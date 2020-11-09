@@ -1,0 +1,21 @@
+[debug] [2020-11-08T14:46:39.074Z] ----------------------------------------------------------------------
+[debug] [2020-11-08T14:46:39.076Z] Command:       /home/john/.nvm/versions/node/v12.18.4/bin/node /home/john/.nvm/versions/node/v12.18.4/bin/firebase init
+[debug] [2020-11-08T14:46:39.076Z] CLI Version:   8.15.1
+[debug] [2020-11-08T14:46:39.076Z] Platform:      linux
+[debug] [2020-11-08T14:46:39.076Z] Node Version:  v12.18.4
+[debug] [2020-11-08T14:46:39.077Z] Time:          Sun Nov 08 2020 14:46:39 GMT+0000 (Greenwich Mean Time)
+[debug] [2020-11-08T14:46:39.077Z] ----------------------------------------------------------------------
+[debug] [2020-11-08T14:46:39.077Z] 
+[debug] [2020-11-08T14:46:39.080Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-11-08T14:46:39.081Z] > authorizing via signed-in user
+[info] 
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  /home/john/Documents/FPL-Assistant
+
