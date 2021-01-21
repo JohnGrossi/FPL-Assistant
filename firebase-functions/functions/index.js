@@ -19,21 +19,29 @@ async function compareLineups() {
     let team2 = await ffpunditScrape();
     let team3 = await sportitoScrape();
     let players = [];
+    let teamANDplayers = new Map();
 
     //for (var i = 0; i < teams.length; i++) {
     for (const key in teams) {
         for (var k = 0; k < 11; k++){
-            if (Object.values(team2.get(teams[key])).includes(Object.values(team1.get(teams[key]))[k])) {
+            
+            //compare team1 to 2 and 3
+            if (Object.values(team2.get(teams[key])).includes(Object.values(team1.get(teams[key]))[k]) && !(players.includes(Object.values(team1.get(teams[key]))[k]))) {
                 players.push(Object.values(team1.get(teams[key]))[k]);
-            } else if (Object.values(team3.get(teams[key])).includes(Object.values(team1.get(teams[key]))[k])) {
+            } else if (Object.values(team3.get(teams[key])).includes(Object.values(team1.get(teams[key]))[k]) && !(players.includes(Object.values(team1.get(teams[key]))[k]))) {
                 players.push(Object.values(team1.get(teams[key]))[k]);
             }
-//CHECK TEAM2 TO 1 AND 3 //CABI CEBIOS HAS TO BE CEBIOS
+            
+            if (Object.values(team1.get(teams[key])).includes(Object.values(team2.get(teams[key]))[k]) && !(players.includes(Object.values(team2.get(teams[key]))[k]))) {
+                players.push(Object.values(team2.get(teams[key]))[k]);
+            } else if (Object.values(team3.get(teams[key])).includes(Object.values(team2.get(teams[key]))[k]) && !(players.includes(Object.values(team2.get(teams[key]))[k]))) {
+                players.push(Object.values(team2.get(teams[key]))[k]);
+            }
         }
-        
+        teamANDplayers.set(teams[key], {1: players[0], 2: players[1], 3: players[2], 4: players[3], 5: players[4], 6: players[5], 7: players[6], 8: players[7], 9: players[8], 10: players[9], 11: players[10]});
+        players =[];
     }
-    console.log(players);
-    //(Object.values(team1.get('WOLVERHAMPTON WANDERERS')))[0]
+    console.log(teamANDplayers);
 }
 compareLineups();
 
@@ -49,7 +57,9 @@ async function ffscoutScrape() {
 
                 //finds all player names and put them in an array
                 $('.player-name').each(function (index, element) {
-                    players.push($(element).text());
+                    var n = $(element).text().split(" ");
+                    
+                    players.push(n[n.length - 1]);
                 });
 
                 let teamANDplayers = new Map();
@@ -119,7 +129,7 @@ async function sportitoScrape() {
                 //finds all player names and put them in an array
                 $('.column-2').each(function (index, element) {
                     var t = ($(element).text()).split(/;|,|\./);
-                    p = p.concat(t);
+                    p = p.concat(t.map(Function.prototype.call, String.prototype.trim));
 
                     players = p.filter(function (el) {
                         return el != '';
@@ -130,8 +140,6 @@ async function sportitoScrape() {
                 for(i=6, j=6; j <26; i+=11, j++) {
                     teamANDplayers.set(teams[j], {1: players[i], 2: players[i+1], 3: players[i+2], 4: players[i+3], 5: players[i+4], 6: players[i+5], 7: players[i+6], 8: players[i+7], 9: players[i+8], 10: players[i+9], 11: players[i+10]});
                 }
-                //var test = Object.values(teamANDplayers.get('WOLVERHAMPTON WANDERERS'));
-                //console.log(teamANDplayers);
 
                 resolve(teamANDplayers);
             }
