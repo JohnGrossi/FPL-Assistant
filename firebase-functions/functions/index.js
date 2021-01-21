@@ -1,17 +1,16 @@
-//const functions = require('firebase-functions');
-//const admin = require('firebase-admin');
-//admin.initializeApp();
-//const database = admin.firestore();
+const functions = require('firebase-functions');
+const admin = require('firebase-admin');
+admin.initializeApp();
+const database = admin.firestore();
 const request = require('request');
 const cheerio = require('cheerio');
-//const puppeteer = require('puppeteer');
-
 const lineup = require('./predictedLineups');
 
-// exports.scrape = functions.pubsub.schedule('0 19 * * *').onRun((context) => {   
-//     database.doc("timers/timer1").update({ "time": admin.firestore.Timestamp.now() });
-//     return console.log('successful timer update');
-// });
+exports.scrape = functions.pubsub.schedule('0 19 * * *').onRun((context) => {
+    let everything = compareLineups();  
+    database.doc("predictedTeams/ARSENAL").set({ "time": 'test', "place": "test2" });
+    return console.log('successful timer update');
+});
 
 async function compareLineups() {
     let teams = ['ARSENAL', 'ASTON VILLA', 'BRIGHTON AND HOVE ALBION', 'BURNLEY', 'CHELSEA', 'CRYSTAL PALACE', 'EVERTON', 'FULHAM', 'LEEDS UNITED', 'LEICESTER CITY', 'LIVERPOOL', 'MANCHESTER CITY', 'MANCHESTER UNITED', 'NEWCASTLE UNITED', 'SHEFFIELD UNITED', 'SOUTHAMPTON', 'TOTTENHAM HOTSPUR', 'WEST BROMWICH ALBION', 'WEST HAM UNITED', 'WOLVERHAMPTON WANDERERS'];
@@ -41,9 +40,8 @@ async function compareLineups() {
         teamANDplayers.set(teams[key], {1: players[0], 2: players[1], 3: players[2], 4: players[3], 5: players[4], 6: players[5], 7: players[6], 8: players[7], 9: players[8], 10: players[9], 11: players[10]});
         players =[];
     }
-    console.log(teamANDplayers);
+    return teamANDplayers;
 }
-compareLineups();
 
 async function ffscoutScrape() {
     return new Promise(function(resolve, reject) {
