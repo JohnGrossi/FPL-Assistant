@@ -1,15 +1,28 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 admin.initializeApp();
-const database = admin.firestore();
+const database = admin.firestore(); 
 const request = require('request');
 const cheerio = require('cheerio');
 const lineup = require('./predictedLineups');
+admin.firestore().settings({ignoreUndefinedProperties: true});
 
-exports.scrape = functions.pubsub.schedule('0 19 * * *').onRun((context) => {
-    let everything = compareLineups();  
-    database.doc("predictedTeams/ARSENAL").set({ "time": 'test', "place": "test2" });
-    return console.log('successful timer update');
+//"npm --prefix \"%RESOURCE_DIR%\" run lint"
+//i removed this from firebase.json, predeploy and all my errors disapeard
+
+exports.scrape = functions.pubsub.schedule('10 3 * * *').onRun((context) => {
+    let teams = ['ARSENAL', 'ASTON VILLA', 'BRIGHTON AND HOVE ALBION', 'BURNLEY', 'CHELSEA', 'CRYSTAL PALACE', 'EVERTON', 'FULHAM', 'LEEDS UNITED', 'LEICESTER CITY', 'LIVERPOOL', 'MANCHESTER CITY', 'MANCHESTER UNITED', 'NEWCASTLE UNITED', 'SHEFFIELD UNITED', 'SOUTHAMPTON', 'TOTTENHAM HOTSPUR', 'WEST BROMWICH ALBION', 'WEST HAM UNITED', 'WOLVERHAMPTON WANDERERS'];
+
+    // Get a new write batch
+    const batch = database.batch();
+    let everything = await compareLineups();
+
+    for(i=0;i<20;i++) {
+        const nycRef = database.collection('predictedTeams').doc(teams[i]);
+        batch.set(nycRef, everything.get(teams[i]));
+    }
+    // Commit the batch
+    await batch.commit();
 });
 
 async function compareLineups() {
@@ -40,6 +53,8 @@ async function compareLineups() {
         teamANDplayers.set(teams[key], {1: players[0], 2: players[1], 3: players[2], 4: players[3], 5: players[4], 6: players[5], 7: players[6], 8: players[7], 9: players[8], 10: players[9], 11: players[10]});
         players =[];
     }
+
+    //console.log(typeof teamANDplayers.get('ARSENAL'));
     return teamANDplayers;
 }
 
