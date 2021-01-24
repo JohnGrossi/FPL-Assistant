@@ -10,7 +10,7 @@ admin.firestore().settings({ignoreUndefinedProperties: true});
 //"npm --prefix \"%RESOURCE_DIR%\" run lint"
 //i removed this from firebase.json, predeploy and all my errors disapeard
 
-exports.scrape = functions.pubsub.schedule('10 3 * * *').onRun((context) => {
+exports.scrape = functions.pubsub.schedule('* 1 * * *').onRun(async context => {
     let teams = ['ARSENAL', 'ASTON VILLA', 'BRIGHTON AND HOVE ALBION', 'BURNLEY', 'CHELSEA', 'CRYSTAL PALACE', 'EVERTON', 'FULHAM', 'LEEDS UNITED', 'LEICESTER CITY', 'LIVERPOOL', 'MANCHESTER CITY', 'MANCHESTER UNITED', 'NEWCASTLE UNITED', 'SHEFFIELD UNITED', 'SOUTHAMPTON', 'TOTTENHAM HOTSPUR', 'WEST BROMWICH ALBION', 'WEST HAM UNITED', 'WOLVERHAMPTON WANDERERS'];
 
     // Get a new write batch
@@ -24,6 +24,21 @@ exports.scrape = functions.pubsub.schedule('10 3 * * *').onRun((context) => {
     // Commit the batch
     await batch.commit();
 });
+
+// exports.testScrape = functions.firestore.document('predictedTeams/ARSENAL').onCreate(async snap => {
+//     let teams = ['ARSENAL', 'ASTON VILLA', 'BRIGHTON AND HOVE ALBION', 'BURNLEY', 'CHELSEA', 'CRYSTAL PALACE', 'EVERTON', 'FULHAM', 'LEEDS UNITED', 'LEICESTER CITY', 'LIVERPOOL', 'MANCHESTER CITY', 'MANCHESTER UNITED', 'NEWCASTLE UNITED', 'SHEFFIELD UNITED', 'SOUTHAMPTON', 'TOTTENHAM HOTSPUR', 'WEST BROMWICH ALBION', 'WEST HAM UNITED', 'WOLVERHAMPTON WANDERERS'];
+
+//     // Get a new write batch
+//     const batch = database.batch();
+//     let everything = await compareLineups();
+
+//     for(i=0;i<20;i++) {
+//         const nycRef = database.collection('predictedTeams').doc(teams[i]);
+//         batch.set(nycRef, everything.get(teams[i]));
+//     }
+//     // Commit the batch
+//     await batch.commit();
+// });
 
 async function compareLineups() {
     let teams = ['ARSENAL', 'ASTON VILLA', 'BRIGHTON AND HOVE ALBION', 'BURNLEY', 'CHELSEA', 'CRYSTAL PALACE', 'EVERTON', 'FULHAM', 'LEEDS UNITED', 'LEICESTER CITY', 'LIVERPOOL', 'MANCHESTER CITY', 'MANCHESTER UNITED', 'NEWCASTLE UNITED', 'SHEFFIELD UNITED', 'SOUTHAMPTON', 'TOTTENHAM HOTSPUR', 'WEST BROMWICH ALBION', 'WEST HAM UNITED', 'WOLVERHAMPTON WANDERERS'];
@@ -53,8 +68,6 @@ async function compareLineups() {
         teamANDplayers.set(teams[key], {1: players[0], 2: players[1], 3: players[2], 4: players[3], 5: players[4], 6: players[5], 7: players[6], 8: players[7], 9: players[8], 10: players[9], 11: players[10]});
         players =[];
     }
-
-    //console.log(typeof teamANDplayers.get('ARSENAL'));
     return teamANDplayers;
 }
 
@@ -80,15 +93,10 @@ async function ffscoutScrape() {
                     teamANDplayers.set(teams[j], {1: players[i], 2: players[i+1], 3: players[i+2], 4: players[i+3], 5: players[i+4], 6: players[i+5], 7: players[i+6], 8: players[i+7], 9: players[i+8], 10: players[i+9], 11: players[i+10]});
                 
                 }
-                
-                var test = Object.values(teamANDplayers.get('ARSENAL'));
-                //console.log(teamANDplayers);
-
                 resolve(teamANDplayers);
             }
         });
-    });
-    
+    });    
 }
 
 async function ffpunditScrape() {
@@ -111,9 +119,6 @@ async function ffpunditScrape() {
                     teamANDplayers.set(teams[j], {1: players[i], 2: players[i+1], 3: players[i+2], 4: players[i+3], 5: players[i+4], 6: players[i+5], 7: players[i+6], 8: players[i+7], 9: players[i+8], 10: players[i+9], 11: players[i+10]});
                 
                 }
-                var test = Object.values(teamANDplayers.get('ARSENAL'));
-                //console.log(players);
-
                 resolve(teamANDplayers);
             }
         });
@@ -128,7 +133,7 @@ async function sportitoScrape() {
                 //load HTML
                 const $ = cheerio.load(html);
             
-                var teams = []; // 'ARSENAL', 'ASTON VILLA', 'BRIGHTON AND HOVE ALBION', 'BURNLEY', 'CHELSEA', 'CRYSTAL PALACE', 'EVERTON', 'FULHAM', 'LEEDS UNITED', 'LEICESTER CITY', 'LIVERPOOL', 'MANCHESTER CITY', 'MANCHESTER UNITED', 'NEWCASTLE UNITED', 'SHEFFIELD UNITED', 'SOUTHAMPTON', 'TOTTENHAM HOTSPUR', 'WEST BROMWICH ALBION', 'WEST HAM UNITED', 'WOLVERHAMPTON WANDERERS
+                var teams = []; 
                 var players = [];
                 var p = [];
 
@@ -153,7 +158,6 @@ async function sportitoScrape() {
                 for(i=6, j=6; j <26; i+=11, j++) {
                     teamANDplayers.set(teams[j], {1: players[i], 2: players[i+1], 3: players[i+2], 4: players[i+3], 5: players[i+4], 6: players[i+5], 7: players[i+6], 8: players[i+7], 9: players[i+8], 10: players[i+9], 11: players[i+10]});
                 }
-
                 resolve(teamANDplayers);
             }
         });
@@ -199,34 +203,3 @@ function fixStupidNames(name){
             return name;
     }
 }
-
-//BACK- UP
-//function ffpunditScrape() {
-    // request('https://www.fiso.co.uk/fanteam-predicted-line-ups/', (error, response, html) =>{
-    //     if (!error) {
-    //         //load HTML
-    //         const $ = cheerio.load(html);
-        
-    //         var teams = ['ARSENAL', 'ASTON VILLA', 'BRIGHTON AND HOVE ALBION', 'BURNLEY', 'CHELSEA', 'CRYSTAL PALACE', 'EVERTON', 'FULHAM', 'LEEDS UNITED', 'LEICESTER CITY', 'LIVERPOOL', 'MANCHESTER CITY', 'MANCHESTER UNITED', 'NEWCASTLE UNITED', 'SHEFFIELD UNITED', 'SOUTHAMPTON', 'TOTTENHAM HOTSPUR', 'WEST BROMWICH ALBION', 'WEST HAM UNITED', 'WOLVERHAMPTON WANDERERS'];
-    //         var players = [];
-
-    //         //finds all player names and put them in an array
-    //         $('.sorting_2').each(function (index, element) {
-    //             players.push($(element).text());
-    //         });
-    //         $('.even td').each(function (index, element) {
-    //             players.push($(element).text());
-    //         });
-
-    //         let teamANDplayers = new Map();
-    //         for(i=0, j=0; j <20; i+=11, j++) {
-    //             teamANDplayers.set(teams[j], {1: players[i], 2: players[i+1], 3: players[i+2], 4: players[i+3], 5: players[i+4], 6: players[i+5], 7: players[i+6], 8: players[i+7], 9: players[i+8], 10: players[i+9], 11: players[i+10]});           
-    //         }
-    //         var test = Object.values(teamANDplayers.get('ARSENAL'));
-            
-    //         console.log(players);
-
-    //         return teamANDplayers;
-    //     }
-    // });
-//}
