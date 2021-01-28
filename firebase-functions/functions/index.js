@@ -208,11 +208,12 @@ function fixStupidNames(name){
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------------
 async function fetchApi() { 
-    let allData = await fplApi.fetchBootstrap(); 
-    let players = allData.elements; //642
-    
-    for(i=0;i < players.length ; i++) { 
-        console.log(players[i]); 
-    } 
+    let allFixtures = await fetch('') //https://fantasy.premierleague.com/api/fixtures/ AND https://fantasy.premierleague.com/api/bootstrap-static/
+    console.log(allFixtures);
+
+    //fetch: https://fantasy.premierleague.com/api/fixtures/ AND https://fantasy.premierleague.com/api/bootstrap-static/
+    //fplAPI libary gets summary but not fixtures
+    //most common error: UnhandledPromiseRejectionWarning: FetchError: invalid json response body at https://fantasy.premierleague.com/api/fixtures/ reason: Unexpected end of JSON input
+
 } 
 fetchApi();
