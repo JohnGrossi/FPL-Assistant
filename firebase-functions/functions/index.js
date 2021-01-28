@@ -5,6 +5,7 @@ const database = admin.firestore();
 const request = require('request');
 const cheerio = require('cheerio');
 const lineup = require('./predictedLineups');
+const fetch = require("node-fetch");
 admin.firestore().settings({ignoreUndefinedProperties: true});
 
 //"npm --prefix \"%RESOURCE_DIR%\" run lint"
@@ -25,6 +26,7 @@ exports.scrape = functions.pubsub.schedule('* 1 * * *').onRun(async context => {
     await batch.commit();
 });
 
+//tesT emulator
 // exports.testScrape = functions.firestore.document('predictedTeams/ARSENAL').onCreate(async snap => {
 //     let teams = ['ARSENAL', 'ASTON VILLA', 'BRIGHTON AND HOVE ALBION', 'BURNLEY', 'CHELSEA', 'CRYSTAL PALACE', 'EVERTON', 'FULHAM', 'LEEDS UNITED', 'LEICESTER CITY', 'LIVERPOOL', 'MANCHESTER CITY', 'MANCHESTER UNITED', 'NEWCASTLE UNITED', 'SHEFFIELD UNITED', 'SOUTHAMPTON', 'TOTTENHAM HOTSPUR', 'WEST BROMWICH ALBION', 'WEST HAM UNITED', 'WOLVERHAMPTON WANDERERS'];
 
