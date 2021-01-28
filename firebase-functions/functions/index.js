@@ -7,6 +7,7 @@ const cheerio = require('cheerio');
 const lineup = require('./predictedLineups');
 const fetch = require("node-fetch");
 admin.firestore().settings({ignoreUndefinedProperties: true});
+const fplApi = require("fpl-api"); //https://github.com/jeppe-smith/fpl-api#fetchbootstrap
 
 //"npm --prefix \"%RESOURCE_DIR%\" run lint"
 //i removed this from firebase.json, predeploy and all my errors disapeard
@@ -205,3 +206,13 @@ function fixStupidNames(name){
             return name;
     }
 }
+//-----------------------------------------------------------------------------------------------------------------------------------------------------
+async function fetchApi() { 
+    let allData = await fplApi.fetchBootstrap(); 
+    let players = allData.elements; //642
+    
+    for(i=0;i < players.length ; i++) { 
+        console.log(players[i]); 
+    } 
+} 
+fetchApi();
