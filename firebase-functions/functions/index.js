@@ -208,8 +208,11 @@ function fixStupidNames(name){
 }
 //-----------------------------------------------------------------------------------------------------------------------------------------------------
 async function fetchApi() { 
-    let allFixtures = await fetch('') //https://fantasy.premierleague.com/api/fixtures/ AND https://fantasy.premierleague.com/api/bootstrap-static/
-    console.log(allFixtures);
+    // let allFixtures = await fetch('') //https://fantasy.premierleague.com/api/fixtures/ AND https://fantasy.premierleague.com/api/bootstrap-static/
+    // console.log(allFixtures); //no work
+
+    let allPlayers = await fplApi.fetchBootstrap();
+    console.log(allPlayers); //this works but no fplApi.fetchFixtures, could be cause its an array
 
     //fetch: https://fantasy.premierleague.com/api/fixtures/ AND https://fantasy.premierleague.com/api/bootstrap-static/
     //fplAPI libary gets summary but not fixtures
