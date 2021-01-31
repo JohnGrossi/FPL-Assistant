@@ -14,7 +14,7 @@ const puppeteer = require('puppeteer');
 //i removed this from firebase.json, predeploy and all my errors disapeard
 
 //cloud function, sets predicted lineUps in database
-exports.predictedTeams = functions.pubsub.schedule('* 18 * * *').onRun(async context => {
+exports.predictedTeams = functions.pubsub.schedule('0 18 * * *').onRun(async context => {
     let teams = ['ARSENAL', 'ASTON VILLA', 'BRIGHTON AND HOVE ALBION', 'BURNLEY', 'CHELSEA', 'CRYSTAL PALACE', 'EVERTON', 'FULHAM', 'LEEDS UNITED', 'LEICESTER CITY', 'LIVERPOOL', 'MANCHESTER CITY', 'MANCHESTER UNITED', 'NEWCASTLE UNITED', 'SHEFFIELD UNITED', 'SOUTHAMPTON', 'TOTTENHAM HOTSPUR', 'WEST BROMWICH ALBION', 'WEST HAM UNITED', 'WOLVERHAMPTON WANDERERS'];
 
     // Get a new write batch
@@ -30,7 +30,7 @@ exports.predictedTeams = functions.pubsub.schedule('* 18 * * *').onRun(async con
 });
 
 //cloud function, sets the upcoming fixtures in database
-exports.fixtures = functions.pubsub.schedule('* 18 * * *').onRun(async context => {
+exports.fixtures = functions.pubsub.schedule('0 18 * * *').onRun(async context => {
 
     let fixtures = await fetchFixtures();
     database.collection('fixtures').doc('currentWeek')
