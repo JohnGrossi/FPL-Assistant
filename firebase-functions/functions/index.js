@@ -215,7 +215,10 @@ async function fetchFixtures() {
         
         //had js things that cheerio seemed to not catch so used puppeteer
         //loads up fixture page
-        const browser = await puppeteer.launch();
+        const browser = await puppeteer.launch({
+            headless: true,
+            args: ['--no-sandbox', '--disable-setuid-sandbox']
+        });
         const page = await browser.newPage();
         await page.goto('https://fantasy.premierleague.com/fixtures')
 
