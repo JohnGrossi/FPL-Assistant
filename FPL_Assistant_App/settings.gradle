@@ -1,0 +1,2 @@
+include ':app'
+rootProject.name = "FPL_Assistant_App"

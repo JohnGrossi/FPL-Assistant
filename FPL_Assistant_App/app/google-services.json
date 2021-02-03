@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "208259929162",
+    "firebase_url": "https://fpl-assistant-41263.firebaseio.com",
+    "project_id": "fpl-assistant-41263",
+    "storage_bucket": "fpl-assistant-41263.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:208259929162:android:87382bbfebca7b633682b3",
+        "android_client_info": {
+          "package_name": "com.example.fpl_assistant_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "208259929162-13qrda721h6jsq5cbhgnsv0mbjvb2vfj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBf-YWNtWA9rXutdVEIFvIhV6jthAWslRA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "208259929162-13qrda721h6jsq5cbhgnsv0mbjvb2vfj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
