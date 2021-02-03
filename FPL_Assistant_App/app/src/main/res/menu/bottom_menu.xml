@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/playerComparisonFragment"
+        android:title="Player Comparison"
+        android:icon="@drawable/ic_compare"/>
+    <item
+        android:id="@+id/fixturesFragment"
+        android:title="Fixtures"
+        android:icon="@drawable/ic_fixtures" />
+    <item
+        android:id="@+id/totwFragment"
+        android:title="Best FPL Team Predictor"
+        android:icon="@drawable/ic_baseline_star_24"/>
+</menu>
