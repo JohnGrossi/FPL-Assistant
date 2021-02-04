@@ -1,18 +1,21 @@
-package com.example.fpl_assistant_app;
+package com.example.fpl_assistant_app.Main;
 
 import android.os.Bundle;
+
+import androidx.fragment.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.fragment.app.Fragment;
+import com.example.fpl_assistant_app.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link PlayerComparisonFragment#newInstance} factory method to
+ * Use the {@link TotwFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class PlayerComparisonFragment extends Fragment {
+public class TotwFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -23,7 +26,7 @@ public class PlayerComparisonFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public PlayerComparisonFragment() {
+    public TotwFragment() {
         // Required empty public constructor
     }
 
@@ -33,11 +36,11 @@ public class PlayerComparisonFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment PlayerComparisonFragment.
+     * @return A new instance of fragment TotwFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static PlayerComparisonFragment newInstance(String param1, String param2) {
-        PlayerComparisonFragment fragment = new PlayerComparisonFragment();
+    public static TotwFragment newInstance(String param1, String param2) {
+        TotwFragment fragment = new TotwFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -58,6 +61,6 @@ public class PlayerComparisonFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_player_comparison, container, false);
+        return inflater.inflate(R.layout.fragment_totw, container, false);
     }
 }

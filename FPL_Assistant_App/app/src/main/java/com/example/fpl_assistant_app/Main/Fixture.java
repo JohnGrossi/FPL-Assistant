@@ -1,4 +1,4 @@
-package com.example.fpl_assistant_app;
+package com.example.fpl_assistant_app.Main;
 
 public class Fixture {
     public String fixtureName;
@@ -10,5 +10,9 @@ public class Fixture {
     public String getFixtureName() {
         return fixtureName;
     }
-    //test
+
+    @Override
+    public String toString() {
+        return fixtureName;
+    }
 }

@@ -7,8 +7,8 @@
         android:icon="@drawable/ic_compare"/>
     <item
         android:id="@+id/fixturesFragment"
-        android:title="Fixtures"
-        android:icon="@drawable/ic_fixtures" />
+        android:icon="@drawable/ic_fixtures"
+        android:title="Fixtures" />
     <item
         android:id="@+id/totwFragment"
         android:title="Best FPL Team Predictor"
