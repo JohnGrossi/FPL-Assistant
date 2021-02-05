@@ -89,8 +89,9 @@ public class HomeTeamFragment extends Fragment {
 
     public void getPlayers(String team, View view) {
 
+        team = matchDatabaseName(team.toUpperCase());
 
-        String[] playerPosition = {"GK","DEF1","DEF2","DEF3","DEF4","MID1","MID2","MID3","MID4","FWD1","FWD2"};
+        String[] playerPosition = {"GK", "DEF1", "DEF2", "DEF3", "DEF4", "MID1", "MID2", "MID3", "MID4", "FWD1", "FWD2"};
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         DocumentReference docRef = db.collection("predictedTeams").document(team.toUpperCase());
@@ -109,7 +110,7 @@ public class HomeTeamFragment extends Fragment {
                             int resID = getResources().getIdentifier(playerPosition[j], "id", "com.example.fpl_assistant_app");
                             textView = (TextView) view.findViewById(resID);
 
-                            Log.d(TAG, "onComplete: " +document.getString(Integer.toString(i)));
+                            Log.d(TAG, "onComplete: " + document.getString(Integer.toString(i)));
                             textView.setText(document.getString(Integer.toString(i)));
                         }
 
@@ -121,5 +122,34 @@ public class HomeTeamFragment extends Fragment {
                 }
             }
         });
+    }
+
+    public String matchDatabaseName(String team) {
+        switch (team) {
+            case "BRIGHTON":
+                return "BRIGHTON AND HOVE ALBION";
+            case "LEEDS":
+                return "LEEDS UNITED";
+            case "LEICESTER":
+                return "LEICESTER CITY";
+            case "MAN CITY":
+                return "MANCHESTER CITY";
+            case "MAN UTD":
+                return "MANCHESTER UNITED";
+            case "NEWCASTLE":
+                return "NEWCASTLE UNITED";
+            case "SHEFFIELD UTD":
+                return "SHEFFIELD UNITED";
+            case "SPURS":
+                return "TOTTENHAM HOTSPUR";
+            case "WEST BROM":
+                return "WEST BROMWICH ALBION";
+            case "WEST HAM":
+                return "WEST HAM UNITED";
+            case "WOLVES":
+                return "WOLVERHAMPTON WANDERERS";
+            default:
+                return team;
+        }
     }
 }
