@@ -1,6 +1,8 @@
 package com.example.fpl_assistant_app.PredictedLineup;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.fpl_assistant_app.Main.Fixture;
@@ -18,11 +21,17 @@ import com.example.fpl_assistant_app.Main.MainActivity;
 import com.example.fpl_assistant_app.Main.MyFixturesRecyclerViewAdapter;
 import com.example.fpl_assistant_app.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FileDownloadTask;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -37,6 +46,7 @@ public class HomeTeamFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     final String TAG = "TasksSample";
+    String homeTeam = "";
 
 
     // TODO: Rename and change types of parameters
@@ -81,21 +91,23 @@ public class HomeTeamFragment extends Fragment {
         String teams = ((PredictedLineupActivity) getActivity()).passInTeams();
 
         String[] split = teams.split(" v ");
-        String home = split[0];
-        getPlayers(home, view);
+        homeTeam = split[0];
+        getPlayers(view);
 
         return view;
     }
 
-    public void getPlayers(String team, View view) {
+    public void getPlayers(View view) {
 
-        team = matchDatabaseName(team.toUpperCase());
+        homeTeam = matchDatabaseName(homeTeam.toUpperCase());
 
         String[] playerPosition = {"GK", "DEF1", "DEF2", "DEF3", "DEF4", "MID1", "MID2", "MID3", "MID4", "FWD1", "FWD2"};
+        String[] playerPicture = {"GKpicture", "DEF1picture", "DEF2picture", "DEF3picture", "DEF4picture", "MID1picture", "MID2picture", "MID3picture", "MID4picture", "FWD1picture", "FWD2picture"};
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        DocumentReference docRef = db.collection("predictedTeams").document(team.toUpperCase());
-        System.out.println(team);
+        FirebaseStorage storage = FirebaseStorage.getInstance();
+        DocumentReference docRef = db.collection("predictedTeams").document(homeTeam.toUpperCase());
+        System.out.println("TEAM: " +homeTeam);
 
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -103,15 +115,37 @@ public class HomeTeamFragment extends Fragment {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
-                        //Log.d(TAG, "DocumentSnapshot data: " + document.getData().values());
                         for (int i = 1, j = 0; i <= 11; i++, j++) {
                             TextView textView;
-                            //Log.d(TAG, "playerPos:"+playerPosition[i-1]);
                             int resID = getResources().getIdentifier(playerPosition[j], "id", "com.example.fpl_assistant_app");
                             textView = (TextView) view.findViewById(resID);
 
-                            Log.d(TAG, "onComplete: " + document.getString(Integer.toString(i)));
+                            Log.d(TAG, "PLAYER: " + document.getString(Integer.toString(i)));
                             textView.setText(document.getString(Integer.toString(i)));
+
+                            String filename = document.getString(Integer.toString(i)) +homeTeam + ".png";
+                            StorageReference storageReference = storage.getReferenceFromUrl("gs://fpl-assistant-41263.appspot.com/Pics").child(filename);
+
+                            try {
+                                final File picture = File.createTempFile(filename, "png");
+                                final String whichPic = playerPicture[j];
+                                Log.d(TAG, "CHECKPOINT1 : " +filename);
+                                storageReference.getFile(picture).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                                    @Override
+                                    public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                                        Log.d(TAG, "CHECKPOINT2 : ");
+                                        int picID = getResources().getIdentifier(whichPic, "id", "com.example.fpl_assistant_app");
+                                        Bitmap bitmap = BitmapFactory.decodeFile(picture.getAbsolutePath());
+                                        ImageView imageView;
+                                        imageView = (ImageView) view.findViewById(picID);
+                                        imageView.setImageBitmap(bitmap);
+                                        Log.d(TAG, "CHECKPOINT3 : ");
+                                    }
+                                });
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+
                         }
 
                     } else {

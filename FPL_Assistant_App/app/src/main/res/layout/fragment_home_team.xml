@@ -18,7 +18,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.96" />
+        app:layout_constraintVertical_bias="0.94" />
 
     <TextView
         android:id="@+id/GK"
@@ -158,5 +158,117 @@
         android:text="FWD2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/MID4" />
+
+    <ImageView
+        android:id="@+id/GKpicture"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/noname"
+        app:layout_constraintBottom_toTopOf="@+id/GK"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.933" />
+
+    <ImageView
+        android:id="@+id/DEF1picture"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/noname"
+        app:layout_constraintBottom_toTopOf="@+id/DEF1"
+        app:layout_constraintEnd_toEndOf="@+id/DEF1"
+        app:layout_constraintStart_toStartOf="@+id/DEF1" />
+
+    <ImageView
+        android:id="@+id/FWD2picture"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/noname"
+        app:layout_constraintBottom_toTopOf="@+id/FWD2"
+        app:layout_constraintEnd_toEndOf="@+id/FWD2"
+        app:layout_constraintStart_toStartOf="@+id/FWD2" />
+
+    <ImageView
+        android:id="@+id/FWD1picture"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/noname"
+        app:layout_constraintBottom_toTopOf="@+id/FWD1"
+        app:layout_constraintEnd_toEndOf="@+id/FWD1"
+        app:layout_constraintStart_toStartOf="@+id/FWD1" />
+
+    <ImageView
+        android:id="@+id/MID4picture"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/noname"
+        app:layout_constraintBottom_toTopOf="@+id/MID4"
+        app:layout_constraintEnd_toEndOf="@+id/MID4"
+        app:layout_constraintStart_toStartOf="@+id/MID4" />
+
+    <ImageView
+        android:id="@+id/MID3picture"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="7dp"
+        android:background="@drawable/noname"
+        app:layout_constraintBottom_toTopOf="@+id/MID3"
+        app:layout_constraintEnd_toEndOf="@+id/MID3"
+        app:layout_constraintStart_toStartOf="@+id/MID3" />
+
+    <ImageView
+        android:id="@+id/MID2picture"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/noname"
+        app:layout_constraintBottom_toTopOf="@+id/MID2"
+        app:layout_constraintEnd_toEndOf="@+id/MID2"
+        app:layout_constraintStart_toStartOf="@+id/MID2" />
+
+    <ImageView
+        android:id="@+id/DEF4picture"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/noname"
+        app:layout_constraintBottom_toTopOf="@+id/DEF4"
+        app:layout_constraintEnd_toEndOf="@+id/DEF4"
+        app:layout_constraintStart_toStartOf="@+id/DEF4" />
+
+    <ImageView
+        android:id="@+id/DEF3picture"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/noname"
+        app:layout_constraintBottom_toTopOf="@+id/DEF3"
+        app:layout_constraintEnd_toEndOf="@+id/DEF3"
+        app:layout_constraintStart_toStartOf="@+id/DEF3" />
+
+    <ImageView
+        android:id="@+id/DEF2picture"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/noname"
+        app:layout_constraintBottom_toTopOf="@+id/DEF2"
+        app:layout_constraintEnd_toEndOf="@+id/DEF2"
+        app:layout_constraintStart_toStartOf="@+id/DEF2" />
+
+    <ImageView
+        android:id="@+id/MID1picture"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="7dp"
+        android:background="@drawable/noname"
+        app:layout_constraintBottom_toTopOf="@+id/MID1"
+        app:layout_constraintEnd_toEndOf="@+id/MID1"
+        app:layout_constraintStart_toStartOf="@+id/MID1" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
