@@ -34,14 +34,48 @@ def test():
 
     elems = WebDriverWait(browser, 30).until(EC.presence_of_all_elements_located((By.CLASS_NAME, "playerName")))
     links = [elem.get_attribute('href') for elem in elems]
-    links = [elem.replace("overview", "stats?co=1&se=363") for elem in links] 
-    
-    browser.get(links[1])
-    name = WebDriverWait(browser, 30).until(EC.presence_of_element_located((By.XPATH, "//*[@id='mainContent']/section/div[2]/div[3]/h1/div")))
-    print(name.text)
+    links = [elem.replace("overview", "stats?co=1&se=363") for elem in links]
 
-    team = WebDriverWait(browser, 30).until(EC.presence_of_element_located((By.XPATH, "//*[@id='mainContent']/div[3]/nav/div/section[1]/div[2]/a")))
-    print(team.text)
+    for link in links :
+        browser.get(link)
+        
+        try:
+            try:
+                name = WebDriverWait(browser, 30).until(EC.presence_of_element_located((By.XPATH, "//*[@id='mainContent']/section/div[2]/div[2]/h1/div")))
+                print(name.text)
+
+                team = WebDriverWait(browser, 30).until(EC.presence_of_element_located((By.XPATH, "//*[@id='mainContent']/div[3]/nav/div/section[1]/div[2]/a")))
+                print(team.text)
+
+                filename = ((name.text).split())[-1] + (team.text).upper()
+
+                time.sleep(2)
+                picture = WebDriverWait(browser, 30).until(EC.presence_of_element_located((By.XPATH, "//*[@id='mainContent']/section/div[2]/div[1]/img")))
+                src = picture.get_attribute('src')#fetch the location of image
+                img = requests.get(src)#fetch image
+                with open(os.path.join(__location__,"pics/", filename+'.png'),'wb') as writer:#open for writing in binary mode
+                    writer.write(img.content)
+
+                print(filename)
+            except:
+                name = WebDriverWait(browser, 30).until(EC.presence_of_element_located((By.XPATH, "//*[@id='mainContent']/section/div[2]/div[3]/h1/div")))
+                print(name.text)
+
+                team = WebDriverWait(browser, 30).until(EC.presence_of_element_located((By.XPATH, "//*[@id='mainContent']/div[3]/nav/div/section[1]/div[2]/a")))
+                print(team.text)
+
+                filename = ((name.text).split())[-1] + (team.text).upper()
+
+                picture = WebDriverWait(browser, 30).until(EC.presence_of_element_located((By.XPATH, "//*[@id='mainContent']/section/div[2]/div[1]/img")))
+                src = picture.get_attribute('src')#fetch the location of image
+                img = requests.get(src)#fetch image
+                with open(os.path.join(__location__,"pics/", filename+'.png'),'wb') as writer:#open for writing in binary mode
+                    writer.write(img.content)
+
+                print(filename)
+        except:
+            print("not longer has a club")
+    
 
     printCSV(links)
 
