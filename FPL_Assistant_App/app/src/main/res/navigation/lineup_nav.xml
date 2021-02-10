@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/lineup_nav"
+    app:startDestination="@id/homeTeamFragment">
+
+    <fragment
+        android:id="@+id/homeTeamFragment"
+        android:name="com.example.fpl_assistant_app.PredictedLineup.HomeTeamFragment"
+        android:label="fragment_home_team"
+        tools:layout="@layout/fragment_home_team" />
+    <fragment
+        android:id="@+id/awayTeamFragment"
+        android:name="com.example.fpl_assistant_app.PredictedLineup.AwayTeamFragment"
+        android:label="fragment_away_team"
+        tools:layout="@layout/fragment_away_team" />
+</navigation>

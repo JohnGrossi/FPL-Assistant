@@ -1,4 +1,4 @@
-package com.example.fpl_assistant_app;
+package com.example.fpl_assistant_app.Main;
 
 import android.os.Bundle;
 import android.view.View;
@@ -9,6 +9,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.example.fpl_assistant_app.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.HashSet;
@@ -32,10 +33,5 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
-    }
-
-
-    public void switchThis (View v) {
-
     }
 }

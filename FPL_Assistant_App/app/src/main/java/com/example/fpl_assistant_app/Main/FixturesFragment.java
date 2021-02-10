@@ -1,6 +1,7 @@
-package com.example.fpl_assistant_app;
+package com.example.fpl_assistant_app.Main;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +14,8 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.fpl_assistant_app.PredictedLineup.PredictedLineupActivity;
+import com.example.fpl_assistant_app.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
@@ -24,7 +27,11 @@ import java.util.ArrayList;
 /**
  * A fragment representing a list of Items.
  */
-public class FixturesFragment extends Fragment {
+public class FixturesFragment extends Fragment implements MyFixturesRecyclerViewAdapter.OnFixtureListener {
+
+    final String TAG = "TasksSample";
+    ArrayList<Fixture> fixtures = new ArrayList<>();
+
 
     // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -71,13 +78,10 @@ public class FixturesFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            final ArrayList<Fixture> fixtures = new ArrayList<>();
-            final MyFixturesRecyclerViewAdapter adapter = new MyFixturesRecyclerViewAdapter(fixtures);
+            final MyFixturesRecyclerViewAdapter adapter = new MyFixturesRecyclerViewAdapter(fixtures, this);
             recyclerView.setAdapter(adapter);
 
             FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-            final String TAG = "TasksSample";
 
             DocumentReference docRef = db.collection("fixtures").document("currentWeek");
             docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -107,5 +111,13 @@ public class FixturesFragment extends Fragment {
 
         }
         return view;
+    }
+
+    @Override
+    public void onFixtureClick(int position) {
+        Log.d(TAG, "onFixtureClick: clicked " +fixtures.get(position));
+        Intent intent = new Intent(getContext(), PredictedLineupActivity.class);
+        intent.putExtra("teams", fixtures.get(position).toString());
+        startActivity(intent);
     }
 }

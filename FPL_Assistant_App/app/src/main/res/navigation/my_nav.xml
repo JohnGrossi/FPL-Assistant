@@ -7,17 +7,17 @@
 
     <fragment
         android:id="@+id/playerComparisonFragment"
-        android:name="com.example.fpl_assistant_app.PlayerComparisonFragment"
+        android:name="com.example.fpl_assistant_app.Main.PlayerComparisonFragment"
         android:label="Player Comparison"
         tools:layout="@layout/fragment_player_comparison" />
     <fragment
         android:id="@+id/fixturesFragment"
-        android:name="com.example.fpl_assistant_app.FixturesFragment"
+        android:name="com.example.fpl_assistant_app.Main.FixturesFragment"
         android:label="Fixtures"
         tools:layout="@layout/fragment_fixtures" />
     <fragment
         android:id="@+id/totwFragment"
-        android:name="com.example.fpl_assistant_app.TotwFragment"
+        android:name="com.example.fpl_assistant_app.Main.TotwFragment"
         android:label="Team of the Week Prediction"
         tools:layout="@layout/fragment_totw" />
 </navigation>
