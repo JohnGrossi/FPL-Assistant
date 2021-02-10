@@ -129,17 +129,14 @@ public class HomeTeamFragment extends Fragment {
                             try {
                                 final File picture = File.createTempFile(filename, "png");
                                 final String whichPic = playerPicture[j];
-                                Log.d(TAG, "CHECKPOINT1 : " +filename);
                                 storageReference.getFile(picture).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                                     @Override
                                     public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                                        Log.d(TAG, "CHECKPOINT2 : ");
                                         int picID = getResources().getIdentifier(whichPic, "id", "com.example.fpl_assistant_app");
                                         Bitmap bitmap = BitmapFactory.decodeFile(picture.getAbsolutePath());
                                         ImageView imageView;
                                         imageView = (ImageView) view.findViewById(picID);
                                         imageView.setImageBitmap(bitmap);
-                                        Log.d(TAG, "CHECKPOINT3 : ");
                                     }
                                 });
                             } catch (IOException e) {
