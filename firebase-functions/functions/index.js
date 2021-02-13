@@ -160,6 +160,7 @@ async function sportitoScrape() {
                 for(i=6, j=6; j <26; i+=11, j++) {
                     teamANDplayers.set(teams[j], {1: players[i], 2: players[i+1], 3: players[i+2], 4: players[i+3], 5: players[i+4], 6: players[i+5], 7: players[i+6], 8: players[i+7], 9: players[i+8], 10: players[i+9], 11: players[i+10]});
                 }
+                console.log(teamANDplayers)
                 resolve(teamANDplayers);
             }
         });
