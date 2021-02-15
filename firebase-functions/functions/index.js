@@ -5,6 +5,8 @@ const database = admin.firestore();
 const request = require('request');
 const cheerio = require('cheerio');
 const lineup = require('./predictedLineups');
+const fixtureList = require('./fixtures');
+const playersData = require('./playerData');
 const fetch = require("node-fetch");
 admin.firestore().settings({ignoreUndefinedProperties: true});
 const fplApi = require("fpl-api"); //https://github.com/jeppe-smith/fpl-api#fetchbootstrap
@@ -21,6 +23,7 @@ exports.predictedTeams = functions.pubsub.schedule('0 18 * * *').onRun(async con
     const batch = database.batch();
     let everything = await compareLineups(teams);
 
+    //sets the 11 predicted players for the team path to the batch write
     for(i=0;i<20;i++) {
         const nycRef = database.collection('predictedTeams').doc(teams[i]);
         batch.set(nycRef, everything.get(teams[i]));
@@ -33,25 +36,23 @@ exports.predictedTeams = functions.pubsub.schedule('0 18 * * *').onRun(async con
 exports.fixtures = functions.pubsub.schedule('0 18 * * *').onRun(async context => {
 
     let fixtures = await fetchFixtures();
-    database.collection('fixtures').doc('currentWeek')
-    .set(fixtures);
+    database.collection('fixtures').doc('currentWeek').set(fixtures);
 });
 
+//const that stops the playerdata method from timing out, takes a little bit to run fully
 const runtimeOpts = {
     timeoutSeconds: 300
 }
   
-
+//cloud function, sets all player data in database
 exports.playerData = functions.pubsub.schedule('0 0 * * 2').onRun(async context => {
     
     let teams = await fetchPlayerData();
 
+    //for each team: for each player - each batch write is 1 team worth of players as it can only do 500 writes at a time/batch
     for (const keys of Object.entries(teams)){
-        console.log(keys[0]);
         const batch = database.batch();
         for (const [key, value] of Object.entries(teams[keys[0]])) {
-            //console.log(key,value);
-        
             const nycRef = database.collection('teams/'+keys[0]+'/players/').doc(key);
             batch.set(nycRef, value);
         }
@@ -73,6 +74,7 @@ async function compareLineups(teams) {
     for (const key in teams) {
         for (var k = 0; k < 11; k++){
             
+            //2:1 ratio - if a players predicted in at least 2 sites its added
             //compare team1 to team2 and team3, add player to array if is found in team lineUps and not already in the array
             if (Object.values(team2.get(teams[key])).includes(Object.values(team1.get(teams[key]))[k]) && !(players.includes(Object.values(team1.get(teams[key]))[k]))) {
                 players.push(Object.values(team1.get(teams[key]))[k]);
@@ -108,11 +110,12 @@ async function ffscoutScrape(teams) {
 
                 //finds all player names and put them in an array
                 $('.player-name').each(function (index, element) {
-                    var n = $(element).text().split(" ");           //removes double-barrel names and just uses last name //ADD SPECIAL CHARACTER FILTER
+                    var n = $(element).text().split(" ");           //removes double-barrel names and just uses last name
                     players.push(n[n.length - 1]);
                 });
 
-                let teamANDplayers = new Map(); //maps team to corresponding players
+                //maps team to corresponding players
+                let teamANDplayers = new Map(); 
                 for(i=0, j=0; j <20; i+=11, j++) {
                     teamANDplayers.set(teams[j], {1: players[i], 2: players[i+1], 3: players[i+2], 4: players[i+3], 5: players[i+4], 6: players[i+5], 7: players[i+6], 8: players[i+7], 9: players[i+8], 10: players[i+9], 11: players[i+10]});
                 
@@ -139,6 +142,7 @@ async function ffpunditScrape(teams) {
                     players.push($(element).text());
                 });
 
+                //maps team to corresponding players
                 let teamANDplayers = new Map();   //maps team to corresponding players
                 for(i=0, j=0; j <20; i+=11, j++) {
                     teamANDplayers.set(teams[j], {1: players[i], 2: players[i+1], 3: players[i+2], 4: players[i+3], 5: players[i+4], 6: players[i+5], 7: players[i+6], 8: players[i+7], 9: players[i+8], 10: players[i+9], 11: players[i+10]});
@@ -180,7 +184,8 @@ async function sportitoScrape() {
                     });
                 });
 
-                let teamANDplayers = new Map(); //maps team to corresponding players
+                //maps team to corresponding players
+                let teamANDplayers = new Map();
                 for(i=6, j=6; j <26; i+=11, j++) {
                     teamANDplayers.set(teams[j], {1: players[i], 2: players[i+1], 3: players[i+2], 4: players[i+3], 5: players[i+4], 6: players[i+5], 7: players[i+6], 8: players[i+7], 9: players[i+8], 10: players[i+9], 11: players[i+10]});
                 }
@@ -195,37 +200,26 @@ function fixStupidNames(name){
     switch(name) {
         case "BRIGHTON":
             return "BRIGHTON AND HOVE ALBION";
-            break;
         case "LEEDS":
             return "LEEDS UNITED";
-            break;
         case "LEICESTER":
             return "LEICESTER CITY";
-            break;
         case "MAN CITY":
             return "MANCHESTER CITY";
-            break;
         case "MAN UNITED":
             return "MANCHESTER UNITED";
-            break;
         case "NEWCASTLE":
             return "NEWCASTLE UNITED";
-            break;
         case "SHEFFIELD":
             return "SHEFFIELD UNITED";
-            break;
         case "TOTTENHAM":
             return "TOTTENHAM HOTSPUR";
-            break;
         case "WEST BROM":
             return "WEST BROMWICH ALBION";
-            break;
         case "WEST HAM":
             return "WEST HAM UNITED";
-            break;
         case "WOLVES":
             return "WOLVERHAMPTON WANDERERS";
-            break;
         default:
             return name;
     }
@@ -247,20 +241,19 @@ async function fetchFixtures() {
 
         const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
 
-        //waits for page to load fully, normal puppeteer wait functions did not work
+        //waits for page to load fully, normal puppeteer wait functions did not work for some reason
         await sleep(4000);
 
         //finds class name that corresponds with team names
         const teams = await page.$$('span[class="Fixture__TeamName-sc-7l1xrv-5 guGKwL"]');
-        //const times = await page.$$('span[class="Fixture__FixtureKOTime-sc-7l1xrv-7 bToSHF"]');
         let fixtures = {};
 
         //find first 2 teams then add to object
         for (let i = 0, k=1; i < teams.length; i+=2, k++) {
             const team1 = await (await teams[i].getProperty('innerText')).jsonValue();
             const team2 = await (await teams[i+1].getProperty('innerText')).jsonValue();
-            //const time = await (await times[k-1].getProperty('innerText')).jsonValue();
 
+            //creates fixture and adds to fixtures
             fixtures[k] = (team1+ " v " +team2);
         }
 
@@ -272,6 +265,7 @@ async function fetchFixtures() {
 
 //----------------------------------------------------------------------------------------------------------------------------------------------------
 
+//function - webscrapes fixtures from the upcoming gw, returns object of fixtures e.g '1: spurs v burnley'
 async function fetchPlayerData() { 
     return new Promise(async function(resolve, reject) {
         //4 lines below remove accents/check if they have accents 'very fast script based on the Unicode standard'
@@ -305,23 +299,29 @@ async function fetchPlayerData() {
             'WOLVERHAMPTON WANDERERS' : {},
         };
 
+        //gets all player info from API
         let players = await fplApi.fetchBootstrap();
+
+        //iterate trough each player
         for (i = 0; i < players.elements.length; i++) {
 
+            //get last name (matches the image when searching for it)
             var n = players.elements[i].second_name.split(" ");
             players.elements[i].second_name = n[n.length-1];
             
+            //remove accents
             if (players.elements[i].second_name.isLatin() == false) {
                 players.elements[i].second_name = players.elements[i].second_name.latinise();
             }
-            if (players.elements[i].second_name.includes('ß')) {
+            if (players.elements[i].second_name.includes('ß')) { //.Latinise doesnt remove this letter
                 players.elements[i].second_name = players.elements[i].second_name.replace('ß','ss');
             }
 
+            //get players past fixture information from API
             let fixtures = await fplApi.fetchElementSummary(players.elements[i].id)
 
             try {
-                //depneding what position set the attributes
+                //depneding what position, set the attributes
                 if (players.elements[i].element_type == 1) {
                     teams[getTeamName(players.elements[i].team)][players.elements[i].second_name] = {'team': getTeamName(players.elements[i].team), 'price': players.elements[i].now_cost, 'position': getPosition(players.elements[i].element_type), 'fitness': players.elements[i].chance_of_playing_this_round, 'pointsTotal': players.elements[i].total_points, 'cleanSheetTotal': players.elements[i].clean_sheets, 'penaltySaves': players.elements[i].penalties_saved, 'lastFixture': getResult(fixtures.history[fixtures.history.length-2].team_h_score, fixtures.history[fixtures.history.length-2].team_a_score, fixtures.history[fixtures.history.length-2].was_home), 'secondLastFixture': getResult(fixtures.history[fixtures.history.length-3].team_h_score, fixtures.history[fixtures.history.length-3].team_a_score, fixtures.history[fixtures.history.length-3].was_home), 'thirdLastFixture': getResult(fixtures.history[fixtures.history.length-4].team_h_score, fixtures.history[fixtures.history.length-4].team_a_score, fixtures.history[fixtures.history.length-4].was_home), 'lastPoints': fixtures.history[fixtures.history.length-2].total_points, 'secondLastPoints': fixtures.history[fixtures.history.length-3].total_points, 'thirdLastPoints': fixtures.history[fixtures.history.length-3].total_points, 'nextFixture': getFixture(players.elements[i].team, fixtures.fixtures[0].team_h, fixtures.fixtures[0].team_a), 'secondNextFixture': getFixture(players.elements[i].team, fixtures.fixtures[1].team_h, fixtures.fixtures[1].team_a), 'thirdNextFixture': getFixture(players.elements[i].team, fixtures.fixtures[2].team_h, fixtures.fixtures[2].team_a)};
                 } else if (players.elements[i].element_type == 2) {
@@ -337,13 +337,11 @@ async function fetchPlayerData() {
                 console.log(error);
             }
         }
-        //console.log(teams.ARSENAL[Object.keys(teams)[0]]);
-
         resolve(teams);
     });
 }
-//fetchPlayerData();
 
+//function - returns the next teams oppenent. API just returns the two team id's and a boolean if they are the home team or no. So this returns the opponent
 function getFixture(playersTeam, hTeam, aTeam) {
     if (playersTeam == hTeam) {
         return getTeamName(aTeam);
@@ -352,6 +350,7 @@ function getFixture(playersTeam, hTeam, aTeam) {
     }
 }
 
+//function - returns score of fixture. again api has everything seperate so put score into one variable and an indicator if they won, lost or drew for front end
 function getResult(homeScore, awayScore, was_home) {
     var fixture = homeScore +'-'+ awayScore;
 
@@ -366,6 +365,7 @@ function getResult(homeScore, awayScore, was_home) {
     return fixture;
 }
 
+//function - changes numerical id to a readable string
 function getTeamName(id) {
     switch(id) {
         case 1:
@@ -411,6 +411,7 @@ function getTeamName(id) {
     }        
 }
 
+//function - change position ID to a readable string
 function getPosition(id) {
     switch(id) {
         case 1:
