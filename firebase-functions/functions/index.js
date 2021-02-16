@@ -4,9 +4,9 @@ admin.initializeApp();
 const database = admin.firestore(); 
 const request = require('request');
 const cheerio = require('cheerio');
-const lineup = require('./predictedLineups');
-const fixtureList = require('./fixtures');
-const playersData = require('./playerData');
+//const lineup = require('./predictedLineups');
+//const fixtureList = require('./fixtures');
+//const playersData = require('./playerData');
 const fetch = require("node-fetch");
 admin.firestore().settings({ignoreUndefinedProperties: true});
 const fplApi = require("fpl-api"); //https://github.com/jeppe-smith/fpl-api#fetchbootstrap
