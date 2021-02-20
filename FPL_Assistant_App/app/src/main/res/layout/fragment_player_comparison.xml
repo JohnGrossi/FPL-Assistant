@@ -4,37 +4,34 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Main.PlayerComparisonFragment">
+    tools:context=".Main.PlayerComparisonFragment"
+    android:background="#F0F0F0">
 
     <TextView
         android:id="@+id/Player2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
-        android:layout_marginEnd="105dp"
-        android:layout_marginRight="105dp"
         android:text="Player 2"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/Player2Image"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Spinner
         android:id="@+id/spinner1"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="Player 2"
-        app:layout_constraintEnd_toEndOf="@+id/Player1"
         app:layout_constraintStart_toStartOf="@+id/Player1"
         app:layout_constraintTop_toBottomOf="@+id/Player1" />
 
     <Spinner
         android:id="@+id/spinner2"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="Player 2"
         app:layout_constraintEnd_toEndOf="@+id/Player2"
-        app:layout_constraintStart_toStartOf="@+id/Player2"
         app:layout_constraintTop_toBottomOf="@+id/Player2" />
 
     <Spinner
@@ -44,7 +41,6 @@
         android:layout_marginTop="10dp"
         android:text="Player 2"
         app:layout_constraintEnd_toEndOf="@+id/spinner2"
-        app:layout_constraintStart_toStartOf="@+id/spinner2"
         app:layout_constraintTop_toBottomOf="@+id/spinner2" />
 
     <Spinner
@@ -53,8 +49,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="Player 2"
-        app:layout_constraintEnd_toEndOf="@+id/spinner1"
-        app:layout_constraintHorizontal_bias="0.6"
         app:layout_constraintStart_toStartOf="@+id/spinner1"
         app:layout_constraintTop_toBottomOf="@+id/spinner1" />
 
@@ -62,11 +56,9 @@
         android:id="@+id/Player1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="105dp"
-        android:layout_marginLeft="105dp"
         android:layout_marginTop="40dp"
         android:text="Player 1"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/Player1Image"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
@@ -79,6 +71,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spinner11" />
 
+    <ImageView
+        android:id="@+id/Player2Image"
+        android:layout_width="83dp"
+        android:layout_height="81dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinner21" />
+
     <TextView
         android:id="@+id/team"
         android:layout_width="wrap_content"
@@ -88,6 +90,16 @@
         android:layout_marginTop="10dp"
         app:layout_constraintStart_toEndOf="@+id/Player1Image"
         app:layout_constraintTop_toBottomOf="@+id/spinner11" />
+
+    <TextView
+        android:id="@+id/team2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        app:layout_constraintBottom_toBottomOf="@+id/team"
+        app:layout_constraintEnd_toStartOf="@+id/Player2Image"
+        app:layout_constraintTop_toTopOf="@+id/team" />
 
     <TextView
         android:id="@+id/name"
@@ -100,6 +112,16 @@
         app:layout_constraintTop_toBottomOf="@+id/team" />
 
     <TextView
+        android:id="@+id/name2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        app:layout_constraintBottom_toBottomOf="@+id/name"
+        app:layout_constraintEnd_toStartOf="@+id/Player2Image"
+        app:layout_constraintTop_toTopOf="@+id/name" />
+
+    <TextView
         android:id="@+id/price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -108,6 +130,16 @@
         android:layout_marginTop="10dp"
         app:layout_constraintStart_toEndOf="@+id/Player1Image"
         app:layout_constraintTop_toBottomOf="@+id/name" />
+
+    <TextView
+        android:id="@+id/price2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        app:layout_constraintBottom_toBottomOf="@+id/price"
+        app:layout_constraintEnd_toStartOf="@+id/Player2Image"
+        app:layout_constraintTop_toTopOf="@+id/price" />
 
     <TextView
         android:id="@+id/fitness"
@@ -119,6 +151,15 @@
         app:layout_constraintTop_toBottomOf="@+id/Player1Image" />
 
     <TextView
+        android:id="@+id/fitness2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="@+id/Player2Image"
+        app:layout_constraintStart_toStartOf="@+id/Player2Image"
+        app:layout_constraintTop_toBottomOf="@+id/Player2Image" />
+
+    <TextView
         android:id="@+id/position"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -128,6 +169,15 @@
         app:layout_constraintTop_toBottomOf="@+id/Player1Image" />
 
     <TextView
+        android:id="@+id/position2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/position"
+        app:layout_constraintEnd_toEndOf="@+id/price2"
+        app:layout_constraintStart_toStartOf="@+id/price2"
+        app:layout_constraintTop_toTopOf="@+id/position" />
+
+    <TextView
         android:id="@+id/results"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -135,8 +185,21 @@
         android:layout_marginLeft="5dp"
         android:layout_marginTop="10dp"
         android:text="Most recent Results"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fitness" />
+
+    <TextView
+        android:id="@+id/results2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:text="Most recent Results"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/results"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/results" />
 
     <TextView
         android:id="@+id/points"
@@ -146,8 +209,21 @@
         android:layout_marginLeft="5dp"
         android:layout_marginTop="10dp"
         android:text="Most recent Points"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/secondLastFixture" />
+
+    <TextView
+        android:id="@+id/points2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:text="Most recent Points"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/points"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/points" />
 
     <TextView
         android:id="@+id/fixtures"
@@ -157,8 +233,21 @@
         android:layout_marginLeft="5dp"
         android:layout_marginTop="10dp"
         android:text="Next 3 Fixtures"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/secondLastPoints" />
+
+    <TextView
+        android:id="@+id/fixtures2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:text="Next 3 Fixtures"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/fixtures"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/fixtures" />
 
     <TextView
         android:id="@+id/totals"
@@ -168,28 +257,59 @@
         android:layout_marginLeft="5dp"
         android:layout_marginTop="10dp"
         android:text="Season Totals"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/thirdNextFixture" />
+
+    <TextView
+        android:id="@+id/totals2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:text="Season Totals"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/totals"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/totals" />
 
     <TextView
         android:id="@+id/lastFixture"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/secondLastFixture"
+        app:layout_constraintStart_toStartOf="@+id/results"
         app:layout_constraintTop_toBottomOf="@+id/results" />
+
+    <TextView
+        android:id="@+id/lastFixture2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        app:layout_constraintEnd_toStartOf="@+id/secondLastFixture2"
+        app:layout_constraintStart_toStartOf="@+id/results2"
+        app:layout_constraintTop_toBottomOf="@+id/results2" />
 
     <TextView
         android:id="@+id/lastPoints"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
-        app:layout_constraintStart_toStartOf="parent"
+        android:background="#FFFFFF"
+        app:layout_constraintEnd_toStartOf="@+id/secondLastPoints"
+        app:layout_constraintStart_toStartOf="@+id/points"
         app:layout_constraintTop_toBottomOf="@+id/points" />
+
+    <TextView
+        android:id="@+id/lastPoints2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:background="#FFFFFF"
+        app:layout_constraintEnd_toStartOf="@+id/secondLastPoints2"
+        app:layout_constraintStart_toStartOf="@+id/points2"
+        app:layout_constraintTop_toBottomOf="@+id/points2" />
 
     <TextView
         android:id="@+id/nextFixture"
@@ -198,8 +318,20 @@
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
+        android:background="#FFFFFF"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fixtures" />
+
+    <TextView
+        android:id="@+id/nextFixture2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:background="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="@+id/nextFixture"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/nextFixture" />
 
     <TextView
         android:id="@+id/pointsTotal"
@@ -208,8 +340,20 @@
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
+        android:background="#FFFFFF"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/totals" />
+
+    <TextView
+        android:id="@+id/pointsTotal2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:background="#FFFFFF"
+        app:layout_constraintEnd_toStartOf="@+id/goalsTotal2"
+        app:layout_constraintTop_toBottomOf="@+id/totals2" />
 
     <TextView
         android:id="@+id/goalsTotal"
@@ -218,17 +362,40 @@
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
+        android:background="#FFFFFF"
         app:layout_constraintStart_toEndOf="@+id/pointsTotal"
         app:layout_constraintTop_toBottomOf="@+id/totals" />
+
+    <TextView
+        android:id="@+id/goalsTotal2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:background="#FFFFFF"
+        app:layout_constraintEnd_toStartOf="@+id/assistTotal2"
+        app:layout_constraintTop_toBottomOf="@+id/totals2" />
 
     <TextView
         android:id="@+id/cleanSheetTotal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        app:layout_constraintEnd_toEndOf="@+id/goalsTotal"
-        app:layout_constraintStart_toStartOf="@+id/goalsTotal"
+        android:background="#FFFFFF"
+        app:layout_constraintStart_toStartOf="@+id/pointsTotal"
         app:layout_constraintTop_toBottomOf="@+id/goalsTotal" />
+
+    <TextView
+        android:id="@+id/cleanSheetTotal2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:background="#FFFFFF"
+        app:layout_constraintEnd_toStartOf="@+id/penaltySaves2"
+        app:layout_constraintTop_toBottomOf="@+id/pointsTotal2" />
 
     <TextView
         android:id="@+id/penaltySaves"
@@ -237,8 +404,20 @@
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
+        android:background="#FFFFFF"
         app:layout_constraintStart_toEndOf="@+id/cleanSheetTotal"
         app:layout_constraintTop_toBottomOf="@+id/assistTotal" />
+
+    <TextView
+        android:id="@+id/penaltySaves2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:background="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pointsTotal2" />
 
     <TextView
         android:id="@+id/assistTotal"
@@ -247,8 +426,20 @@
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
+        android:background="#FFFFFF"
         app:layout_constraintStart_toEndOf="@+id/goalsTotal"
         app:layout_constraintTop_toBottomOf="@+id/totals" />
+
+    <TextView
+        android:id="@+id/assistTotal2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:background="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/totals2" />
 
     <TextView
         android:id="@+id/thirdNextFixture"
@@ -257,8 +448,20 @@
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
+        android:background="#FFFFFF"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/secondNextFixture" />
+
+    <TextView
+        android:id="@+id/thirdNextFixture2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:background="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="@+id/thirdNextFixture"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/thirdNextFixture" />
 
     <TextView
         android:id="@+id/secondNextFixture"
@@ -267,38 +470,78 @@
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
+        android:background="#FFFFFF"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nextFixture" />
+
+    <TextView
+        android:id="@+id/secondNextFixture2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
+        android:background="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="@+id/secondNextFixture"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/secondNextFixture" />
 
     <TextView
         android:id="@+id/thirdLastPoints"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
+        android:background="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="@+id/points"
         app:layout_constraintStart_toEndOf="@+id/secondLastPoints"
         app:layout_constraintTop_toBottomOf="@+id/points" />
+
+    <TextView
+        android:id="@+id/thirdLastPoints2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:background="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="@+id/points2"
+        app:layout_constraintStart_toEndOf="@+id/secondLastPoints2"
+        app:layout_constraintTop_toBottomOf="@+id/points2" />
 
     <TextView
         android:id="@+id/secondLastPoints"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
-        app:layout_constraintStart_toEndOf="@+id/lastPoints"
+        android:background="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="@+id/points"
+        app:layout_constraintStart_toStartOf="@+id/points"
         app:layout_constraintTop_toBottomOf="@+id/points" />
+
+    <TextView
+        android:id="@+id/secondLastPoints2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:background="#FFFFFF"
+        app:layout_constraintEnd_toEndOf="@+id/points2"
+        app:layout_constraintStart_toStartOf="@+id/points2"
+        app:layout_constraintTop_toBottomOf="@+id/points2" />
 
     <TextView
         android:id="@+id/secondLastFixture"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
-        app:layout_constraintStart_toEndOf="@+id/lastFixture"
+        app:layout_constraintEnd_toEndOf="@+id/results"
+        app:layout_constraintStart_toStartOf="@+id/results"
         app:layout_constraintTop_toBottomOf="@+id/results" />
+
+    <TextView
+        android:id="@+id/secondLastFixture2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        app:layout_constraintEnd_toEndOf="@+id/results2"
+        app:layout_constraintStart_toStartOf="@+id/results2"
+        app:layout_constraintTop_toBottomOf="@+id/results2" />
 
     <TextView
         android:id="@+id/thirdLastFixture"
@@ -307,6 +550,16 @@
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
+        app:layout_constraintEnd_toEndOf="@+id/results"
         app:layout_constraintStart_toEndOf="@+id/secondLastFixture"
         app:layout_constraintTop_toBottomOf="@+id/results" />
+
+    <TextView
+        android:id="@+id/thirdLastFixture2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        app:layout_constraintEnd_toEndOf="@+id/results2"
+        app:layout_constraintStart_toEndOf="@+id/secondLastFixture2"
+        app:layout_constraintTop_toBottomOf="@+id/results2" />
 </androidx.constraintlayout.widget.ConstraintLayout>

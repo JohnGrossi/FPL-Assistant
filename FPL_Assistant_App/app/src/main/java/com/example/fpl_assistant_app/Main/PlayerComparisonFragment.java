@@ -3,6 +3,7 @@ package com.example.fpl_assistant_app.Main;
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -46,11 +47,18 @@ import java.util.List;
 public class PlayerComparisonFragment extends Fragment implements AdapterView.OnItemSelectedListener {
 
     String[] playerArray;
+    String playerImage;
+    Spinner spinner1;
     Spinner spinner11;
+    Spinner spinner2;
+    Spinner spinner21;
     ArrayAdapter<CharSequence> adapter2 = null;
+    ArrayAdapter<CharSequence> adapter4 = null;
     Activity thisActivity;
     String team;
-    String[] playerStat = {"team", "price", "position", "fitness", "lastFixture", "secondLastFixture", "thirdLastFixture", "lastPoints", "secondLastPoints", "thirdLastPoints", "nextFixture", "secondNextFixture", "thirdNextFixture", "pointsTotal", "cleanSheetTotal", "penaltySaves", "goalsTotal", "assistTotal"};
+    String[] playerStat = {"name", "team", "price", "position", "fitness", "lastFixture", "secondLastFixture", "thirdLastFixture", "lastPoints", "secondLastPoints", "thirdLastPoints", "nextFixture", "secondNextFixture", "thirdNextFixture", "pointsTotal", "cleanSheetTotal", "penaltySaves", "goalsTotal", "assistTotal"};
+    String[] playerStat2 = {"name2", "team2", "price2", "position2", "fitness2", "lastFixture2", "secondLastFixture2", "thirdLastFixture2", "lastPoints2", "secondLastPoints2", "thirdLastPoints2", "nextFixture2", "secondNextFixture2", "thirdNextFixture2", "pointsTotal2", "cleanSheetTotal2", "penaltySaves2", "goalsTotal2", "assistTotal2"};
+
 
     public PlayerComparisonFragment() {
         // Required empty public constructor
@@ -83,13 +91,19 @@ public class PlayerComparisonFragment extends Fragment implements AdapterView.On
         thisActivity = this.getActivity();
         String teams[] = getResources().getStringArray(R.array.teams);
 
-        Spinner spinner = (Spinner) view.findViewById(R.id.spinner1);
-        ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(this.getActivity(), android.R.layout.simple_spinner_item, teams);
+        spinner1 = view.findViewById(R.id.spinner1);
+        spinner2 = view.findViewById(R.id.spinner2);
+        spinner11 = view.findViewById(R.id.spinner11);
+        spinner21 = view.findViewById(R.id.spinner21);
+        ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(this.getActivity(), android.R.layout.simple_spinner_item, teams); //
+        ArrayAdapter<CharSequence> adapter3 = new ArrayAdapter<CharSequence>(this.getActivity(), android.R.layout.simple_spinner_item, teams); //
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
-        spinner.setAdapter(adapter);
-        spinner11 = (Spinner) view.findViewById(R.id.spinner11);
-        spinner.setOnItemSelectedListener(this);
+        spinner1.setAdapter(adapter);
+        spinner2.setAdapter(adapter3); //
+        spinner1.setOnItemSelectedListener(this);
         spinner11.setOnItemSelectedListener(this);
+        spinner2.setOnItemSelectedListener(this);
+        spinner21.setOnItemSelectedListener(this);
 
         return view;
     }
@@ -106,7 +120,7 @@ public class PlayerComparisonFragment extends Fragment implements AdapterView.On
 
     public void setStats(AdapterView<?> parent, int position) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        if (parent.getId() == R.id.spinner1) {
+        if (parent.getId() == R.id.spinner1 || parent.getId() == R.id.spinner2) {
             team = (String) parent.getItemAtPosition(position);
             CollectionReference collectionRef = db.collection("teams").document(((String) parent.getItemAtPosition(position)).toUpperCase()).collection("players");
             collectionRef.get().addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -115,20 +129,25 @@ public class PlayerComparisonFragment extends Fragment implements AdapterView.On
                     List<DocumentSnapshot> snapshotList = queryDocumentSnapshots.getDocuments();
                     ArrayList<String> players = new ArrayList<>();
                     for (DocumentSnapshot snapshot : snapshotList) {
-                        //Log.d("big man tag", "onSuccess: " + snapshot.getId());
                         players.add(snapshot.getId());
                     }
 
                     playerArray = new String[players.size()];
                     playerArray = players.toArray(playerArray);
-                    adapter2 = new ArrayAdapter<CharSequence>(thisActivity, android.R.layout.simple_spinner_item, playerArray);
 
-                    adapter2.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
-                    spinner11.setAdapter(adapter2);
+                    if(parent.getId() == R.id.spinner1) {
+                        adapter2 = new ArrayAdapter<CharSequence>(thisActivity, android.R.layout.simple_spinner_item, playerArray);
+                        adapter2.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+                        spinner11.setAdapter(adapter2);
+                    } else {
+                        adapter4 = new ArrayAdapter<CharSequence>(thisActivity, android.R.layout.simple_spinner_item, playerArray);
+                        adapter4.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+                        spinner21.setAdapter(adapter4);
+                    }
                 }
             });
         }
-        if (parent.getId() == R.id.spinner11) {
+        if (parent.getId() == R.id.spinner11 || parent.getId() == R.id.spinner21) {
             String player = (String) parent.getItemAtPosition(position);
             setPhoto(player, team.toUpperCase());
             DocumentReference docRef = db.collection("teams").document(team.toUpperCase()).collection("players").document(player);
@@ -136,27 +155,45 @@ public class PlayerComparisonFragment extends Fragment implements AdapterView.On
                 @Override
                 public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                     DocumentSnapshot document = task.getResult();
-                    for (String i : playerStat) {
+                    String[] chosen;
+
+                    if(parent.getId() == R.id.spinner11) {
+                        playerImage = "Player1Image";
+                        chosen = playerStat;
+                    } else {
+                        playerImage = "Player2Image";
+                        chosen = playerStat2;
+                    }
+
+                    for (String i : chosen) {
+                        String dbRef = i.replace("2", "");
+                        //Log.d("TAG", "THE i VARIABLE: " +i);
                         TextView textView;
 
                         int resID = getResources().getIdentifier(i, "id", "com.example.fpl_assistant_app");
                         textView = getView().findViewById(resID);
+                        Log.d("TAG", "onComplete HERe: " +String.valueOf(document.get(i)));
 
                         if(textView.getResources().getResourceName(textView.getId()).contains("pointsTotal")) {
-                            textView.setText("Points:" +String.valueOf(document.get(i)));
+                            textView.setText("Points: " +String.valueOf(document.get(dbRef)));
                         }else if(textView.getResources().getResourceName(textView.getId()).contains("cleanSheetTotal")) {
-                            textView.setText("Clean Sheets:" +String.valueOf(document.get(i)));
+                            textView.setText("Clean Sheets: " +String.valueOf(document.get(dbRef)));
+                        }else if(textView.getResources().getResourceName(textView.getId()).contains("name")) {
+                            textView.setText(player);
                         }else if(textView.getResources().getResourceName(textView.getId()).contains("penaltySaves")) {
-                            textView.setText("Penalty Saves:" +String.valueOf(document.get(i)));
+                            textView.setText("Penalty Saves: " +String.valueOf(document.get(dbRef)));
                         }else if(textView.getResources().getResourceName(textView.getId()).contains("goalsTotal")) {
-                            textView.setText("Goals:" +String.valueOf(document.get(i)));
+                            textView.setText("Goals: " +String.valueOf(document.get(dbRef)));
                         }else if(textView.getResources().getResourceName(textView.getId()).contains("assistTotal")) {
-                            textView.setText("Assists:" +String.valueOf(document.get(i)));
+                            textView.setText("Assists: " +String.valueOf(document.get(dbRef)));
+                        }else if(textView.getResources().getResourceName(textView.getId()).contains("astFixture")) {
+                            textView.setText(String.valueOf(document.get(dbRef)));
+                            setColour(String.valueOf(document.get(dbRef)), textView);
+                        }else if(textView.getResources().getResourceName(textView.getId()).contains("price")) {
+                            formatPrice(String.valueOf(document.get(dbRef)), textView);
                         } else {
-                            textView.setText(String.valueOf(document.get(i)));
-
+                            textView.setText(String.valueOf(document.get(dbRef)));
                         }
-
                         if (textView.getText().toString().contains("null")) {
                             textView.setText("");
                         }
@@ -164,6 +201,27 @@ public class PlayerComparisonFragment extends Fragment implements AdapterView.On
                 }
             });
         }
+    }
+
+    //public void setFields
+
+    public void formatPrice(String price, TextView textView){
+    price = "£" +price;
+    price = price.substring(0, price.length()-1) +"."+ price.substring(price.length()-1, price.length());
+    textView.setText(price);
+    //get "." inbetween last characters
+    }
+
+    public void setColour(String fixture, TextView textView){
+        if (fixture.contains("W")) {
+            textView.setBackgroundColor(Color.parseColor("#00FF38"));
+        } else if (fixture.contains("L")) {
+            textView.setBackgroundColor(Color.parseColor("#FF0000"));
+        } else {
+            textView.setBackgroundColor(Color.parseColor("#FF6000"));
+        }
+        fixture = fixture.substring(0, fixture.length() - 2);
+        textView.setText(fixture);
     }
 
     public void setPhoto(String player, String team) {
@@ -177,7 +235,7 @@ public class PlayerComparisonFragment extends Fragment implements AdapterView.On
             storageReference.getFile(picture).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                    int picID = getResources().getIdentifier("Player1Image", "id", "com.example.fpl_assistant_app");
+                    int picID = getResources().getIdentifier(playerImage, "id", "com.example.fpl_assistant_app");
                     Bitmap bitmap = BitmapFactory.decodeFile(picture.getAbsolutePath());
                     ImageView imageView;
                     imageView = getView().findViewById(picID);
