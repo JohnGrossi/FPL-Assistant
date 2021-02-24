@@ -1,5 +1,27 @@
 <resources>
     <string name="app_name">FPL_Assistant_App</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string-array name="teams">
+        <item>Team</item>
+        <item>Arsenal</item>
+        <item>Aston Villa</item>
+        <item>Brighton</item>
+        <item>Burnley</item>
+        <item>Chelsea</item>
+        <item>Crystal Palace</item>
+        <item>Everton</item>
+        <item>Fulham</item>
+        <item>Leeds United</item>
+        <item>Leicester City</item>
+        <item>Liverpool</item>
+        <item>Manchester City</item>
+        <item>Manchester United</item>
+        <item>Newcastle United</item>
+        <item>Sheffield United</item>
+        <item>Southampton</item>
+        <item>Tottenham Hotspurs</item>
+        <item>West Bromwich Albion</item>
+        <item>West Ham United</item>
+        <item>Wolverhampton Wanderers</item>
+    </string-array>
 </resources>
