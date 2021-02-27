@@ -1,6 +1,9 @@
+const serviceAccount = require('./fpl-assistant-41263-9d3dff4075fc.json');
 const functions = require('firebase-functions');            //TODO split into seperate files
 const admin = require('firebase-admin');
-admin.initializeApp();
+admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount)
+});
 const database = admin.firestore(); 
 const request = require('request');
 const cheerio = require('cheerio');
@@ -455,21 +458,29 @@ async function setTeamStats (teams){
 async function totw () {
     let teams = ['ARSENAL', 'ASTON VILLA', 'BRIGHTON AND HOVE ALBION', 'BURNLEY', 'CHELSEA', 'CRYSTAL PALACE', 'EVERTON', 'FULHAM', 'LEEDS UNITED', 'LEICESTER CITY', 'LIVERPOOL', 'MANCHESTER CITY', 'MANCHESTER UNITED', 'NEWCASTLE UNITED', 'SHEFFIELD UNITED', 'SOUTHAMPTON', 'TOTTENHAM HOTSPUR', 'WEST BROMWICH ALBION', 'WEST HAM UNITED', 'WOLVERHAMPTON WANDERERS'];
 
-
     let expected11 = await getPredicted11(teams[0]);
-    console.log(expected11);
+    console.log(expected11[1]);
 
+    let playerData = await getPlayerData(expected11[1], teams[0]);
+    console.log(playerData);
 }
 
 async function getPredicted11(team) {
-    //const query = database.collection('predictedTeams').doc(team);
-    // const doc =  await query.get();
-    // resolve(doc);
-
-    const snapshot = await database.collection('predictedTeams').doc(team).get();
-    snapshot.forEach((doc) => {
-        console.log(doc.id, '=>', doc.data());
+    return new Promise(async function(resolve, reject) {
+        const teamsPlayers = await database.collection('predictedTeams').doc(team).get();
+        resolve(teamsPlayers.data());
     });
 }
 
-getPredicted11('ARSENAL');
+async function getPlayerData(player, team) {
+    return new Promise(async function(resolve, reject) {
+        const playerStats = await database.collection('teams').doc(team).collection('players').doc(player).get();
+        console.log(playerStats.data());
+    });
+}
+
+async function giveScore() {
+
+}
+
+totw();
