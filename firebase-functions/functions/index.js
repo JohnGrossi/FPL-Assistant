@@ -333,13 +333,13 @@ async function fetchPlayerData(teams) {
             try {
                 //depneding what position, set the attributes
                 if (players.elements[i].element_type == 1) {
-                    teams[getTeamName(players.elements[i].team)][players.elements[i].second_name] = {'team': getTeamName(players.elements[i].team), 'price': players.elements[i].now_cost, 'position': getPosition(players.elements[i].element_type), 'fitness': players.elements[i].chance_of_playing_this_round, 'pointsTotal': players.elements[i].total_points, 'cleanSheetTotal': players.elements[i].clean_sheets, 'penaltySaves': players.elements[i].penalties_saved, 'lastFixture': getResult(fixtures.history[fixtures.history.length-2].team_h_score, fixtures.history[fixtures.history.length-2].team_a_score, fixtures.history[fixtures.history.length-2].was_home), 'secondLastFixture': getResult(fixtures.history[fixtures.history.length-3].team_h_score, fixtures.history[fixtures.history.length-3].team_a_score, fixtures.history[fixtures.history.length-3].was_home), 'thirdLastFixture': getResult(fixtures.history[fixtures.history.length-4].team_h_score, fixtures.history[fixtures.history.length-4].team_a_score, fixtures.history[fixtures.history.length-4].was_home), 'lastPoints': fixtures.history[fixtures.history.length-2].total_points, 'secondLastPoints': fixtures.history[fixtures.history.length-3].total_points, 'thirdLastPoints': fixtures.history[fixtures.history.length-3].total_points, 'nextFixture': getFixture(players.elements[i].team, fixtures.fixtures[0].team_h, fixtures.fixtures[0].team_a), 'secondNextFixture': getFixture(players.elements[i].team, fixtures.fixtures[1].team_h, fixtures.fixtures[1].team_a), 'thirdNextFixture': getFixture(players.elements[i].team, fixtures.fixtures[2].team_h, fixtures.fixtures[2].team_a)};
+                    teams[getTeamName(players.elements[i].team,"")][players.elements[i].second_name] = {'team': getTeamName(players.elements[i].team,""), 'price': players.elements[i].now_cost, 'position': getPosition(players.elements[i].element_type), 'fitness': players.elements[i].chance_of_playing_this_round, 'pointsTotal': players.elements[i].total_points, 'cleanSheetTotal': players.elements[i].clean_sheets, 'penaltySaves': players.elements[i].penalties_saved, 'lastFixture': getResult(fixtures.history[fixtures.history.length-2].team_h_score, fixtures.history[fixtures.history.length-2].team_a_score, fixtures.history[fixtures.history.length-2].was_home), 'secondLastFixture': getResult(fixtures.history[fixtures.history.length-3].team_h_score, fixtures.history[fixtures.history.length-3].team_a_score, fixtures.history[fixtures.history.length-3].was_home), 'thirdLastFixture': getResult(fixtures.history[fixtures.history.length-4].team_h_score, fixtures.history[fixtures.history.length-4].team_a_score, fixtures.history[fixtures.history.length-4].was_home), 'lastPoints': fixtures.history[fixtures.history.length-2].total_points, 'secondLastPoints': fixtures.history[fixtures.history.length-3].total_points, 'thirdLastPoints': fixtures.history[fixtures.history.length-3].total_points, 'nextFixture': getFixture(players.elements[i].team, fixtures.fixtures[0].team_h, fixtures.fixtures[0].team_a), 'secondNextFixture': getFixture(players.elements[i].team, fixtures.fixtures[1].team_h, fixtures.fixtures[1].team_a), 'thirdNextFixture': getFixture(players.elements[i].team, fixtures.fixtures[2].team_h, fixtures.fixtures[2].team_a)};
                 } else if (players.elements[i].element_type == 2) {
-                    teams[getTeamName(players.elements[i].team)][players.elements[i].second_name] = {'team': getTeamName(players.elements[i].team), 'price': players.elements[i].now_cost, 'position': getPosition(players.elements[i].element_type), 'fitness': players.elements[i].chance_of_playing_this_round, 'pointsTotal': players.elements[i].total_points, 'cleanSheetTotal': players.elements[i].clean_sheets, 'goalsTotal': players.elements[i].goals_scored, 'assistTotal': players.elements[i].assists, 'lastFixture': getResult(fixtures.history[fixtures.history.length-2].team_h_score, fixtures.history[fixtures.history.length-2].team_a_score, fixtures.history[fixtures.history.length-2].was_home), 'secondLastFixture': getResult(fixtures.history[fixtures.history.length-3].team_h_score, fixtures.history[fixtures.history.length-3].team_a_score, fixtures.history[fixtures.history.length-3].was_home), 'thirdLastFixture': getResult(fixtures.history[fixtures.history.length-4].team_h_score, fixtures.history[fixtures.history.length-4].team_a_score, fixtures.history[fixtures.history.length-4].was_home), 'lastPoints': fixtures.history[fixtures.history.length-2].total_points, 'secondLastPoints': fixtures.history[fixtures.history.length-3].total_points, 'thirdLastPoints': fixtures.history[fixtures.history.length-3].total_points, 'nextFixture': getFixture(players.elements[i].team, fixtures.fixtures[0].team_h, fixtures.fixtures[0].team_a), 'secondNextFixture': getFixture(players.elements[i].team, fixtures.fixtures[1].team_h, fixtures.fixtures[1].team_a), 'thirdNextFixture': getFixture(players.elements[i].team, fixtures.fixtures[2].team_h, fixtures.fixtures[2].team_a)};
+                    teams[getTeamName(players.elements[i].team,"")][players.elements[i].second_name] = {'team': getTeamName(players.elements[i].team,""), 'price': players.elements[i].now_cost, 'position': getPosition(players.elements[i].element_type), 'fitness': players.elements[i].chance_of_playing_this_round, 'pointsTotal': players.elements[i].total_points, 'cleanSheetTotal': players.elements[i].clean_sheets, 'goalsTotal': players.elements[i].goals_scored, 'assistTotal': players.elements[i].assists, 'lastFixture': getResult(fixtures.history[fixtures.history.length-2].team_h_score, fixtures.history[fixtures.history.length-2].team_a_score, fixtures.history[fixtures.history.length-2].was_home), 'secondLastFixture': getResult(fixtures.history[fixtures.history.length-3].team_h_score, fixtures.history[fixtures.history.length-3].team_a_score, fixtures.history[fixtures.history.length-3].was_home), 'thirdLastFixture': getResult(fixtures.history[fixtures.history.length-4].team_h_score, fixtures.history[fixtures.history.length-4].team_a_score, fixtures.history[fixtures.history.length-4].was_home), 'lastPoints': fixtures.history[fixtures.history.length-2].total_points, 'secondLastPoints': fixtures.history[fixtures.history.length-3].total_points, 'thirdLastPoints': fixtures.history[fixtures.history.length-3].total_points, 'nextFixture': getFixture(players.elements[i].team, fixtures.fixtures[0].team_h, fixtures.fixtures[0].team_a), 'secondNextFixture': getFixture(players.elements[i].team, fixtures.fixtures[1].team_h, fixtures.fixtures[1].team_a), 'thirdNextFixture': getFixture(players.elements[i].team, fixtures.fixtures[2].team_h, fixtures.fixtures[2].team_a)};
                 } else if (players.elements[i].element_type == 3) {
-                    teams[getTeamName(players.elements[i].team)][players.elements[i].second_name] = {'team': getTeamName(players.elements[i].team), 'price': players.elements[i].now_cost, 'position': getPosition(players.elements[i].element_type), 'fitness': players.elements[i].chance_of_playing_this_round, 'pointsTotal': players.elements[i].total_points, 'goalsTotal': players.elements[i].goals_scored, 'assistTotal': players.elements[i].assists, 'lastFixture': getResult(fixtures.history[fixtures.history.length-2].team_h_score, fixtures.history[fixtures.history.length-2].team_a_score, fixtures.history[fixtures.history.length-2].was_home), 'secondLastFixture': getResult(fixtures.history[fixtures.history.length-3].team_h_score, fixtures.history[fixtures.history.length-3].team_a_score, fixtures.history[fixtures.history.length-3].was_home), 'thirdLastFixture': getResult(fixtures.history[fixtures.history.length-4].team_h_score, fixtures.history[fixtures.history.length-4].team_a_score, fixtures.history[fixtures.history.length-4].was_home), 'lastPoints': fixtures.history[fixtures.history.length-2].total_points, 'secondLastPoints': fixtures.history[fixtures.history.length-3].total_points, 'thirdLastPoints': fixtures.history[fixtures.history.length-3].total_points, 'nextFixture': getFixture(players.elements[i].team, fixtures.fixtures[0].team_h, fixtures.fixtures[0].team_a), 'secondNextFixture': getFixture(players.elements[i].team, fixtures.fixtures[1].team_h, fixtures.fixtures[1].team_a), 'thirdNextFixture': getFixture(players.elements[i].team, fixtures.fixtures[2].team_h, fixtures.fixtures[2].team_a)};
+                    teams[getTeamName(players.elements[i].team,"")][players.elements[i].second_name] = {'team': getTeamName(players.elements[i].team,""), 'price': players.elements[i].now_cost, 'position': getPosition(players.elements[i].element_type), 'fitness': players.elements[i].chance_of_playing_this_round, 'pointsTotal': players.elements[i].total_points, 'goalsTotal': players.elements[i].goals_scored, 'assistTotal': players.elements[i].assists, 'lastFixture': getResult(fixtures.history[fixtures.history.length-2].team_h_score, fixtures.history[fixtures.history.length-2].team_a_score, fixtures.history[fixtures.history.length-2].was_home), 'secondLastFixture': getResult(fixtures.history[fixtures.history.length-3].team_h_score, fixtures.history[fixtures.history.length-3].team_a_score, fixtures.history[fixtures.history.length-3].was_home), 'thirdLastFixture': getResult(fixtures.history[fixtures.history.length-4].team_h_score, fixtures.history[fixtures.history.length-4].team_a_score, fixtures.history[fixtures.history.length-4].was_home), 'lastPoints': fixtures.history[fixtures.history.length-2].total_points, 'secondLastPoints': fixtures.history[fixtures.history.length-3].total_points, 'thirdLastPoints': fixtures.history[fixtures.history.length-3].total_points, 'nextFixture': getFixture(players.elements[i].team, fixtures.fixtures[0].team_h, fixtures.fixtures[0].team_a), 'secondNextFixture': getFixture(players.elements[i].team, fixtures.fixtures[1].team_h, fixtures.fixtures[1].team_a), 'thirdNextFixture': getFixture(players.elements[i].team, fixtures.fixtures[2].team_h, fixtures.fixtures[2].team_a)};
                 } else if (players.elements[i].element_type == 4) {
-                    teams[getTeamName(players.elements[i].team)][players.elements[i].second_name] = {'team': getTeamName(players.elements[i].team), 'price': players.elements[i].now_cost, 'position': getPosition(players.elements[i].element_type), 'fitness': players.elements[i].chance_of_playing_this_round, 'pointsTotal': players.elements[i].total_points, 'goalsTotal': players.elements[i].goals_scored, 'assistTotal': players.elements[i].assists, 'lastFixture': getResult(fixtures.history[fixtures.history.length-2].team_h_score, fixtures.history[fixtures.history.length-2].team_a_score, fixtures.history[fixtures.history.length-2].was_home), 'secondLastFixture': getResult(fixtures.history[fixtures.history.length-3].team_h_score, fixtures.history[fixtures.history.length-3].team_a_score, fixtures.history[fixtures.history.length-3].was_home), 'thirdLastFixture': getResult(fixtures.history[fixtures.history.length-4].team_h_score, fixtures.history[fixtures.history.length-4].team_a_score, fixtures.history[fixtures.history.length-4].was_home), 'lastPoints': fixtures.history[fixtures.history.length-2].total_points, 'secondLastPoints': fixtures.history[fixtures.history.length-3].total_points, 'thirdLastPoints': fixtures.history[fixtures.history.length-3].total_points, 'nextFixture': getFixture(players.elements[i].team, fixtures.fixtures[0].team_h, fixtures.fixtures[0].team_a), 'secondNextFixture': getFixture(players.elements[i].team, fixtures.fixtures[1].team_h, fixtures.fixtures[1].team_a), 'thirdNextFixture': getFixture(players.elements[i].team, fixtures.fixtures[2].team_h, fixtures.fixtures[2].team_a)};
+                    teams[getTeamName(players.elements[i].team,"")][players.elements[i].second_name] = {'team': getTeamName(players.elements[i].team,""), 'price': players.elements[i].now_cost, 'position': getPosition(players.elements[i].element_type), 'fitness': players.elements[i].chance_of_playing_this_round, 'pointsTotal': players.elements[i].total_points, 'goalsTotal': players.elements[i].goals_scored, 'assistTotal': players.elements[i].assists, 'lastFixture': getResult(fixtures.history[fixtures.history.length-2].team_h_score, fixtures.history[fixtures.history.length-2].team_a_score, fixtures.history[fixtures.history.length-2].was_home), 'secondLastFixture': getResult(fixtures.history[fixtures.history.length-3].team_h_score, fixtures.history[fixtures.history.length-3].team_a_score, fixtures.history[fixtures.history.length-3].was_home), 'thirdLastFixture': getResult(fixtures.history[fixtures.history.length-4].team_h_score, fixtures.history[fixtures.history.length-4].team_a_score, fixtures.history[fixtures.history.length-4].was_home), 'lastPoints': fixtures.history[fixtures.history.length-2].total_points, 'secondLastPoints': fixtures.history[fixtures.history.length-3].total_points, 'thirdLastPoints': fixtures.history[fixtures.history.length-3].total_points, 'nextFixture': getFixture(players.elements[i].team, fixtures.fixtures[0].team_h, fixtures.fixtures[0].team_a), 'secondNextFixture': getFixture(players.elements[i].team, fixtures.fixtures[1].team_h, fixtures.fixtures[1].team_a), 'thirdNextFixture': getFixture(players.elements[i].team, fixtures.fixtures[2].team_h, fixtures.fixtures[2].team_a)};
                 }
             } catch (error) {
                 console.log(players.elements[i].second_name);
@@ -354,9 +354,9 @@ async function fetchPlayerData(teams) {
 //function - returns the next teams oppenent. API just returns the two team id's and a boolean if they are the home team or no. So this returns the opponent
 function getFixture(playersTeam, hTeam, aTeam) {
     if (playersTeam == hTeam) {
-        return getTeamName(aTeam);
+        return getTeamName(aTeam, " A");
     } else {
-        return getTeamName(hTeam);
+        return getTeamName(hTeam, " H");
     }
 }
 
@@ -376,48 +376,48 @@ function getResult(homeScore, awayScore, was_home) {
 }
 
 //function - changes numerical id to a readable string
-function getTeamName(id) {
+function getTeamName(id, homeAway) {
     switch(id) {
         case 1:
-            return "ARSENAL";
+            return "ARSENAL" +homeAway;
         case 2:
-            return "ASTON VILLA";
+            return "ASTON VILLA" +homeAway;
         case 3:
-            return "BRIGHTON AND HOVE ALBION";
+            return "BRIGHTON AND HOVE ALBION" +homeAway;
         case 4:
-            return "BURNLEY";
+            return "BURNLEY" +homeAway;
         case 5:
-            return "CHELSEA";
+            return "CHELSEA" +homeAway;
         case 6:
-            return "CRYSTAL PALACE";
+            return "CRYSTAL PALACE" +homeAway;
         case 7:
-            return "EVERTON";
+            return "EVERTON" +homeAway;
         case 8:
-            return "FULHAM";
+            return "FULHAM" +homeAway;
         case 9:
-            return "LEEDS UNITED";
+            return "LEEDS UNITED" +homeAway;
         case 10:
-            return "LEICESTER CITY";
+            return "LEICESTER CITY" +homeAway;
         case 11:
-            return "LIVERPOOL";
+            return "LIVERPOOL" +homeAway;
         case 12:
-            return "MANCHESTER CITY";
+            return "MANCHESTER CITY" +homeAway;
         case 13:
-            return "MANCHESTER UNITED";
+            return "MANCHESTER UNITED" +homeAway;
         case 14:
-            return "NEWCASTLE UNITED";
+            return "NEWCASTLE UNITED" +homeAway;
         case 15:
-            return "SHEFFIELD UNITED";
+            return "SHEFFIELD UNITED" +homeAway;
         case 16:
-            return "SOUTHAMPTON";
+            return "SOUTHAMPTON" +homeAway;
         case 17:
-            return "TOTTENHAM HOTSPUR";
+            return "TOTTENHAM HOTSPUR" +homeAway;
         case 18:
-            return "WEST BROMWICH ALBION";
+            return "WEST BROMWICH ALBION" +homeAway;
         case 19:
-            return "WEST HAM UNITED";
+            return "WEST HAM UNITED" +homeAway;
         case 20:
-            return "WOLVERHAMPTON WANDERERS";
+            return "WOLVERHAMPTON WANDERERS" +homeAway;
     }        
 }
 
@@ -449,3 +449,27 @@ async function setTeamStats (teams){
         resolve(teams);
     });
 }
+
+//-------------------------------------------------------------------------------------------------------------------------
+
+async function totw () {
+    let teams = ['ARSENAL', 'ASTON VILLA', 'BRIGHTON AND HOVE ALBION', 'BURNLEY', 'CHELSEA', 'CRYSTAL PALACE', 'EVERTON', 'FULHAM', 'LEEDS UNITED', 'LEICESTER CITY', 'LIVERPOOL', 'MANCHESTER CITY', 'MANCHESTER UNITED', 'NEWCASTLE UNITED', 'SHEFFIELD UNITED', 'SOUTHAMPTON', 'TOTTENHAM HOTSPUR', 'WEST BROMWICH ALBION', 'WEST HAM UNITED', 'WOLVERHAMPTON WANDERERS'];
+
+
+    let expected11 = await getPredicted11(teams[0]);
+    console.log(expected11);
+
+}
+
+async function getPredicted11(team) {
+    //const query = database.collection('predictedTeams').doc(team);
+    // const doc =  await query.get();
+    // resolve(doc);
+
+    const snapshot = await database.collection('predictedTeams').doc(team).get();
+    snapshot.forEach((doc) => {
+        console.log(doc.id, '=>', doc.data());
+    });
+}
+
+getPredicted11('ARSENAL');
