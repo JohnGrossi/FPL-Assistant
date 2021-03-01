@@ -457,12 +457,16 @@ async function setTeamStats (teams){
 
 async function totw () {
     let teams = ['ARSENAL', 'ASTON VILLA', 'BRIGHTON AND HOVE ALBION', 'BURNLEY', 'CHELSEA', 'CRYSTAL PALACE', 'EVERTON', 'FULHAM', 'LEEDS UNITED', 'LEICESTER CITY', 'LIVERPOOL', 'MANCHESTER CITY', 'MANCHESTER UNITED', 'NEWCASTLE UNITED', 'SHEFFIELD UNITED', 'SOUTHAMPTON', 'TOTTENHAM HOTSPUR', 'WEST BROMWICH ALBION', 'WEST HAM UNITED', 'WOLVERHAMPTON WANDERERS'];
+    let score = 1;
 
     let expected11 = await getPredicted11(teams[0]);
-    console.log(expected11[1]);
+    console.log("name ", expected11[1]);
 
     let playerData = await getPlayerData(expected11[1], teams[0]);
-    console.log(playerData);
+    console.log("Data ", playerData);
+
+    let finalScore = await giveScore(score, playerData);
+    console.log("Score ", finalScore);
 }
 
 async function getPredicted11(team) {
@@ -475,12 +479,42 @@ async function getPredicted11(team) {
 async function getPlayerData(player, team) {
     return new Promise(async function(resolve, reject) {
         const playerStats = await database.collection('teams').doc(team).collection('players').doc(player).get();
-        console.log(playerStats.data());
+        resolve(playerStats.data());
     });
 }
 
-async function giveScore() {
+async function giveScore(score, data) {
+    return new Promise(async function(resolve, reject) {
+        const opponentStrength = await getStrengthMultiplier(data);
+        const attackVdefence = await getAvDMultiplier(data);
+        resolve(strength);
+    });
+}
 
+async function getStrengthMultiplier(data) {
+    return new Promise(async function(resolve, reject) {
+
+        //gets opponets strength
+        let team = data.nextFixture;
+        let teamName = team.slice(0, -2); //removes " H" or " A"
+        const opponent = await database.collection('teams').doc(teamName).get();
+        const opponentStrength = opponent.data().strength;
+
+        //Get corresponding multiplier depending on the strength
+        if(opponentStrength == 1){ resolve(1.5)}
+        if(opponentStrength == 2){ resolve(1.25)}
+        if(opponentStrength == 3){ resolve(1)}
+        if(opponentStrength == 4){ resolve(0.75)}
+        if(opponentStrength == 5){ resolve(0.5)}
+    });
+}
+
+async function getAvDMultiplier(data) {
+    return new Promise(async function(resolve, reject) {
+
+        if(data.position == "GK" || data.position == "DEF" )
+
+    });
 }
 
 totw();
