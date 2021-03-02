@@ -16,7 +16,7 @@ const fplApi = require("fpl-api"); //https://github.com/jeppe-smith/fpl-api#fetc
 const puppeteer = require('puppeteer');
 
 //"npm --prefix \"%RESOURCE_DIR%\" run lint"
-//i removed this from firebase.json, predeploy and all my errors disapeard
+//i removed this from firebase.json, predeploy and all my errors disapearddefence
 
 //cloud function, sets predicted lineUps in database
 exports.predictedTeams = functions.pubsub.schedule('0 18 * * *').onRun(async context => {
@@ -466,7 +466,6 @@ async function totw () {
     console.log("Data ", playerData);
 
     let finalScore = await giveScore(score, playerData);
-    console.log("Score ", finalScore);
 }
 
 async function getPredicted11(team) {
@@ -487,7 +486,12 @@ async function giveScore(score, data) {
     return new Promise(async function(resolve, reject) {
         const opponentStrength = await getStrengthMultiplier(data);
         const attackVdefence = await getAvDMultiplier(data);
-        resolve(strength);
+        const previousGwPoints = await getPreviousGwPoints(data);
+
+        console.log("opponent strength: " +opponentStrength);
+        console.log("attack v defence: " +attackVdefence);
+
+        resolve(attackVdefence);
     });
 }
 
@@ -512,8 +516,71 @@ async function getStrengthMultiplier(data) {
 async function getAvDMultiplier(data) {
     return new Promise(async function(resolve, reject) {
 
-        if(data.position == "GK" || data.position == "DEF" )
+        //get opponent and if theyre home or away, also players team with stats
+        const homeORaway = data.nextFixture.substr(data.nextFixture.length - 1);
+        const opponent = data.nextFixture.slice(0, -2);
+        const playersTeam = data.team;
+        const opponentStats = await database.collection('teams').doc(opponent).get();
+        const allPlayerTeamStat = await database.collection('teams').doc(playersTeam).get();
 
+        //if OPPONENT is home
+        if(homeORaway == "H"){
+            if(data.position == "GK" || data.position == "DEF" ) {
+
+                //getting opponents home attack # and player's teams away defence #
+                const opponentStat = opponentStats.data().attack_home;
+                const playerTeamStats = allPlayerTeamStat.data().defence_away;
+
+                resolve(compareAvD(opponentStat, playerTeamStats));
+            
+            }
+            if(data.position == "MID" || data.position == "FWD" ) {
+
+                //getting opponents home defence # and player's teams away defence #
+                const opponentStat = opponentStats.data().defence_home;
+                const playerTeamStats = allPlayerTeamStat.data().attack_away;
+
+                resolve(compareAvD(opponentStat, playerTeamStats));
+
+            }
+        }
+
+        //if OPPONENT is away
+        if(homeORaway == "A") {
+            if(data.position == "GK" || data.position == "DEF" ) {
+
+                //getting opponents away attack # and player's teams home defence #
+                const opponentStat = opponentStats.data().attack_away;
+                const playerTeamStats = allPlayerTeamStat.data().defence_home;
+
+                resolve(compareAvD(opponentStat, playerTeamStats));
+
+            }
+            if(data.position == "MID" || data.position == "FWD" ) {
+
+                //getting opponents away defence # and player's teams home attack #
+                const opponentStat = opponentStats.data().defence_away;
+                const playerTeamStats = allPlayerTeamStat.data().attack_home;
+
+                resolve(compareAvD(opponentStat, playerTeamStats));
+            }
+        }
+    });
+}
+
+async function compareAvD(opponentStat, playerTeamStats) {
+    return new Promise(async function(resolve, reject) {
+
+        //return multiplier depending if opponent stat is higher or lower than the players team stat
+        if(opponentStat > playerTeamStats) {resolve(0.75)}
+        if(opponentStat < playerTeamStats) {resolve(1.25)}
+        if(opponentStat == playerTeamStats) {resolve(1)}
+    });
+}
+
+async function getPreviousGwPoints(data) {
+    return new Promise(async function(resolve, reject) {
+        
     });
 }
 
