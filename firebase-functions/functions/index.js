@@ -59,8 +59,8 @@ exports.playerData = functions.pubsub.schedule('0 0 * * 2').onRun(async context 
         'CRYSTAL PALACE' : {},
         'EVERTON' : {},
         'FULHAM' : {},
-        'LEICESTER CITY' : {}, //swapped with leeds cause the API doesnt know alphabetical order :/
         'LEEDS UNITED' : {},
+        'LEICESTER CITY' : {},
         'LIVERPOOL' : {},
         'MANCHESTER CITY' : {},
         'MANCHESTER UNITED' : {},
@@ -417,9 +417,9 @@ function getTeamName(id, homeAway) {
             return "EVERTON" +homeAway;
         case 8:
             return "FULHAM" +homeAway;
-        case 9:
-            return "LEEDS UNITED" +homeAway;
         case 10:
+            return "LEEDS UNITED" +homeAway; //Whoever wrote the API doesn't understand alphabetical order. or i've not slept enough and i don't
+        case 9:
             return "LEICESTER CITY" +homeAway;
         case 11:
             return "LIVERPOOL" +homeAway;
@@ -475,56 +475,80 @@ async function setTeamStats (teams){
 
 //-------------------------------------------------------------------------------------------------------------------------
 
-async function totw () { //deploy playerData
+async function constraintSatisfactionProblem() {
 
-    var allTeams = {
-        'ARSENAL' : {},
-        'ASTON VILLA' : {},
-        'BRIGHTON AND HOVE ALBION' : {},
-        'BURNLEY' : {},
-        'CHELSEA' : {},
-        'CRYSTAL PALACE' : {},
-        'EVERTON' : {},
-        'FULHAM' : {},
-        'LEEDS UNITED' : {},
-        'LEICESTER CITY' : {},
-        'LIVERPOOL' : {},
-        'MANCHESTER CITY' : {},
-        'MANCHESTER UNITED' : {},
-        'NEWCASTLE UNITED' : {},
-        'SHEFFIELD UNITED' : {},
-        'SOUTHAMPTON' : {},
-        'TOTTENHAM HOTSPUR' : {},
-        'WEST BROMWICH ALBION' : {},
-        'WEST HAM UNITED' : {},
-        'WOLVERHAMPTON WANDERERS' : {},
-    };
+    let playersScores = await giveAllPlayersScore ()
+    console.log(playersScores);
 
-    let score = 1;
+    let highestScore = 0;
+    let data;
 
-    for(i = 0; i <20; i++){
-        let expected11 = await getPredicted11(Object.keys(allTeams)[i]);
-        console.log("name ", expected11[1]);
-    
-        for(j = 0; j<11; j++) {
-            console.log(expected11[j+1]);
-
-            let playerData = await getPlayerData(expected11[j+1], Object.keys(allTeams)[i]);
-            //console.log("Data ", playerData);
-
-            if(playerData == undefined) {
-                continue;
-            }
+    //for each team, get the 11 predicted to start
+    for(i in playersScores){
+        console.log(i);    
         
-            let finalScore = await giveScore(score, playerData);
-            console.log("final score: ", finalScore);
-        
-            allTeams[playerData.team][expected11[j+1]] = {'team': Object.keys(allTeams)[i], 'price': playerData.price, 'position': playerData.position, 'algorithmScore': finalScore}
+        //for each player get their data, give them a score then add to the allTeams object
+        for(j in playersScores[i]) {
+            if(playersScores[i][j].algorithmScore > highestScore) { highestScore = playersScores[i][j].algorithmScore; data = j}
         }
-
     }
-    
-    console.log(allTeams);
+
+    console.log("PERSON    ", data);
+    console.log("HIGHEST SCORE   ", highestScore);
+
+}
+
+async function giveAllPlayersScore () {
+    return new Promise(async function(resolve, reject) {
+
+        var allTeams = {
+            'ARSENAL' : {},
+            'ASTON VILLA' : {},
+            'BRIGHTON AND HOVE ALBION' : {},
+            'BURNLEY' : {},
+            'CHELSEA' : {},
+            'CRYSTAL PALACE' : {},
+            'EVERTON' : {},
+            'FULHAM' : {},
+            'LEEDS UNITED' : {},
+            'LEICESTER CITY' : {},
+            'LIVERPOOL' : {},
+            'MANCHESTER CITY' : {},
+            'MANCHESTER UNITED' : {},
+            'NEWCASTLE UNITED' : {},
+            'SHEFFIELD UNITED' : {},
+            'SOUTHAMPTON' : {},
+            'TOTTENHAM HOTSPUR' : {},
+            'WEST BROMWICH ALBION' : {},
+            'WEST HAM UNITED' : {},
+            'WOLVERHAMPTON WANDERERS' : {},
+        };
+
+        //set initial points to be 1
+        let score = 1;
+
+        //for each team, get the 11 predicted to start
+        for(i = 0; i <20; i++){
+            let expected11 = await getPredicted11(Object.keys(allTeams)[i]);    
+            
+            //for each player get their data, give them a score then add to the allTeams object
+            for(j = 0; j<11; j++) {
+                let playerData = await getPlayerData(expected11[j+1], Object.keys(allTeams)[i]);
+
+                //if you cant find the player just go to the next one (brazilians break it cause their names are the wrong way around)
+                if(playerData == undefined) {
+                    continue;
+                }
+            
+                let finalScore = await giveScore(score, playerData);
+            
+                allTeams[playerData.team][expected11[j+1]] = {'team': Object.keys(allTeams)[i], 'price': playerData.price, 'position': playerData.position, 'algorithmScore': finalScore}
+            }
+
+        }
+        
+        resolve(allTeams);
+    });
 }
 
 async function getPredicted11(team) {
@@ -554,6 +578,8 @@ async function giveScore(score, data) {
         console.log("win streak: " +teamPerformance);
 
         const finalScore = score*opponentStrength*attackVdefence*previousGwPoints*teamPerformance;
+        console.log("FINAL " +finalScore);
+
 
         resolve(finalScore);
     });
@@ -587,13 +613,13 @@ async function getAvDMultiplier(data) {
         const opponentStats = await database.collection('teams').doc(opponent).get();
         const allPlayerTeamStat = await database.collection('teams').doc(playersTeam).get();
 
-        //if OPPONENT is home
+        //if at home
         if(homeORaway == "H"){
             if(data.position == "GK" || data.position == "DEF" ) {
 
                 //getting opponents home attack # and player's teams away defence #
-                const opponentStat = opponentStats.data().attack_home;
-                const playerTeamStats = allPlayerTeamStat.data().defence_away;
+                const opponentStat = opponentStats.data().attack_away;
+                const playerTeamStats = allPlayerTeamStat.data().defence_home;
 
                 resolve(compareAvD(opponentStat, playerTeamStats));
             
@@ -601,21 +627,21 @@ async function getAvDMultiplier(data) {
             if(data.position == "MID" || data.position == "FWD" ) {
 
                 //getting opponents home defence # and player's teams away defence #
-                const opponentStat = opponentStats.data().defence_home;
-                const playerTeamStats = allPlayerTeamStat.data().attack_away;
+                const opponentStat = opponentStats.data().defence_away;
+                const playerTeamStats = allPlayerTeamStat.data().attack_home;
 
                 resolve(compareAvD(opponentStat, playerTeamStats));
 
             }
         }
 
-        //if OPPONENT is away
+        //if away
         if(homeORaway == "A") {
             if(data.position == "GK" || data.position == "DEF" ) {
 
                 //getting opponents away attack # and player's teams home defence #
-                const opponentStat = opponentStats.data().attack_away;
-                const playerTeamStats = allPlayerTeamStat.data().defence_home;
+                const opponentStat = opponentStats.data().attack_home;
+                const playerTeamStats = allPlayerTeamStat.data().defence_away;
 
                 resolve(compareAvD(opponentStat, playerTeamStats));
 
@@ -623,8 +649,8 @@ async function getAvDMultiplier(data) {
             if(data.position == "MID" || data.position == "FWD" ) {
 
                 //getting opponents away defence # and player's teams home attack #
-                const opponentStat = opponentStats.data().defence_away;
-                const playerTeamStats = allPlayerTeamStat.data().attack_home;
+                const opponentStat = opponentStats.data().defence_home;
+                const playerTeamStats = allPlayerTeamStat.data().attack_away;
 
                 resolve(compareAvD(opponentStat, playerTeamStats));
             }
@@ -678,4 +704,4 @@ async function teamPerformanceMultiplier(data) {
     });
 }
 
-totw();
+constraintSatisfactionProblem();
