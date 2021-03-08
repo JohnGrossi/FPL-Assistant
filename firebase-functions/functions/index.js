@@ -42,6 +42,22 @@ exports.fixtures = functions.pubsub.schedule('0 18 * * *').onRun(async context =
     database.collection('fixtures').doc('currentWeek').set(fixtures);
 });
 
+//cloud function, sets the upcoming best11 in database
+exports.best11 = functions.pubsub.schedule('0 18 * * *').onRun(async context => {
+
+    let best11 = await constraintSatisfactionProblem();
+
+    const batch = database.batch();
+    for(i = 0; i < best11.length; i++) {
+        for(key in best11[i]) {
+            const nycRef = database.collection('best11/').doc(key);
+            batch.set(nycRef, best11[i][key]);
+        }
+    }
+    await batch.commit();
+
+});
+
 //const that stops the playerdata method from timing out, takes a little bit to run fully
 const runtimeOpts = {
     timeoutSeconds: 300
@@ -476,26 +492,186 @@ async function setTeamStats (teams){
 //-------------------------------------------------------------------------------------------------------------------------
 
 async function constraintSatisfactionProblem() {
+    return new Promise(async function(resolve, reject) {
 
-    let playersScores = await giveAllPlayersScore ()
-    console.log(playersScores);
+        let playersScores = await giveAllPlayersScore ()
+        console.log(playersScores);
 
-    let highestScore = 0;
-    let data;
+        let highestScore = 0;
+        let top11 = [];
+        let buffer = [];
+        let position = [];
+        let name;
+        let minimum = false;
+        let team;
+        let playerPosition;
+        let teamCounter;
+        let positionCounter;
 
-    //for each team, get the 11 predicted to start
-    for(i in playersScores){
-        console.log(i);    
-        
-        //for each player get their data, give them a score then add to the allTeams object
-        for(j in playersScores[i]) {
-            if(playersScores[i][j].algorithmScore > highestScore) { highestScore = playersScores[i][j].algorithmScore; data = j}
+        //get initial 7
+        while(minimum == false) {
+
+            //get > player
+            for(i in playersScores){
+                
+                //for each player get their data, give them a score then add to the allTeams object
+                for(j in playersScores[i]) {
+                    if(playersScores[i][j].algorithmScore > highestScore) {
+                        highestScore = playersScores[i][j].algorithmScore;
+                        name = j;
+                        position = [i, j];
+                    }
+                }
+            }
+
+            //reset highest score
+            highestScore = 0;
+            team = playersScores[position[0]][position[1]].team;
+            playerPosition = playersScores[position[0]][position[1]].position;
+
+            teamCounter = 0;
+            for(p = 0; p < top11.length; p++) {
+                for(key in top11[p]) {
+                    if (top11[p][key].team == team) {
+                        teamCounter += 1;
+                    }
+                }
+            }
+
+            if(teamCounter == 3) {
+                delete playersScores[position[0]][position[1]];
+                continue;
+            }
+
+            positionCounter = 0;
+            for(i = 0; i < top11.length; i++) {
+                for(key in top11[i]) {
+                    if (top11[i][key].position == playerPosition) {
+                        positionCounter += 1;
+                    }
+                }
+            }
+
+            if(playerPosition == "GK" && positionCounter == 1) {
+                buffer.push({[name]: playersScores[position[0]][position[1]]})
+                delete playersScores[position[0]][position[1]];
+                continue;
+            }
+            if(playerPosition == "DEF" && positionCounter == 3) {
+                buffer.push({[name]: playersScores[position[0]][position[1]]})
+                delete playersScores[position[0]][position[1]];
+                continue;
+            }
+            if(playerPosition == "MID" && positionCounter == 2) {
+                buffer.push({[name]: playersScores[position[0]][position[1]]})
+                delete playersScores[position[0]][position[1]];
+                continue;
+            }
+            if(playerPosition == "FWD" && positionCounter == 1) {
+                buffer.push({[name]: playersScores[position[0]][position[1]]})
+                delete playersScores[position[0]][position[1]];
+                continue;
+            }
+            
+
+            top11.push({[name]: playersScores[position[0]][position[1]]})
+            delete playersScores[position[0]][position[1]];
+            
+            if(top11.length == 7){ minimum = true}
         }
-    }
 
-    console.log("PERSON    ", data);
-    console.log("HIGHEST SCORE   ", highestScore);
+        //add buffer back
+        for(p = 0; p < buffer.length; p++) {
+            for(key in buffer[p]) {
+                playersScores[buffer[p][key].team][key] = buffer[p][key]
+            }
+        }
+        //empty buffer
+        buffer = []
 
+        //get final 11
+        while(minimum == true) {
+
+            //get > player
+            for(i in playersScores){
+                
+                //for each player get their data, give them a score then add to the allTeams object
+                for(j in playersScores[i]) {
+                    if(playersScores[i][j].algorithmScore > highestScore) {
+                        highestScore = playersScores[i][j].algorithmScore;
+                        name = j;
+                        position = [i, j];
+                    }
+                }
+            }
+
+            //reset highest score
+            highestScore = 0;
+            team = playersScores[position[0]][position[1]].team;
+            playerPosition = playersScores[position[0]][position[1]].position;
+
+            teamCounter = 0;
+            for(p = 0; p < top11.length; p++) {
+                for(key in top11[p]) {
+                    if (top11[p][key].team == team) {
+                        teamCounter += 1;
+                    }
+                }
+            }
+
+            if(teamCounter == 3) {
+                delete playersScores[position[0]][position[1]];
+                continue;
+            }
+
+            positionCounter = 0;
+            for(i = 0; i < top11.length; i++) {
+                for(key in top11[i]) {
+                    if (top11[i][key].position == playerPosition) {
+                        positionCounter += 1;
+                    }
+                }
+            }
+
+            if(playerPosition == "GK" && positionCounter == 1) {
+                buffer.push({[name]: playersScores[position[0]][position[1]]})
+                delete playersScores[position[0]][position[1]];
+                continue;
+            }
+            if(playerPosition == "DEF" && positionCounter == 5) {
+                buffer.push({[name]: playersScores[position[0]][position[1]]})
+                delete playersScores[position[0]][position[1]];
+                continue;
+            }
+            if(playerPosition == "MID" && positionCounter == 5) {
+                buffer.push({[name]: playersScores[position[0]][position[1]]})
+                delete playersScores[position[0]][position[1]];
+                continue;
+            }
+            if(playerPosition == "FWD" && positionCounter == 3) {
+                buffer.push({[name]: playersScores[position[0]][position[1]]})
+                delete playersScores[position[0]][position[1]];
+                continue;
+            }
+            
+
+            top11.push({[name]: playersScores[position[0]][position[1]]})
+            delete playersScores[position[0]][position[1]];
+            
+            if(top11.length == 11){ minimum = false}
+        }
+
+        //add buffer back
+        for(p = 0; p < buffer.length; p++) {
+            for(key in buffer[p]) {
+                playersScores[buffer[p][key].team][key] = buffer[p][key]
+            }
+        }
+        //empty buffer
+        buffer = []
+
+        resolve(top11);
+    });
 }
 
 async function giveAllPlayersScore () {
@@ -572,13 +748,13 @@ async function giveScore(score, data) {
         const previousGwPoints = await getPreviousGwPointsMultiplier(data);
         const teamPerformance = await teamPerformanceMultiplier(data);
 
-        console.log("opponent strength: " +opponentStrength);
-        console.log("attack v defence: " +attackVdefence);
-        console.log("GW points: " +previousGwPoints);
-        console.log("win streak: " +teamPerformance);
+        // console.log("opponent strength: " +opponentStrength);
+        // console.log("attack v defence: " +attackVdefence);
+        // console.log("GW points: " +previousGwPoints);
+        // console.log("win streak: " +teamPerformance);
 
         const finalScore = score*opponentStrength*attackVdefence*previousGwPoints*teamPerformance;
-        console.log("FINAL " +finalScore);
+        // console.log("FINAL " +finalScore);
 
 
         resolve(finalScore);
@@ -703,5 +879,3 @@ async function teamPerformanceMultiplier(data) {
         resolve(form);
     });
 }
-
-constraintSatisfactionProblem();
