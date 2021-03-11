@@ -46,19 +46,51 @@ const runtimeOpts = {
   
 //cloud function, sets all player data in database
 exports.playerData = functions.pubsub.schedule('0 0 * * 2').onRun(async context => {
+
+    var allTeams = {
+        'ARSENAL' : {},
+        'ASTON VILLA' : {},
+        'BRIGHTON AND HOVE ALBION' : {},
+        'BURNLEY' : {},
+        'CHELSEA' : {},
+        'CRYSTAL PALACE' : {},
+        'EVERTON' : {},
+        'FULHAM' : {},
+        'LEEDS UNITED' : {},
+        'LEICESTER CITY' : {},
+        'LIVERPOOL' : {},
+        'MANCHESTER CITY' : {},
+        'MANCHESTER UNITED' : {},
+        'NEWCASTLE UNITED' : {},
+        'SHEFFIELD UNITED' : {},
+        'SOUTHAMPTON' : {},
+        'TOTTENHAM HOTSPUR' : {},
+        'WEST BROMWICH ALBION' : {},
+        'WEST HAM UNITED' : {},
+        'WOLVERHAMPTON WANDERERS' : {},
+    };
     
-    let teams = await fetchPlayerData();
+    let playerData = await fetchPlayerData(allTeams);
 
     //for each team: for each player - each batch write is 1 team worth of players as it can only do 500 writes at a time/batch
-    for (const keys of Object.entries(teams)){
+    for (const keys of Object.entries(playerData)){
         const batch = database.batch();
-        for (const [key, value] of Object.entries(teams[keys[0]])) {
+        for (const [key, value] of Object.entries(playerData[keys[0]])) {
             const nycRef = database.collection('teams/'+keys[0]+'/players/').doc(key);
             batch.set(nycRef, value);
         }
         // Commit the batch
         await batch.commit();
-    } 
+    }
+
+    let teamData = await setTeamStats(allTeams);
+
+    const batch = database.batch();
+    for (const [key, value] of Object.entries(teamData)){
+        const nycRef = database.collection('teams').doc(key);
+        batch.set(nycRef, value);
+    }
+    await batch.commit();
 });
 
 //function - compare the three sites lineUps and conclude a predicted 11 for each team, returns map of teams with their lineUp
@@ -67,7 +99,7 @@ async function compareLineups(teams) {
     //Get the LineUps from other sites
     let team1 = await ffscoutScrape(teams);
     let team2 = await ffpunditScrape(teams);
-    let team3 = await sportitoScrape();
+    let team3 = await ffscoutScrape(teams);
     let players = [];
     let teamANDplayers = new Map();
 
@@ -266,7 +298,7 @@ async function fetchFixtures() {
 //----------------------------------------------------------------------------------------------------------------------------------------------------
 
 //function - webscrapes fixtures from the upcoming gw, returns object of fixtures e.g '1: spurs v burnley'
-async function fetchPlayerData() { 
+async function fetchPlayerData(teams) { 
     return new Promise(async function(resolve, reject) {
         //4 lines below remove accents/check if they have accents 'very fast script based on the Unicode standard'
         //https://stackoverflow.com/questions/990904/remove-accents-diacritics-in-a-string-in-javascript
@@ -276,28 +308,6 @@ async function fetchPlayerData() {
         String.prototype.isLatin=function(){return this==this.latinise()}
         
         var player = {};
-        var teams = {
-            'ARSENAL' : {},
-            'ASTON VILLA' : {},
-            'BRIGHTON AND HOVE ALBION' : {},
-            'BURNLEY' : {},
-            'CHELSEA' : {},
-            'CRYSTAL PALACE' : {},
-            'EVERTON' : {},
-            'FULHAM' : {},
-            'LEEDS UNITED' : {},
-            'LEICESTER CITY' : {},
-            'LIVERPOOL' : {},
-            'MANCHESTER CITY' : {},
-            'MANCHESTER UNITED' : {},
-            'NEWCASTLE UNITED' : {},
-            'SHEFFIELD UNITED' : {},
-            'SOUTHAMPTON' : {},
-            'TOTTENHAM HOTSPUR' : {},
-            'WEST BROMWICH ALBION' : {},
-            'WEST HAM UNITED' : {},
-            'WOLVERHAMPTON WANDERERS' : {},
-        };
 
         //gets all player info from API
         let players = await fplApi.fetchBootstrap();
@@ -423,4 +433,19 @@ function getPosition(id) {
         case 4:
             return "FWD";
     }
+}
+
+//function - set teams stats
+async function setTeamStats (teams){
+    return new Promise(async function(resolve, reject) {
+
+        let teamStats = await fplApi.fetchBootstrap();
+
+        let i = 0;
+        for(team in teams) {
+            teams[team] = {'strength': teamStats.teams[i].strength, 'attack_home': teamStats.teams[i].strength_attack_home, 'attack_away': teamStats.teams[i].strength_attack_away, 'defence_home': teamStats.teams[i].strength_defence_home, 'defence_away': teamStats.teams[i].strength_defence_away};
+            i++;
+        }
+        resolve(teams);
+    });
 }
