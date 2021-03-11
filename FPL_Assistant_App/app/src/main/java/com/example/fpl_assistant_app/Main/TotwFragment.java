@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.example.fpl_assistant_app.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
@@ -147,6 +148,28 @@ public class TotwFragment extends Fragment {
                                     ImageView imageView;
                                     imageView = (ImageView) view.findViewById(picID);
                                     imageView.setImageBitmap(bitmap);
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    final File picture2;
+                                    try {
+                                        picture2 = File.createTempFile("noName", "png");
+
+                                        storageReference.getFile(picture2).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                                            @Override
+                                            public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                                                int picID = getResources().getIdentifier(whichPic, "id", "com.example.fpl_assistant_app");
+                                                Bitmap bitmap = BitmapFactory.decodeFile(picture2.getAbsolutePath());
+                                                ImageView imageView;
+                                                imageView = (ImageView) view.findViewById(picID);
+                                                imageView.setImageBitmap(bitmap);
+                                            }
+                                        });
+                                    } catch (IOException ioException) {
+                                        ioException.printStackTrace();
+                                    }
+
                                 }
                             });
                         } catch (IOException e) {
