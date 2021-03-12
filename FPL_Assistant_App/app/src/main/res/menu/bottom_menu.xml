@@ -11,6 +11,6 @@
         android:title="Fixtures" />
     <item
         android:id="@+id/totwFragment"
-        android:title="Best FPL Team Predictor"
+        android:title="TOTW Predictor"
         android:icon="@drawable/ic_baseline_star_24"/>
 </menu>

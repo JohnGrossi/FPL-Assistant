@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -94,6 +95,16 @@ public class HomeTeamFragment extends Fragment {
         homeTeam = split[0];
         getPlayers(view);
 
+        Button button = (Button) view.findViewById(R.id.backButton);
+        button.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                getActivity().finish();
+            }
+        });
+
         return view;
     }
 
@@ -121,7 +132,7 @@ public class HomeTeamFragment extends Fragment {
                             textView = (TextView) view.findViewById(resID);
 
                             Log.d(TAG, "PLAYER: " + document.getString(Integer.toString(i)));
-                            textView.setText(document.getString(Integer.toString(i)));
+                            textView.setText(" "+ document.getString(Integer.toString(i) ) +" ");
 
                             String filename = document.getString(Integer.toString(i)) +homeTeam + ".png";
                             StorageReference storageReference = storage.getReferenceFromUrl("gs://fpl-assistant-41263.appspot.com/Pics").child(filename);

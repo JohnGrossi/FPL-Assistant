@@ -9,6 +9,7 @@ import androidx.navigation.ui.NavigationUI;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.TableLayout;
 
 import com.example.fpl_assistant_app.R;
@@ -23,6 +24,10 @@ public class PredictedLineupActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //getSupportActionBar().hide();
+
+
         setContentView(R.layout.activity_predicted_lineup);
 
         BottomNavigationView lineupNavigationView = findViewById(R.id.lineupNavigationView);
