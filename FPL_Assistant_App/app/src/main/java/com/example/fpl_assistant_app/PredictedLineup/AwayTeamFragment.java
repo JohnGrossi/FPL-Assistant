@@ -59,6 +59,7 @@ public class AwayTeamFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ((PredictedLineupActivity) getActivity()).setActionBarTitle("Away Team Prediction");
     }
 
     @Override
@@ -80,6 +81,7 @@ public class AwayTeamFragment extends Fragment {
                 getActivity().finish();
             }
         });
+
 
         return view;
     }

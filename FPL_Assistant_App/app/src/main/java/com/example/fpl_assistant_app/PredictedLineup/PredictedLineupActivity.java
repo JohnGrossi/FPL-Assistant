@@ -27,7 +27,6 @@ public class PredictedLineupActivity extends AppCompatActivity {
 
         //getSupportActionBar().hide();
 
-
         setContentView(R.layout.activity_predicted_lineup);
 
         BottomNavigationView lineupNavigationView = findViewById(R.id.lineupNavigationView);
@@ -41,6 +40,8 @@ public class PredictedLineupActivity extends AppCompatActivity {
 
         NavigationUI.setupWithNavController(lineupNavigationView, navController);
 
+        getSupportActionBar().setTitle("Home Team Prediction");
+
     }
 
     public String passInTeams(){
@@ -51,5 +52,9 @@ public class PredictedLineupActivity extends AppCompatActivity {
         String home = split[0];
         String away = split[1];
         return teams;
+    }
+
+    public void setActionBarTitle(String title) {
+        getSupportActionBar().setTitle(title);
     }
 }
