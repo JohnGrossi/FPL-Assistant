@@ -7,13 +7,27 @@
     tools:context=".Main.PlayerComparisonFragment"
     android:background="#F0F0F0">
 
+
     <TextView
         android:id="@+id/Player2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:text="Player 2"
-        app:layout_constraintEnd_toEndOf="@+id/Player2Image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/your_id"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/your_id"
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="#c0c0c0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Spinner
@@ -22,7 +36,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="Player 2"
-        app:layout_constraintStart_toStartOf="@+id/Player1"
+        app:layout_constraintStart_toStartOf="@+id/Player1Image"
         app:layout_constraintTop_toBottomOf="@+id/Player1" />
 
     <Spinner
@@ -31,7 +45,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="Player 2"
-        app:layout_constraintEnd_toEndOf="@+id/Player2"
+        app:layout_constraintEnd_toEndOf="@+id/Player2Image"
         app:layout_constraintTop_toBottomOf="@+id/Player2" />
 
     <Spinner
@@ -58,7 +72,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:text="Player 1"
-        app:layout_constraintStart_toStartOf="@+id/Player1Image"
+        app:layout_constraintEnd_toStartOf="@+id/your_id"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
@@ -88,6 +103,11 @@
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="10dp"
+        android:background="#FFFFFF"
+        android:maxWidth="90dp"
+        android:singleLine="true"
+        android:maxLines="1"
+        android:ellipsize="end"
         app:layout_constraintStart_toEndOf="@+id/Player1Image"
         app:layout_constraintTop_toBottomOf="@+id/spinner11" />
 
@@ -97,6 +117,10 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="5dp"
         android:layout_marginRight="5dp"
+        android:maxWidth="90dp"
+        android:singleLine="true"
+        android:maxLines="1"
+        android:ellipsize="end"
         app:layout_constraintBottom_toBottomOf="@+id/team"
         app:layout_constraintEnd_toStartOf="@+id/Player2Image"
         app:layout_constraintTop_toTopOf="@+id/team" />
@@ -108,6 +132,10 @@
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="10dp"
+        android:maxWidth="90dp"
+        android:singleLine="true"
+        android:maxLines="1"
+        android:ellipsize="end"
         app:layout_constraintStart_toEndOf="@+id/Player1Image"
         app:layout_constraintTop_toBottomOf="@+id/team" />
 
@@ -117,6 +145,10 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="5dp"
         android:layout_marginRight="5dp"
+        android:maxWidth="90dp"
+        android:singleLine="true"
+        android:maxLines="1"
+        android:ellipsize="end"
         app:layout_constraintBottom_toBottomOf="@+id/name"
         app:layout_constraintEnd_toStartOf="@+id/Player2Image"
         app:layout_constraintTop_toTopOf="@+id/name" />
@@ -278,6 +310,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
+        android:paddingLeft="1dp"
+        android:paddingRight="1dp"
         app:layout_constraintEnd_toStartOf="@+id/secondLastFixture"
         app:layout_constraintStart_toStartOf="@+id/results"
         app:layout_constraintTop_toBottomOf="@+id/results" />
@@ -287,6 +321,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
+        android:paddingLeft="1dp"
         app:layout_constraintEnd_toStartOf="@+id/secondLastFixture2"
         app:layout_constraintStart_toStartOf="@+id/results2"
         app:layout_constraintTop_toBottomOf="@+id/results2" />
@@ -314,11 +349,15 @@
     <TextView
         android:id="@+id/nextFixture"
         android:layout_width="wrap_content"
+        android:maxWidth="180dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
         android:background="#FFFFFF"
+        android:singleLine="true"
+        android:maxLines="1"
+        android:ellipsize="end"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fixtures" />
 
@@ -329,6 +368,10 @@
         android:layout_marginEnd="5dp"
         android:layout_marginRight="5dp"
         android:background="#FFFFFF"
+        android:maxWidth="180dp"
+        android:singleLine="true"
+        android:maxLines="1"
+        android:ellipsize="end"
         app:layout_constraintBottom_toBottomOf="@+id/nextFixture"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/nextFixture" />
@@ -444,11 +487,15 @@
     <TextView
         android:id="@+id/thirdNextFixture"
         android:layout_width="wrap_content"
+        android:maxWidth="180dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
         android:background="#FFFFFF"
+        android:singleLine="true"
+        android:maxLines="1"
+        android:ellipsize="end"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/secondNextFixture" />
 
@@ -459,6 +506,10 @@
         android:layout_marginEnd="5dp"
         android:layout_marginRight="5dp"
         android:background="#FFFFFF"
+        android:maxWidth="180dp"
+        android:singleLine="true"
+        android:maxLines="1"
+        android:ellipsize="end"
         app:layout_constraintBottom_toBottomOf="@+id/thirdNextFixture"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/thirdNextFixture" />
@@ -466,11 +517,15 @@
     <TextView
         android:id="@+id/secondNextFixture"
         android:layout_width="wrap_content"
+        android:maxWidth="180dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
         android:background="#FFFFFF"
+        android:singleLine="true"
+        android:maxLines="1"
+        android:ellipsize="end"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nextFixture" />
 
@@ -481,6 +536,10 @@
         android:layout_marginEnd="5dp"
         android:layout_marginRight="5dp"
         android:background="#FFFFFF"
+        android:maxWidth="180dp"
+        android:singleLine="true"
+        android:maxLines="1"
+        android:ellipsize="end"
         app:layout_constraintBottom_toBottomOf="@+id/secondNextFixture"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/secondNextFixture" />
@@ -530,6 +589,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
+        android:paddingLeft="1dp"
+        android:paddingRight="1dp"
         app:layout_constraintEnd_toEndOf="@+id/results"
         app:layout_constraintStart_toStartOf="@+id/results"
         app:layout_constraintTop_toBottomOf="@+id/results" />
@@ -539,6 +600,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
+        android:paddingLeft="1dp"
+        android:paddingRight="1dp"
         app:layout_constraintEnd_toEndOf="@+id/results2"
         app:layout_constraintStart_toStartOf="@+id/results2"
         app:layout_constraintTop_toBottomOf="@+id/results2" />
@@ -550,6 +613,8 @@
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
+        android:paddingLeft="1dp"
+        android:paddingRight="1dp"
         app:layout_constraintEnd_toEndOf="@+id/results"
         app:layout_constraintStart_toEndOf="@+id/secondLastFixture"
         app:layout_constraintTop_toBottomOf="@+id/results" />
@@ -559,6 +624,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
+        android:paddingLeft="1dp"
         app:layout_constraintEnd_toEndOf="@+id/results2"
         app:layout_constraintStart_toEndOf="@+id/secondLastFixture2"
         app:layout_constraintTop_toBottomOf="@+id/results2" />

@@ -101,6 +101,7 @@ public class PlayerComparisonFragment extends Fragment implements AdapterView.On
         ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence>(this.getActivity(), android.R.layout.simple_spinner_item, teams); //
         ArrayAdapter<CharSequence> adapter3 = new ArrayAdapter<CharSequence>(this.getActivity(), android.R.layout.simple_spinner_item, teams); //
         adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        adapter3.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         spinner1.setAdapter(adapter);
         spinner2.setAdapter(adapter3); //
         spinner1.setOnItemSelectedListener(this);
@@ -207,12 +208,13 @@ public class PlayerComparisonFragment extends Fragment implements AdapterView.On
                         }else if(textView.getResources().getResourceName(textView.getId()).contains("assistTotal")) {
                             textView.setText("Assists: " +String.valueOf(document.get(dbRef)));
                         }else if(textView.getResources().getResourceName(textView.getId()).contains("astFixture")) {
-                            textView.setText(String.valueOf(document.get(dbRef)));
                             setColour(String.valueOf(document.get(dbRef)), textView);
                         }else if(textView.getResources().getResourceName(textView.getId()).contains("price")) {
                             formatPrice(String.valueOf(document.get(dbRef)), textView);
+                        }else if(textView.getResources().getResourceName(textView.getId()).contains("points")) {
+                            formatPrice(String.valueOf(document.get(dbRef)), textView);
                         } else {
-                            textView.setText(String.valueOf(document.get(dbRef)));
+                            textView.setText(" "+ String.valueOf(document.get(dbRef) +" "));
                         }
                         if (textView.getText().toString().contains("null")) {
                             textView.setText("");
@@ -244,11 +246,12 @@ public class PlayerComparisonFragment extends Fragment implements AdapterView.On
     }
 
     //set photo
-    public void setPhoto(String player, String team) {
+    public void setPhoto(String player, String team) { //https://stackoverflow.com/questions/37751202/how-to-check-if-file-exists-in-firebase-storage
         FirebaseStorage storage = FirebaseStorage.getInstance();
 
         String filename = player +team + ".png";
         StorageReference storageReference = storage.getReferenceFromUrl("gs://fpl-assistant-41263.appspot.com/Pics").child(filename);
+        Log.d("TAG", "setPhoto: "+storageReference);
 
         try {
             final File picture = File.createTempFile(filename, "png");
