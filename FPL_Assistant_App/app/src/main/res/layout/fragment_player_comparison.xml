@@ -395,7 +395,7 @@
         android:layout_marginEnd="5dp"
         android:layout_marginRight="5dp"
         android:background="#FFFFFF"
-        app:layout_constraintEnd_toStartOf="@+id/goalsTotal2"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/totals2" />
 
     <TextView
@@ -406,8 +406,8 @@
         android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
         android:background="#FFFFFF"
-        app:layout_constraintStart_toEndOf="@+id/pointsTotal"
-        app:layout_constraintTop_toBottomOf="@+id/totals" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pointsTotal" />
 
     <TextView
         android:id="@+id/goalsTotal2"
@@ -417,17 +417,19 @@
         android:layout_marginEnd="5dp"
         android:layout_marginRight="5dp"
         android:background="#FFFFFF"
-        app:layout_constraintEnd_toStartOf="@+id/assistTotal2"
-        app:layout_constraintTop_toBottomOf="@+id/totals2" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pointsTotal2" />
 
     <TextView
         android:id="@+id/cleanSheetTotal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
         android:background="#FFFFFF"
-        app:layout_constraintStart_toStartOf="@+id/pointsTotal"
-        app:layout_constraintTop_toBottomOf="@+id/goalsTotal" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/assistTotal" />
 
     <TextView
         android:id="@+id/cleanSheetTotal2"
@@ -437,8 +439,8 @@
         android:layout_marginEnd="5dp"
         android:layout_marginRight="5dp"
         android:background="#FFFFFF"
-        app:layout_constraintEnd_toStartOf="@+id/penaltySaves2"
-        app:layout_constraintTop_toBottomOf="@+id/pointsTotal2" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/penaltySaves2" />
 
     <TextView
         android:id="@+id/penaltySaves"
@@ -448,8 +450,8 @@
         android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
         android:background="#FFFFFF"
-        app:layout_constraintStart_toEndOf="@+id/cleanSheetTotal"
-        app:layout_constraintTop_toBottomOf="@+id/assistTotal" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cleanSheetTotal" />
 
     <TextView
         android:id="@+id/penaltySaves2"
@@ -460,7 +462,7 @@
         android:layout_marginRight="5dp"
         android:background="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pointsTotal2" />
+        app:layout_constraintTop_toBottomOf="@+id/assistTotal2" />
 
     <TextView
         android:id="@+id/assistTotal"
@@ -470,8 +472,8 @@
         android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
         android:background="#FFFFFF"
-        app:layout_constraintStart_toEndOf="@+id/goalsTotal"
-        app:layout_constraintTop_toBottomOf="@+id/totals" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/goalsTotal" />
 
     <TextView
         android:id="@+id/assistTotal2"
@@ -482,7 +484,7 @@
         android:layout_marginRight="5dp"
         android:background="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/totals2" />
+        app:layout_constraintTop_toBottomOf="@+id/goalsTotal2" />
 
     <TextView
         android:id="@+id/thirdNextFixture"

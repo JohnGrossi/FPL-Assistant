@@ -21,6 +21,7 @@ import androidx.fragment.app.FragmentActivity;
 
 import com.example.fpl_assistant_app.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
@@ -49,6 +50,8 @@ public class PlayerComparisonFragment extends Fragment implements AdapterView.On
     String[] playerArray;
     String playerImage;
     String team;
+    String team1;
+    String team2;
 
     Spinner spinner1;
     Spinner spinner11;
@@ -129,6 +132,13 @@ public class PlayerComparisonFragment extends Fragment implements AdapterView.On
 
         //if either team spinner is clicked
         if (parent.getId() == R.id.spinner1 || parent.getId() == R.id.spinner2) {
+
+            if(parent.getId() == R.id.spinner1) {
+                team1 = (String) parent.getItemAtPosition(position);
+            } else {
+                team2 = (String) parent.getItemAtPosition(position);
+            }
+
             //get team clicked and gets players associated with it from database
             team = (String) parent.getItemAtPosition(position);
             CollectionReference collectionRef = db.collection("teams").document(((String) parent.getItemAtPosition(position)).toUpperCase()).collection("players");
@@ -162,6 +172,13 @@ public class PlayerComparisonFragment extends Fragment implements AdapterView.On
 
         //if either player spinner is clicked
         if (parent.getId() == R.id.spinner11 || parent.getId() == R.id.spinner21) {
+
+            if(parent.getId() == R.id.spinner11) {
+                team = team1;
+            } else {
+                team =  team2;
+            }
+
             //get player clicked and set the photo
             String player = (String) parent.getItemAtPosition(position);
             setPhoto(player, team.toUpperCase());
@@ -263,6 +280,28 @@ public class PlayerComparisonFragment extends Fragment implements AdapterView.On
                     ImageView imageView;
                     imageView = getView().findViewById(picID);
                     imageView.setImageBitmap(bitmap);
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    StorageReference storageReference = storage.getReferenceFromUrl("gs://fpl-assistant-41263.appspot.com/Pics").child("noName.png");
+                    File picture = null;
+                    try {
+                        picture = File.createTempFile("noName.png", "png");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    File finalPicture = picture;
+                    storageReference.getFile(finalPicture).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
+                            int picID = getResources().getIdentifier(playerImage, "id", "com.example.fpl_assistant_app");
+                            Bitmap bitmap = BitmapFactory.decodeFile(finalPicture.getAbsolutePath());
+                            ImageView imageView;
+                            imageView = getView().findViewById(picID);
+                            imageView.setImageBitmap(bitmap);
+                        }
+                    });
                 }
             });
         } catch (IOException e) {
