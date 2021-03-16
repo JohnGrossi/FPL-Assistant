@@ -19,14 +19,15 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Click fixture to \n see predicted line-ups"
-            android:textSize="24sp" />
+            android:textSize="24sp"
+            android:textColor="@color/black"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="0dp"
             app:layoutManager="LinearLayoutManager"
             tools:listitem="@layout/fragment_item" />
     </LinearLayout>

@@ -90,6 +90,8 @@ public class HomeTeamFragment extends Fragment {
 
         String teams = ((PredictedLineupActivity) getActivity()).passInTeams();
 
+        //String sTitle = getArguments().getString("title");
+
         String[] split = teams.split(" v ");
         homeTeam = split[0];
         getPlayers(view);
