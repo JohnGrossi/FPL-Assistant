@@ -212,25 +212,13 @@ public class PlayerComparisonFragment extends Fragment implements AdapterView.On
                         textView = getView().findViewById(resID);
 
                         //set values
-                        if(textView.getResources().getResourceName(textView.getId()).contains("pointsTotal")) {
-                            textView.setText("Points: " +String.valueOf(document.get(dbRef)));
-                        }else if(textView.getResources().getResourceName(textView.getId()).contains("fitness")) {
+                        if(textView.getResources().getResourceName(textView.getId()).contains("fitness")) {
                             textView.setText("Fitness: " +String.valueOf(document.get(dbRef)));
-                        }else if(textView.getResources().getResourceName(textView.getId()).contains("cleanSheetTotal")) {
-                            textView.setText("Clean Sheets: " +String.valueOf(document.get(dbRef)));
                         }else if(textView.getResources().getResourceName(textView.getId()).contains("name")) {
                             textView.setText(player);
-                        }else if(textView.getResources().getResourceName(textView.getId()).contains("penaltySaves")) {
-                            textView.setText("Penalty Saves: " +String.valueOf(document.get(dbRef)));
-                        }else if(textView.getResources().getResourceName(textView.getId()).contains("goalsTotal")) {
-                            textView.setText("Goals: " +String.valueOf(document.get(dbRef)));
-                        }else if(textView.getResources().getResourceName(textView.getId()).contains("assistTotal")) {
-                            textView.setText("Assists: " +String.valueOf(document.get(dbRef)));
                         }else if(textView.getResources().getResourceName(textView.getId()).contains("astFixture")) {
                             setColour(String.valueOf(document.get(dbRef)), textView);
                         }else if(textView.getResources().getResourceName(textView.getId()).contains("price")) {
-                            formatPrice(String.valueOf(document.get(dbRef)), textView);
-                        }else if(textView.getResources().getResourceName(textView.getId()).contains("points")) {
                             formatPrice(String.valueOf(document.get(dbRef)), textView);
                         } else {
                             textView.setText(" "+ String.valueOf(document.get(dbRef) +" "));
