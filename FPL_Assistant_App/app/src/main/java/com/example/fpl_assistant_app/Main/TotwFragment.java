@@ -104,6 +104,9 @@ public class TotwFragment extends Fragment {
                     int DEFnumber = 0;
                     int MIDnumber = 0;
                     int FWDnumber = 0;
+                    int price = 0;
+                    Long captainScore = Long.valueOf(0);
+                    String captain = null;
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         TextView textView;
                         int holder = 0;
@@ -131,8 +134,14 @@ public class TotwFragment extends Fragment {
                         Log.d("ACDC", "onComplete: "+textViewName);
                         int resID = getResources().getIdentifier(textViewName, "id", "com.example.fpl_assistant_app");
                         textView = (TextView) view.findViewById(resID);
-
                         textView.setText(document.getId());
+
+                        price += document.getLong("price");
+
+                        if(document.getLong("algorithmScore") > captainScore) {
+                            captainScore = document.getLong("algorithmScore");
+                            captain = document.getId();
+                        }
 
                         String filename = document.getId() +document.getString("team") + ".png";
                         StorageReference storageReference = storage.getReferenceFromUrl("gs://fpl-assistant-41263.appspot.com/Pics").child(filename);
@@ -176,12 +185,27 @@ public class TotwFragment extends Fragment {
                             e.printStackTrace();
                         }
                     }
+
+                    TextView textView;
+                    String prices = String.valueOf(price).substring(0, String.valueOf(price).length()-1) +"."+ String.valueOf(price).substring(String.valueOf(price).length()-1);
+                    int resID = getResources().getIdentifier("priceNumber", "id", "com.example.fpl_assistant_app");
+                    textView = (TextView) view.findViewById(resID);
+                    textView.setText("£"+prices);
+
+                    resID = getResources().getIdentifier("captain", "id", "com.example.fpl_assistant_app");
+                    textView = (TextView) view.findViewById(resID);
+                    textView.setText("Captain: " +captain);
                 } else {
                     Log.d("TAG", "Error getting documents: ", task.getException());
                 }
             }
+
+
         });
 
     }
 
-}
+    public void getBenchPlayers(View view) {}
+
+
+    }

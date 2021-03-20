@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Main.PlayerComparisonFragment"
-    android:background="#F0F0F0">
+    android:background="@color/white"
+    tools:context=".Main.PlayerComparisonFragment">
 
 
     <TextView
@@ -55,6 +55,7 @@
         android:layout_marginTop="10dp"
         android:text="Player 2"
         app:layout_constraintEnd_toEndOf="@+id/spinner2"
+        app:layout_constraintStart_toStartOf="@+id/spinner2"
         app:layout_constraintTop_toBottomOf="@+id/spinner2" />
 
     <Spinner
@@ -63,6 +64,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="Player 2"
+        app:layout_constraintEnd_toEndOf="@+id/spinner1"
         app:layout_constraintStart_toStartOf="@+id/spinner1"
         app:layout_constraintTop_toBottomOf="@+id/spinner1" />
 
@@ -104,10 +106,10 @@
         android:layout_marginLeft="5dp"
         android:layout_marginTop="10dp"
         android:background="#FFFFFF"
-        android:maxWidth="90dp"
-        android:singleLine="true"
-        android:maxLines="1"
         android:ellipsize="end"
+        android:maxWidth="90dp"
+        android:maxLines="1"
+        android:singleLine="true"
         app:layout_constraintStart_toEndOf="@+id/Player1Image"
         app:layout_constraintTop_toBottomOf="@+id/spinner11" />
 
@@ -117,10 +119,10 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="5dp"
         android:layout_marginRight="5dp"
-        android:maxWidth="90dp"
-        android:singleLine="true"
-        android:maxLines="1"
         android:ellipsize="end"
+        android:maxWidth="90dp"
+        android:maxLines="1"
+        android:singleLine="true"
         app:layout_constraintBottom_toBottomOf="@+id/team"
         app:layout_constraintEnd_toStartOf="@+id/Player2Image"
         app:layout_constraintTop_toTopOf="@+id/team" />
@@ -132,10 +134,10 @@
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="10dp"
-        android:maxWidth="90dp"
-        android:singleLine="true"
-        android:maxLines="1"
         android:ellipsize="end"
+        android:maxWidth="90dp"
+        android:maxLines="1"
+        android:singleLine="true"
         app:layout_constraintStart_toEndOf="@+id/Player1Image"
         app:layout_constraintTop_toBottomOf="@+id/team" />
 
@@ -145,10 +147,10 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="5dp"
         android:layout_marginRight="5dp"
-        android:maxWidth="90dp"
-        android:singleLine="true"
-        android:maxLines="1"
         android:ellipsize="end"
+        android:maxWidth="90dp"
+        android:maxLines="1"
+        android:singleLine="true"
         app:layout_constraintBottom_toBottomOf="@+id/name"
         app:layout_constraintEnd_toStartOf="@+id/Player2Image"
         app:layout_constraintTop_toTopOf="@+id/name" />
@@ -322,6 +324,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:paddingLeft="1dp"
+        android:paddingRight="1dp"
         app:layout_constraintEnd_toStartOf="@+id/secondLastFixture2"
         app:layout_constraintStart_toStartOf="@+id/results2"
         app:layout_constraintTop_toBottomOf="@+id/results2" />
@@ -349,15 +352,15 @@
     <TextView
         android:id="@+id/nextFixture"
         android:layout_width="wrap_content"
-        android:maxWidth="180dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
         android:background="#FFFFFF"
-        android:singleLine="true"
-        android:maxLines="1"
         android:ellipsize="end"
+        android:maxWidth="180dp"
+        android:maxLines="1"
+        android:singleLine="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fixtures" />
 
@@ -368,10 +371,10 @@
         android:layout_marginEnd="5dp"
         android:layout_marginRight="5dp"
         android:background="#FFFFFF"
-        android:maxWidth="180dp"
-        android:singleLine="true"
-        android:maxLines="1"
         android:ellipsize="end"
+        android:maxWidth="180dp"
+        android:maxLines="1"
+        android:singleLine="true"
         app:layout_constraintBottom_toBottomOf="@+id/nextFixture"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/nextFixture" />
@@ -489,15 +492,15 @@
     <TextView
         android:id="@+id/thirdNextFixture"
         android:layout_width="wrap_content"
-        android:maxWidth="180dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
         android:background="#FFFFFF"
-        android:singleLine="true"
-        android:maxLines="1"
         android:ellipsize="end"
+        android:maxWidth="180dp"
+        android:maxLines="1"
+        android:singleLine="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/secondNextFixture" />
 
@@ -508,10 +511,10 @@
         android:layout_marginEnd="5dp"
         android:layout_marginRight="5dp"
         android:background="#FFFFFF"
-        android:maxWidth="180dp"
-        android:singleLine="true"
-        android:maxLines="1"
         android:ellipsize="end"
+        android:maxWidth="180dp"
+        android:maxLines="1"
+        android:singleLine="true"
         app:layout_constraintBottom_toBottomOf="@+id/thirdNextFixture"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/thirdNextFixture" />
@@ -519,15 +522,15 @@
     <TextView
         android:id="@+id/secondNextFixture"
         android:layout_width="wrap_content"
-        android:maxWidth="180dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
         android:background="#FFFFFF"
-        android:singleLine="true"
-        android:maxLines="1"
         android:ellipsize="end"
+        android:maxWidth="180dp"
+        android:maxLines="1"
+        android:singleLine="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/nextFixture" />
 
@@ -538,10 +541,10 @@
         android:layout_marginEnd="5dp"
         android:layout_marginRight="5dp"
         android:background="#FFFFFF"
-        android:maxWidth="180dp"
-        android:singleLine="true"
-        android:maxLines="1"
         android:ellipsize="end"
+        android:maxWidth="180dp"
+        android:maxLines="1"
+        android:singleLine="true"
         app:layout_constraintBottom_toBottomOf="@+id/secondNextFixture"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/secondNextFixture" />
@@ -627,7 +630,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:paddingLeft="1dp"
+        android:paddingRight="1dp"
         app:layout_constraintEnd_toEndOf="@+id/results2"
         app:layout_constraintStart_toEndOf="@+id/secondLastFixture2"
         app:layout_constraintTop_toBottomOf="@+id/results2" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

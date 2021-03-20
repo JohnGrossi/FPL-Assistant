@@ -214,6 +214,8 @@ public class PlayerComparisonFragment extends Fragment implements AdapterView.On
                         //set values
                         if(textView.getResources().getResourceName(textView.getId()).contains("pointsTotal")) {
                             textView.setText("Points: " +String.valueOf(document.get(dbRef)));
+                        }else if(textView.getResources().getResourceName(textView.getId()).contains("fitness")) {
+                            textView.setText("Fitness: " +String.valueOf(document.get(dbRef)));
                         }else if(textView.getResources().getResourceName(textView.getId()).contains("cleanSheetTotal")) {
                             textView.setText("Clean Sheets: " +String.valueOf(document.get(dbRef)));
                         }else if(textView.getResources().getResourceName(textView.getId()).contains("name")) {
