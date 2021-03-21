@@ -4,8 +4,66 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Main.PlayerComparisonFragment"
-    android:background="#F0F0F0">
+    android:background="#F0F0F0"
+    tools:context=".Main.PlayerComparisonFragment">
+
+
+    <TextView
+        android:id="@+id/team3"
+        android:layout_width="190dp"
+        android:layout_height="115dp"
+        android:background="#FFFFFF"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="@+id/Player1Image"
+        app:layout_constraintTop_toTopOf="@+id/Player1Image" />
+
+    <TextView
+        android:id="@+id/team4"
+        android:layout_width="190dp"
+        android:layout_height="115dp"
+        android:background="#FFFFFF"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="@+id/Player2Image"
+        app:layout_constraintTop_toTopOf="@+id/Player2Image" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="380dp"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/results"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/results" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="380dp"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="@+id/points"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/points" />
+
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="380dp"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:textSize="73dp"
+        app:layout_constraintBottom_toBottomOf="@+id/thirdNextFixture"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/fixtures" />
 
     <TextView
         android:id="@+id/Player2"
@@ -13,7 +71,20 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:text="Player 2"
-        app:layout_constraintEnd_toEndOf="@+id/Player2Image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/your_id"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/your_id"
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="480dp"
+        android:background="#c0c0c0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Spinner
@@ -22,7 +93,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="Player 2"
-        app:layout_constraintStart_toStartOf="@+id/Player1"
+        app:layout_constraintStart_toStartOf="@+id/Player1Image"
         app:layout_constraintTop_toBottomOf="@+id/Player1" />
 
     <Spinner
@@ -31,12 +102,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="Player 2"
-        app:layout_constraintEnd_toEndOf="@+id/Player2"
+        app:layout_constraintEnd_toEndOf="@+id/Player2Image"
         app:layout_constraintTop_toBottomOf="@+id/Player2" />
 
     <Spinner
         android:id="@+id/spinner21"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="Player 2"
@@ -45,7 +116,7 @@
 
     <Spinner
         android:id="@+id/spinner11"
-        android:layout_width="wrap_content"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="Player 2"
@@ -58,7 +129,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:text="Player 1"
-        app:layout_constraintStart_toStartOf="@+id/Player1Image"
+        app:layout_constraintEnd_toStartOf="@+id/your_id"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
@@ -88,6 +160,12 @@
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="10dp"
+        android:background="#FFFFFF"
+        android:ellipsize="end"
+        android:maxWidth="90dp"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:textColor="@color/black"
         app:layout_constraintStart_toEndOf="@+id/Player1Image"
         app:layout_constraintTop_toBottomOf="@+id/spinner11" />
 
@@ -97,6 +175,11 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="5dp"
         android:layout_marginRight="5dp"
+        android:ellipsize="end"
+        android:maxWidth="90dp"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="@+id/team"
         app:layout_constraintEnd_toStartOf="@+id/Player2Image"
         app:layout_constraintTop_toTopOf="@+id/team" />
@@ -108,6 +191,11 @@
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="10dp"
+        android:ellipsize="end"
+        android:maxWidth="90dp"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:textColor="@color/black"
         app:layout_constraintStart_toEndOf="@+id/Player1Image"
         app:layout_constraintTop_toBottomOf="@+id/team" />
 
@@ -117,6 +205,11 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="5dp"
         android:layout_marginRight="5dp"
+        android:ellipsize="end"
+        android:maxWidth="90dp"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="@+id/name"
         app:layout_constraintEnd_toStartOf="@+id/Player2Image"
         app:layout_constraintTop_toTopOf="@+id/name" />
@@ -128,6 +221,7 @@
         android:layout_marginStart="5dp"
         android:layout_marginLeft="5dp"
         android:layout_marginTop="10dp"
+        android:textColor="@color/black"
         app:layout_constraintStart_toEndOf="@+id/Player1Image"
         app:layout_constraintTop_toBottomOf="@+id/name" />
 
@@ -137,6 +231,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="5dp"
         android:layout_marginRight="5dp"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="@+id/price"
         app:layout_constraintEnd_toStartOf="@+id/Player2Image"
         app:layout_constraintTop_toTopOf="@+id/price" />
@@ -146,6 +241,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="@+id/Player1Image"
         app:layout_constraintStart_toStartOf="@+id/Player1Image"
         app:layout_constraintTop_toBottomOf="@+id/Player1Image" />
@@ -155,6 +251,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="@+id/Player2Image"
         app:layout_constraintStart_toStartOf="@+id/Player2Image"
         app:layout_constraintTop_toBottomOf="@+id/Player2Image" />
@@ -164,6 +261,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="@+id/price"
         app:layout_constraintStart_toStartOf="@+id/price"
         app:layout_constraintTop_toBottomOf="@+id/Player1Image" />
@@ -172,6 +270,7 @@
         android:id="@+id/position2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="@+id/position"
         app:layout_constraintEnd_toEndOf="@+id/price2"
         app:layout_constraintStart_toStartOf="@+id/price2"
@@ -181,167 +280,230 @@
         android:id="@+id/results"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="32dp"
+        android:background="#AA1111"
+        android:fontFamily="sans-serif-smallcaps"
+        android:gravity="center"
+        android:paddingLeft="1dp"
+        android:paddingRight="1dp"
         android:text="Most recent Results"
+        android:textColor="@color/white"
+        android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/your_id"
+        app:layout_constraintStart_toStartOf="@+id/your_id"
         app:layout_constraintTop_toBottomOf="@+id/fitness" />
-
-    <TextView
-        android:id="@+id/results2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="5dp"
-        android:layout_marginRight="5dp"
-        android:text="Most recent Results"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/results"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/results" />
 
     <TextView
         android:id="@+id/points"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
+        android:background="#AA1111"
+        android:fontFamily="sans-serif-smallcaps"
         android:text="Most recent Points"
+        android:textColor="@color/white"
+        android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/secondLastFixture" />
-
-    <TextView
-        android:id="@+id/points2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="5dp"
-        android:layout_marginRight="5dp"
-        android:text="Most recent Points"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/points"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/points" />
+        app:layout_constraintEnd_toEndOf="@+id/results"
+        app:layout_constraintStart_toStartOf="@+id/results"
+        app:layout_constraintTop_toBottomOf="@+id/results" />
 
     <TextView
         android:id="@+id/fixtures"
-        android:layout_width="wrap_content"
+        android:layout_width="380dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
+        android:background="#AA1111"
+        android:fontFamily="sans-serif-smallcaps"
+        android:gravity="center"
         android:text="Next 3 Fixtures"
+        android:textColor="@color/white"
+        android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/secondLastPoints" />
+        app:layout_constraintEnd_toEndOf="@+id/points"
+        app:layout_constraintStart_toStartOf="@+id/points"
+        app:layout_constraintTop_toBottomOf="@+id/points" />
 
     <TextView
-        android:id="@+id/fixtures2"
-        android:layout_width="wrap_content"
+        android:id="@+id/totals7"
+        android:layout_width="380dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="5dp"
-        android:layout_marginRight="5dp"
-        android:text="Next 3 Fixtures"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:fontFamily="sans-serif-smallcaps"
+        android:gravity="center"
+        android:text="Season Totals"
+        android:textColor="@color/white"
+        android:textSize="63dp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/fixtures"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/fixtures" />
+        app:layout_constraintEnd_toEndOf="@+id/fixtures"
+        app:layout_constraintStart_toStartOf="@+id/fixtures"
+        app:layout_constraintTop_toBottomOf="@+id/thirdNextFixture" />
 
     <TextView
         android:id="@+id/totals"
-        android:layout_width="wrap_content"
+        android:layout_width="380dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp"
         android:layout_marginTop="10dp"
+        android:background="#AA1111"
+        android:fontFamily="sans-serif-smallcaps"
+        android:gravity="center"
         android:text="Season Totals"
+        android:textColor="@color/white"
+        android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/fixtures"
+        app:layout_constraintStart_toStartOf="@+id/fixtures"
         app:layout_constraintTop_toBottomOf="@+id/thirdNextFixture" />
 
     <TextView
         android:id="@+id/totals2"
-        android:layout_width="wrap_content"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="5dp"
-        android:layout_marginRight="5dp"
-        android:text="Season Totals"
+        android:background="#AA1111"
+        android:fontFamily="sans-serif-smallcaps"
+        android:gravity="center"
+        android:paddingTop="8dp"
+        android:text="Points"
+        android:textColor="@color/white"
+        android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/totals"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/totals" />
+        app:layout_constraintBottom_toBottomOf="@+id/pointsTotal"
+        app:layout_constraintEnd_toEndOf="@+id/totals"
+        app:layout_constraintStart_toStartOf="@+id/totals"
+        app:layout_constraintTop_toTopOf="@+id/pointsTotal" />
+
+    <TextView
+        android:id="@+id/totals3"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:background="#AA1111"
+        android:fontFamily="sans-serif-smallcaps"
+        android:gravity="center"
+        android:paddingTop="4dp"
+        android:text="Goals"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/goalsTotal"
+        app:layout_constraintEnd_toEndOf="@+id/totals2"
+        app:layout_constraintStart_toStartOf="@+id/totals2"
+        app:layout_constraintTop_toTopOf="@+id/goalsTotal" />
+
+    <TextView
+        android:id="@+id/totals4"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:background="#AA1111"
+        android:fontFamily="sans-serif-smallcaps"
+        android:gravity="center"
+        android:paddingTop="4dp"
+        android:text="Assists"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/assistTotal"
+        app:layout_constraintEnd_toEndOf="@+id/totals3"
+        app:layout_constraintStart_toStartOf="@+id/totals3"
+        app:layout_constraintTop_toTopOf="@+id/assistTotal" />
+
+    <TextView
+        android:id="@+id/totals5"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:background="#AA1111"
+        android:fontFamily="sans-serif-smallcaps"
+        android:gravity="center"
+        android:paddingTop="4dp"
+        android:text="Clean Sheets"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/cleanSheetTotal"
+        app:layout_constraintEnd_toEndOf="@+id/totals4"
+        app:layout_constraintStart_toStartOf="@+id/totals4"
+        app:layout_constraintTop_toTopOf="@+id/cleanSheetTotal" />
+
+    <TextView
+        android:id="@+id/totals6"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:background="#AA1111"
+        android:fontFamily="sans-serif-smallcaps"
+        android:gravity="center"
+        android:paddingTop="4dp"
+        android:text="Penalty Saves"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/penaltySaves"
+        app:layout_constraintEnd_toEndOf="@+id/totals5"
+        app:layout_constraintStart_toStartOf="@+id/totals5"
+        app:layout_constraintTop_toTopOf="@+id/penaltySaves" />
 
     <TextView
         android:id="@+id/lastFixture"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:paddingLeft="1dp"
+        android:paddingRight="1dp"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="@+id/secondLastFixture"
         app:layout_constraintEnd_toStartOf="@+id/secondLastFixture"
-        app:layout_constraintStart_toStartOf="@+id/results"
-        app:layout_constraintTop_toBottomOf="@+id/results" />
+        app:layout_constraintStart_toStartOf="@+id/Player1Image"
+        app:layout_constraintTop_toTopOf="@+id/secondLastFixture" />
 
     <TextView
         android:id="@+id/lastFixture2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
+        android:paddingLeft="1dp"
+        android:paddingRight="1dp"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="@+id/results"
         app:layout_constraintEnd_toStartOf="@+id/secondLastFixture2"
-        app:layout_constraintStart_toStartOf="@+id/results2"
-        app:layout_constraintTop_toBottomOf="@+id/results2" />
-
-    <TextView
-        android:id="@+id/lastPoints"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:background="#FFFFFF"
-        app:layout_constraintEnd_toStartOf="@+id/secondLastPoints"
-        app:layout_constraintStart_toStartOf="@+id/points"
-        app:layout_constraintTop_toBottomOf="@+id/points" />
-
-    <TextView
-        android:id="@+id/lastPoints2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:background="#FFFFFF"
-        app:layout_constraintEnd_toStartOf="@+id/secondLastPoints2"
-        app:layout_constraintStart_toStartOf="@+id/points2"
-        app:layout_constraintTop_toBottomOf="@+id/points2" />
+        app:layout_constraintStart_toStartOf="@+id/Player2Image"
+        app:layout_constraintTop_toTopOf="@+id/results" />
 
     <TextView
         android:id="@+id/nextFixture"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
         android:background="#FFFFFF"
-        app:layout_constraintStart_toStartOf="parent"
+        android:ellipsize="end"
+        android:maxWidth="180dp"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="@+id/fixtures"
         app:layout_constraintTop_toBottomOf="@+id/fixtures" />
 
     <TextView
         android:id="@+id/nextFixture2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="5dp"
-        android:layout_marginRight="5dp"
         android:background="#FFFFFF"
+        android:ellipsize="end"
+        android:maxWidth="180dp"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="@+id/nextFixture"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/fixtures"
         app:layout_constraintTop_toTopOf="@+id/nextFixture" />
 
     <TextView
         android:id="@+id/pointsTotal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
         android:background="#FFFFFF"
-        app:layout_constraintStart_toStartOf="parent"
+        android:gravity="center"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toStartOf="@+id/totals2"
+        app:layout_constraintStart_toStartOf="@+id/totals"
         app:layout_constraintTop_toBottomOf="@+id/totals" />
 
     <TextView
@@ -349,33 +511,36 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginRight="5dp"
         android:background="#FFFFFF"
-        app:layout_constraintEnd_toStartOf="@+id/goalsTotal2"
-        app:layout_constraintTop_toBottomOf="@+id/totals2" />
+        android:gravity="center"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="@+id/totals"
+        app:layout_constraintStart_toEndOf="@+id/totals2"
+        app:layout_constraintTop_toBottomOf="@+id/totals" />
 
     <TextView
         android:id="@+id/goalsTotal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
         android:background="#FFFFFF"
-        app:layout_constraintStart_toEndOf="@+id/pointsTotal"
-        app:layout_constraintTop_toBottomOf="@+id/totals" />
+        android:gravity="center"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="@+id/pointsTotal"
+        app:layout_constraintStart_toStartOf="@+id/pointsTotal"
+        app:layout_constraintTop_toBottomOf="@+id/pointsTotal" />
 
     <TextView
         android:id="@+id/goalsTotal2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginRight="5dp"
         android:background="#FFFFFF"
-        app:layout_constraintEnd_toStartOf="@+id/assistTotal2"
-        app:layout_constraintTop_toBottomOf="@+id/totals2" />
+        android:gravity="center"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="@+id/pointsTotal2"
+        app:layout_constraintStart_toStartOf="@+id/pointsTotal2"
+        app:layout_constraintTop_toBottomOf="@+id/pointsTotal2" />
 
     <TextView
         android:id="@+id/cleanSheetTotal"
@@ -383,183 +548,238 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:background="#FFFFFF"
-        app:layout_constraintStart_toStartOf="@+id/pointsTotal"
-        app:layout_constraintTop_toBottomOf="@+id/goalsTotal" />
+        android:gravity="center"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="@+id/assistTotal"
+        app:layout_constraintStart_toStartOf="@+id/assistTotal"
+        app:layout_constraintTop_toBottomOf="@+id/assistTotal" />
 
     <TextView
         android:id="@+id/cleanSheetTotal2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginRight="5dp"
         android:background="#FFFFFF"
-        app:layout_constraintEnd_toStartOf="@+id/penaltySaves2"
-        app:layout_constraintTop_toBottomOf="@+id/pointsTotal2" />
+        android:gravity="center"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="@+id/assistTotal2"
+        app:layout_constraintStart_toStartOf="@+id/assistTotal2"
+        app:layout_constraintTop_toBottomOf="@+id/assistTotal2" />
 
     <TextView
         android:id="@+id/penaltySaves"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="4dp"
         android:background="#FFFFFF"
-        app:layout_constraintStart_toEndOf="@+id/cleanSheetTotal"
-        app:layout_constraintTop_toBottomOf="@+id/assistTotal" />
+        android:gravity="center"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="@+id/cleanSheetTotal"
+        app:layout_constraintTop_toBottomOf="@+id/cleanSheetTotal" />
 
     <TextView
         android:id="@+id/penaltySaves2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginRight="5dp"
         android:background="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pointsTotal2" />
+        android:gravity="center"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="@+id/cleanSheetTotal2"
+        app:layout_constraintTop_toBottomOf="@+id/cleanSheetTotal2" />
 
     <TextView
         android:id="@+id/assistTotal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
         android:background="#FFFFFF"
-        app:layout_constraintStart_toEndOf="@+id/goalsTotal"
-        app:layout_constraintTop_toBottomOf="@+id/totals" />
+        android:gravity="center"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="@+id/goalsTotal"
+        app:layout_constraintStart_toStartOf="@+id/goalsTotal"
+        app:layout_constraintTop_toBottomOf="@+id/goalsTotal" />
 
     <TextView
         android:id="@+id/assistTotal2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginRight="5dp"
         android:background="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/totals2" />
+        android:gravity="center"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="@+id/goalsTotal2"
+        app:layout_constraintStart_toStartOf="@+id/goalsTotal2"
+        app:layout_constraintTop_toBottomOf="@+id/goalsTotal2" />
 
     <TextView
         android:id="@+id/thirdNextFixture"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
         android:background="#FFFFFF"
-        app:layout_constraintStart_toStartOf="parent"
+        android:ellipsize="end"
+        android:maxWidth="180dp"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="@+id/fixtures"
         app:layout_constraintTop_toBottomOf="@+id/secondNextFixture" />
 
     <TextView
         android:id="@+id/thirdNextFixture2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="5dp"
-        android:layout_marginRight="5dp"
         android:background="#FFFFFF"
+        android:ellipsize="end"
+        android:maxWidth="180dp"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="@+id/thirdNextFixture"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/fixtures"
         app:layout_constraintTop_toTopOf="@+id/thirdNextFixture" />
 
     <TextView
         android:id="@+id/secondNextFixture"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp"
         android:layout_marginTop="5dp"
         android:background="#FFFFFF"
-        app:layout_constraintStart_toStartOf="parent"
+        android:ellipsize="end"
+        android:maxWidth="180dp"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="@+id/fixtures"
         app:layout_constraintTop_toBottomOf="@+id/nextFixture" />
 
     <TextView
         android:id="@+id/secondNextFixture2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="5dp"
-        android:layout_marginRight="5dp"
         android:background="#FFFFFF"
+        android:ellipsize="end"
+        android:maxWidth="180dp"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="@+id/secondNextFixture"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/fixtures"
         app:layout_constraintTop_toTopOf="@+id/secondNextFixture" />
-
-    <TextView
-        android:id="@+id/thirdLastPoints"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:background="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="@+id/points"
-        app:layout_constraintStart_toEndOf="@+id/secondLastPoints"
-        app:layout_constraintTop_toBottomOf="@+id/points" />
-
-    <TextView
-        android:id="@+id/thirdLastPoints2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:background="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="@+id/points2"
-        app:layout_constraintStart_toEndOf="@+id/secondLastPoints2"
-        app:layout_constraintTop_toBottomOf="@+id/points2" />
 
     <TextView
         android:id="@+id/secondLastPoints"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
         android:background="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="@+id/points"
-        app:layout_constraintStart_toStartOf="@+id/points"
-        app:layout_constraintTop_toBottomOf="@+id/points" />
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="@+id/points"
+        app:layout_constraintEnd_toEndOf="@+id/secondLastFixture"
+        app:layout_constraintStart_toStartOf="@+id/secondLastFixture"
+        app:layout_constraintTop_toTopOf="@+id/points" />
+
+    <TextView
+        android:id="@+id/lastPoints"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="@+id/points"
+        app:layout_constraintEnd_toEndOf="@+id/lastFixture"
+        app:layout_constraintStart_toStartOf="@+id/lastFixture"
+        app:layout_constraintTop_toTopOf="@+id/points" />
+
+    <TextView
+        android:id="@+id/thirdLastPoints"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="@+id/points"
+        app:layout_constraintEnd_toEndOf="@+id/thirdLastFixture"
+        app:layout_constraintStart_toStartOf="@+id/thirdLastFixture"
+        app:layout_constraintTop_toTopOf="@+id/points" />
 
     <TextView
         android:id="@+id/secondLastPoints2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
         android:background="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="@+id/points2"
-        app:layout_constraintStart_toStartOf="@+id/points2"
-        app:layout_constraintTop_toBottomOf="@+id/points2" />
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="@+id/lastPoints2"
+        app:layout_constraintEnd_toEndOf="@+id/secondLastFixture2"
+        app:layout_constraintStart_toStartOf="@+id/secondLastFixture2"
+        app:layout_constraintTop_toTopOf="@+id/lastPoints2" />
+
+    <TextView
+        android:id="@+id/lastPoints2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="@+id/points"
+        app:layout_constraintEnd_toEndOf="@+id/lastFixture2"
+        app:layout_constraintStart_toStartOf="@+id/lastFixture2"
+        app:layout_constraintTop_toTopOf="@+id/points" />
+
+    <TextView
+        android:id="@+id/thirdLastPoints2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="@+id/secondLastPoints2"
+        app:layout_constraintEnd_toEndOf="@+id/thirdLastFixture2"
+        app:layout_constraintStart_toStartOf="@+id/thirdLastFixture2"
+        app:layout_constraintTop_toTopOf="@+id/secondLastPoints2" />
 
     <TextView
         android:id="@+id/secondLastFixture"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        app:layout_constraintEnd_toEndOf="@+id/results"
-        app:layout_constraintStart_toStartOf="@+id/results"
-        app:layout_constraintTop_toBottomOf="@+id/results" />
+        android:paddingLeft="1dp"
+        android:paddingRight="1dp"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="@+id/thirdLastFixture"
+        app:layout_constraintEnd_toEndOf="@+id/Player1Image"
+        app:layout_constraintStart_toStartOf="@+id/Player1Image"
+        app:layout_constraintTop_toTopOf="@+id/thirdLastFixture" />
 
     <TextView
         android:id="@+id/secondLastFixture2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        app:layout_constraintEnd_toEndOf="@+id/results2"
-        app:layout_constraintStart_toStartOf="@+id/results2"
-        app:layout_constraintTop_toBottomOf="@+id/results2" />
+        android:paddingLeft="1dp"
+        android:paddingRight="1dp"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="@+id/lastFixture2"
+        app:layout_constraintEnd_toEndOf="@+id/Player2Image"
+        app:layout_constraintStart_toStartOf="@+id/Player2Image"
+        app:layout_constraintTop_toTopOf="@+id/lastFixture2" />
 
     <TextView
         android:id="@+id/thirdLastFixture"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="5dp"
-        app:layout_constraintEnd_toEndOf="@+id/results"
+        android:paddingLeft="1dp"
+        android:paddingRight="1dp"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="@+id/results"
+        app:layout_constraintEnd_toEndOf="@+id/Player1Image"
         app:layout_constraintStart_toEndOf="@+id/secondLastFixture"
-        app:layout_constraintTop_toBottomOf="@+id/results" />
+        app:layout_constraintTop_toTopOf="@+id/results" />
 
     <TextView
         android:id="@+id/thirdLastFixture2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        app:layout_constraintEnd_toEndOf="@+id/results2"
+        android:paddingLeft="1dp"
+        android:paddingRight="1dp"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="@+id/secondLastFixture2"
+        app:layout_constraintEnd_toEndOf="@+id/Player2Image"
         app:layout_constraintStart_toEndOf="@+id/secondLastFixture2"
-        app:layout_constraintTop_toBottomOf="@+id/results2" />
+        app:layout_constraintTop_toTopOf="@+id/secondLastFixture2" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

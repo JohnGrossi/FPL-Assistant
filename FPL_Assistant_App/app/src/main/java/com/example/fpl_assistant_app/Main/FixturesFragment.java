@@ -70,46 +70,45 @@ public class FixturesFragment extends Fragment implements MyFixturesRecyclerView
         View view = inflater.inflate(R.layout.fragment_fixtures, container, false);
 
         // Set the adapter
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
-            final MyFixturesRecyclerViewAdapter adapter = new MyFixturesRecyclerViewAdapter(fixtures, this);
-            recyclerView.setAdapter(adapter);
+        Context context = view.getContext();
+        LinearLayoutManager llm = new LinearLayoutManager(context);
+        llm.setOrientation(LinearLayoutManager.VERTICAL);
+        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.list);
+        recyclerView.setLayoutManager(llm);
+        if (mColumnCount <= 1) {
+            recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        } else {
+            recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
+        }
+        final MyFixturesRecyclerViewAdapter adapter = new MyFixturesRecyclerViewAdapter(fixtures, this);
+        recyclerView.setAdapter(adapter);
 
-            FirebaseFirestore db = FirebaseFirestore.getInstance();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-            DocumentReference docRef = db.collection("fixtures").document("currentWeek");
-            docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                @Override
-                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                    if (task.isSuccessful()) {
-                        DocumentSnapshot document = task.getResult();
-                        if (document.exists()) {
-                            Log.d(TAG,"DocumentSnapshot data: " + document.getData().values());
-                            for (int i = 1; i < 11; i++) {
-                                Fixture fixture1 = new Fixture();
-                                fixture1.setFixtureName(document.getString(Integer.toString(i)));
-                                fixtures.add(fixture1);
-                                adapter.notifyDataSetChanged();
-                            }
-
-                        } else {
-                            Log.d(TAG, "No such document");
+        DocumentReference docRef = db.collection("fixtures").document("currentWeek");
+        docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    if (document.exists()) {
+                        Log.d(TAG,"DocumentSnapshot data: " + document.getData().values());
+                        for (int i = 1; i < 11; i++) {
+                            Fixture fixture1 = new Fixture();
+                            fixture1.setFixtureName(document.getString(Integer.toString(i)));
+                            fixtures.add(fixture1);
+                            adapter.notifyDataSetChanged();
                         }
+
                     } else {
-                        Log.d(TAG, "get failed with ", task.getException());
+                        Log.d(TAG, "No such document");
                     }
+                } else {
+                    Log.d(TAG, "get failed with ", task.getException());
                 }
+            }
             });
 
-
-
-        }
         return view;
     }
 

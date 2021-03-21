@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -58,6 +59,7 @@ public class AwayTeamFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ((PredictedLineupActivity) getActivity()).setActionBarTitle("Away Team Prediction");
     }
 
     @Override
@@ -70,6 +72,17 @@ public class AwayTeamFragment extends Fragment {
         awayTeam = split[1];
         getPlayers(view);
 
+        Button button = (Button) view.findViewById(R.id.backButton);
+        button.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                getActivity().finish();
+            }
+        });
+
+
         return view;
     }
 
@@ -77,8 +90,8 @@ public class AwayTeamFragment extends Fragment {
 
         awayTeam = matchDatabaseName(awayTeam.toUpperCase());
 
-        String[] playerPosition = {"GK", "DEF1", "DEF2", "DEF3", "DEF4", "MID1", "MID2", "MID3", "MID4", "FWD1", "FWD2"};
-        String[] playerPicture = {"GKpicture", "DEF1picture", "DEF2picture", "DEF3picture", "DEF4picture", "MID1picture", "MID2picture", "MID3picture", "MID4picture", "FWD1picture", "FWD2picture"};
+        String[] playerPosition = {"GK1", "DEF1", "DEF2", "DEF3", "DEF4", "MID1", "MID2", "MID3", "MID4", "FWD1", "FWD2"};
+        String[] playerPicture = {"GK1picture", "DEF1picture", "DEF2picture", "DEF3picture", "DEF4picture", "MID1picture", "MID2picture", "MID3picture", "MID4picture", "FWD1picture", "FWD2picture"};
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -97,7 +110,7 @@ public class AwayTeamFragment extends Fragment {
                             textView = (TextView) view.findViewById(resID);
 
                             Log.d(TAG, "PLAYER: " + document.getString(Integer.toString(i)));
-                            textView.setText(document.getString(Integer.toString(i)));
+                            textView.setText(" "+ document.getString(Integer.toString(i) ) +" ");
 
                             String filename = document.getString(Integer.toString(i)) + awayTeam + ".png";
                             StorageReference storageReference = storage.getReferenceFromUrl("gs://fpl-assistant-41263.appspot.com/Pics").child(filename);
