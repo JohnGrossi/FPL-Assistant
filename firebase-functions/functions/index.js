@@ -19,7 +19,7 @@ const puppeteer = require('puppeteer');
 //i removed this from firebase.json, predeploy and all my errors disapearddefence
 
 //cloud function, sets predicted lineUps in database
-exports.predictedTeams = functions.pubsub.schedule('0 18 * * *').onRun(async context => {
+exports.predictedTeams = functions.pubsub.schedule('0 2 * * *').onRun(async context => {
     let teams = ['ARSENAL', 'ASTON VILLA', 'BRIGHTON AND HOVE ALBION', 'BURNLEY', 'CHELSEA', 'CRYSTAL PALACE', 'EVERTON', 'FULHAM', 'LEEDS UNITED', 'LEICESTER CITY', 'LIVERPOOL', 'MANCHESTER CITY', 'MANCHESTER UNITED', 'NEWCASTLE UNITED', 'SHEFFIELD UNITED', 'SOUTHAMPTON', 'TOTTENHAM HOTSPUR', 'WEST BROMWICH ALBION', 'WEST HAM UNITED', 'WOLVERHAMPTON WANDERERS'];
 
     // Get a new write batch
@@ -36,14 +36,14 @@ exports.predictedTeams = functions.pubsub.schedule('0 18 * * *').onRun(async con
 });
 
 //cloud function, sets the upcoming fixtures in database
-exports.fixtures = functions.pubsub.schedule('0 18 * * *').onRun(async context => {
+exports.fixtures = functions.pubsub.schedule('0 2 * * *').onRun(async context => {
 
     let fixtures = await fetchFixtures();
     database.collection('fixtures').doc('currentWeek').set(fixtures);
 });
 
 //cloud function, sets the upcoming best11 in database
-exports.best11 = functions.pubsub.schedule('0 18 * * *').onRun(async context => {
+exports.best11 = functions.pubsub.schedule('30 2 * * 2,5').onRun(async context => {
 
     //clear collection
     await deleteCollection(database);
@@ -67,7 +67,7 @@ const runtimeOpts = {
 }
   
 //cloud function, sets all player data in database
-exports.playerData = functions.pubsub.schedule('0 0 * * 2').onRun(async context => {
+exports.playerData = functions.pubsub.schedule('0 0 * * *').onRun(async context => {
 
     var allTeams = {
         'ARSENAL' : {},
