@@ -45,7 +45,7 @@ public class PredictedLineupActivity extends AppCompatActivity {
         TabLayout tL = findViewById(R.id.tab_layout);
         tL.setupWithViewPager(viewPager);
 
-        getSupportActionBar().setTitle("Home Team Prediction");
+        getSupportActionBar().setTitle("Team Predictions");
 
     }
 

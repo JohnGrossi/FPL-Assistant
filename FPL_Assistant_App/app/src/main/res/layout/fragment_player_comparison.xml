@@ -67,10 +67,13 @@
 
     <TextView
         android:id="@+id/Player2"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
+        android:background="#AA1111"
+        android:gravity="center"
         android:text="Player 2"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/your_id"
         app:layout_constraintTop_toTopOf="parent" />
@@ -79,7 +82,7 @@
         android:id="@+id/your_id"
         android:layout_width="1dp"
         android:layout_height="match_parent"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="40dp"
         android:layout_marginBottom="480dp"
         android:background="#c0c0c0"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -125,10 +128,13 @@
 
     <TextView
         android:id="@+id/Player1"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
+        android:background="#AA1111"
+        android:gravity="center"
         android:text="Player 1"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toStartOf="@+id/your_id"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -335,7 +341,7 @@
         android:gravity="center"
         android:text="Season Totals"
         android:textColor="@color/white"
-        android:textSize="63dp"
+        android:textSize="61dp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/fixtures"
         app:layout_constraintStart_toStartOf="@+id/fixtures"
