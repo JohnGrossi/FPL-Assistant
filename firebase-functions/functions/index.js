@@ -1,5 +1,5 @@
 const serviceAccount = require('./fpl-assistant-41263-9d3dff4075fc.json');
-const functions = require('firebase-functions');            //TODO split into seperate files
+const functions = require('firebase-functions');            
 const admin = require('firebase-admin');
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount)
@@ -7,16 +7,13 @@ admin.initializeApp({
 const database = admin.firestore(); 
 const request = require('request');
 const cheerio = require('cheerio');
-//const lineup = require('./predictedLineups');
-//const fixtureList = require('./fixtures');
-//const playersData = require('./playerData');
 const fetch = require("node-fetch");
 admin.firestore().settings({ignoreUndefinedProperties: true});
 const fplApi = require("fpl-api"); //https://github.com/jeppe-smith/fpl-api#fetchbootstrap
 const puppeteer = require('puppeteer');
 
 //"npm --prefix \"%RESOURCE_DIR%\" run lint"
-//i removed this from firebase.json, predeploy and all my errors disapearddefence
+//i removed this from firebase.json
 
 //cloud function, sets predicted lineUps in database
 exports.predictedTeams = functions.pubsub.schedule('0 18 * * *').onRun(async context => {
@@ -494,9 +491,11 @@ async function setTeamStats (teams){
 
 //-------------------------------------------------------------------------------------------------------------------------
 
+//function handle CSP
 async function constraintSatisfactionProblem() {
     return new Promise(async function(resolve, reject) {
 
+        //algorithm to give players a score
         let playersScores = await giveAllPlayersScore ()
         console.log(playersScores);
 
@@ -511,14 +510,14 @@ async function constraintSatisfactionProblem() {
         let teamCounter;
         let positionCounter;
 
-        //get initial 7
+        //get initial 7 players (minimum formation)
         while(minimum == false) {
 
-            //get > player
+            //for each team
             for(i in playersScores){
-                
-                //for each player get their data, give them a score then add to the allTeams object
+                //for each player in that team
                 for(j in playersScores[i]) {
+                    //if players score is highest so far, it becomes the new highest
                     if(playersScores[i][j].algorithmScore > highestScore) {
                         highestScore = playersScores[i][j].algorithmScore;
                         name = j;
@@ -527,11 +526,12 @@ async function constraintSatisfactionProblem() {
                 }
             }
 
-            //reset highest score
+            //reset highest score, get team name and players position
             highestScore = 0;
             team = playersScores[position[0]][position[1]].team;
             playerPosition = playersScores[position[0]][position[1]].position;
 
+            //check theres not already 3 from that team
             teamCounter = 0;
             for(p = 0; p < top11.length; p++) {
                 for(key in top11[p]) {
@@ -541,11 +541,13 @@ async function constraintSatisfactionProblem() {
                 }
             }
 
+            //if too many from that team move onto next highest player, delete from list
             if(teamCounter == 3) {
                 delete playersScores[position[0]][position[1]];
                 continue;
             }
 
+            //check how many from that position there are
             positionCounter = 0;
             for(i = 0; i < top11.length; i++) {
                 for(key in top11[i]) {
@@ -555,6 +557,7 @@ async function constraintSatisfactionProblem() {
                 }
             }
 
+            //if minimum for that position is already met, add player to buffer array, remove from list
             if(playerPosition == "GK" && positionCounter == 1) {
                 buffer.push({[name]: playersScores[position[0]][position[1]]})
                 delete playersScores[position[0]][position[1]];
@@ -576,7 +579,7 @@ async function constraintSatisfactionProblem() {
                 continue;
             }
             
-
+            //if fine add to array of the best 11
             top11.push({[name]: playersScores[position[0]][position[1]]})
             delete playersScores[position[0]][position[1]];
             
@@ -595,11 +598,11 @@ async function constraintSatisfactionProblem() {
         //get final 11
         while(minimum == true) {
 
-            //get > player
+            //for each team
             for(i in playersScores){
-                
-                //for each player get their data, give them a score then add to the allTeams object
+                //for each player in that team
                 for(j in playersScores[i]) {
+                    //get highest player
                     if(playersScores[i][j].algorithmScore > highestScore) {
                         highestScore = playersScores[i][j].algorithmScore;
                         name = j;
@@ -636,6 +639,7 @@ async function constraintSatisfactionProblem() {
                 }
             }
 
+            //if too many for the position move onto next player
             if(playerPosition == "GK" && positionCounter == 1) {
                 buffer.push({[name]: playersScores[position[0]][position[1]]})
                 delete playersScores[position[0]][position[1]];
@@ -657,7 +661,7 @@ async function constraintSatisfactionProblem() {
                 continue;
             }
             
-
+            //if all good (not too many from team or position) add to top11 array
             top11.push({[name]: playersScores[position[0]][position[1]]})
             delete playersScores[position[0]][position[1]];
             
@@ -677,6 +681,7 @@ async function constraintSatisfactionProblem() {
     });
 }
 
+//function - give players a score base on how well they're predicted to play
 async function giveAllPlayersScore () {
     return new Promise(async function(resolve, reject) {
 
@@ -721,6 +726,7 @@ async function giveAllPlayersScore () {
             
                 let finalScore = await giveScore(score, playerData);
             
+                //set object at team then add player
                 allTeams[playerData.team][expected11[j+1]] = {'team': Object.keys(allTeams)[i], 'price': playerData.price, 'position': playerData.position, 'algorithmScore': finalScore}
             }
 
@@ -730,6 +736,7 @@ async function giveAllPlayersScore () {
     });
 }
 
+//function - get 11 from database
 async function getPredicted11(team) {
     return new Promise(async function(resolve, reject) {
         const teamsPlayers = await database.collection('predictedTeams').doc(team).get();
@@ -737,6 +744,7 @@ async function getPredicted11(team) {
     });
 }
 
+//function - get players data from databse
 async function getPlayerData(player, team) {
     return new Promise(async function(resolve, reject) {
         const playerStats = await database.collection('teams').doc(team).collection('players').doc(player).get();
@@ -744,6 +752,7 @@ async function getPlayerData(player, team) {
     });
 }
 
+//function - 'handler' to go through each step of the algoritm add calculate score
 async function giveScore(score, data) {
     return new Promise(async function(resolve, reject) {
         const opponentStrength = await getStrengthMultiplier(data);
@@ -764,6 +773,7 @@ async function giveScore(score, data) {
     });
 }
 
+//function - give score base of opponents strenght
 async function getStrengthMultiplier(data) {
     return new Promise(async function(resolve, reject) {
 
@@ -782,6 +792,7 @@ async function getStrengthMultiplier(data) {
     });
 }
 
+//function - give score based on attack v defence at home or away
 async function getAvDMultiplier(data) {
     return new Promise(async function(resolve, reject) {
 
@@ -837,6 +848,7 @@ async function getAvDMultiplier(data) {
     });
 }
 
+//function - give score based on TEAMS attck/deffence at home/away compared to the oppositions opposite. e.g home teams attack against away teams defence
 async function compareAvD(opponentStat, playerTeamStats) {
     return new Promise(async function(resolve, reject) {
 
@@ -847,6 +859,7 @@ async function compareAvD(opponentStat, playerTeamStats) {
     });
 }
 
+//function - give score base on player form over past 3 games
 async function getPreviousGwPointsMultiplier(data) {
     return new Promise(async function(resolve, reject) {
 
@@ -868,6 +881,7 @@ async function getPreviousGwPointsMultiplier(data) {
     });
 }
 
+//function - give score base on teams past performace
 async function teamPerformanceMultiplier(data) {
     return new Promise(async function(resolve, reject) {
 
@@ -883,6 +897,7 @@ async function teamPerformanceMultiplier(data) {
     });
 }
 
+//function - delete best 11 so next one can be added
 async function deleteCollection(db) {
     const collectionRef = db.collection('best11');
     const query = collectionRef.orderBy('__name__');
@@ -897,7 +912,7 @@ async function deleteQueryBatch(db, query, resolve) {
   
     const batchSize = snapshot.size;
     if (batchSize === 0) {
-      // When there are no documents left, we are done
+      // When there are no documents left, done
       resolve();
       return;
     }
@@ -910,7 +925,7 @@ async function deleteQueryBatch(db, query, resolve) {
     await batch.commit();
   
     // Recurse on the next process tick, to avoid
-    // exploding the stack.
+    // exploding the stack
     process.nextTick(() => {
       deleteQueryBatch(db, query, resolve);
     });
