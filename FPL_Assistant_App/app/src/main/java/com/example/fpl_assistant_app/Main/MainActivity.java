@@ -22,16 +22,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //set up bottom nav bar
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottomNavigationView);
         NavController navController = Navigation.findNavController(this,  R.id.fragment);
-
         Set<Integer> topLevelDestinations = new HashSet<>();
+
+        //set fragments to nav bar
         topLevelDestinations.add(R.id.playerComparisonFragment);
         topLevelDestinations.add(R.id.fixturesFragment);
         topLevelDestinations.add(R.id.totwFragment);
+
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(topLevelDestinations).build();
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-
         NavigationUI.setupWithNavController(bottomNavigationView, navController);
 
     }

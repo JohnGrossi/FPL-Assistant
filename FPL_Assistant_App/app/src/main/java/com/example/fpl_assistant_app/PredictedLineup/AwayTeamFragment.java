@@ -35,11 +35,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link AwayTeamFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class AwayTeamFragment extends Fragment {
 
     final String TAG = "TasksSample";
@@ -66,12 +61,14 @@ public class AwayTeamFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_away_team, container, false);
 
+        //get away team
         String teams = ((PredictedLineupActivity) getActivity()).passInTeams();
 
         String[] split = teams.split(" v ");
         awayTeam = split[1];
         getPlayers(view);
 
+        //set up back button
         Button button = (Button) view.findViewById(R.id.backButton);
         button.setOnClickListener(new View.OnClickListener()
         {
@@ -88,11 +85,14 @@ public class AwayTeamFragment extends Fragment {
 
     public void getPlayers(View view) {
 
+        //has to be uppercase to match database
         awayTeam = matchDatabaseName(awayTeam.toUpperCase());
 
+        //view names
         String[] playerPosition = {"GK1", "DEF1", "DEF2", "DEF3", "DEF4", "MID1", "MID2", "MID3", "MID4", "FWD1", "FWD2"};
         String[] playerPicture = {"GK1picture", "DEF1picture", "DEF2picture", "DEF3picture", "DEF4picture", "MID1picture", "MID2picture", "MID3picture", "MID4picture", "FWD1picture", "FWD2picture"};
 
+        //set up databse connection to get players for that team
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         FirebaseStorage storage = FirebaseStorage.getInstance();
         DocumentReference docRef = db.collection("predictedTeams").document(awayTeam.toUpperCase());
@@ -104,7 +104,7 @@ public class AwayTeamFragment extends Fragment {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
-                        for (int i = 1, j = 0; i <= 11; i++, j++) {
+                        for (int i = 1, j = 0; i <= 11; i++, j++) {     //loop through 11 and set to textView and Image views
                             TextView textView;
                             int resID = getResources().getIdentifier(playerPosition[j], "id", "com.example.fpl_assistant_app");
                             textView = (TextView) view.findViewById(resID);
@@ -118,17 +118,14 @@ public class AwayTeamFragment extends Fragment {
                             try {
                                 final File picture = File.createTempFile(filename, "png");
                                 final String whichPic = playerPicture[j];
-                                Log.d(TAG, "CHECKPOINT1 : " + filename);
                                 storageReference.getFile(picture).addOnSuccessListener(new OnSuccessListener<FileDownloadTask.TaskSnapshot>() {
                                     @Override
                                     public void onSuccess(FileDownloadTask.TaskSnapshot taskSnapshot) {
-                                        Log.d(TAG, "CHECKPOINT2 : ");
                                         int picID = getResources().getIdentifier(whichPic, "id", "com.example.fpl_assistant_app");
                                         Bitmap bitmap = BitmapFactory.decodeFile(picture.getAbsolutePath());
                                         ImageView imageView;
                                         imageView = (ImageView) view.findViewById(picID);
                                         imageView.setImageBitmap(bitmap);
-                                        Log.d(TAG, "CHECKPOINT3 : ");
                                     }
                                 });
                             } catch (IOException e) {
@@ -147,6 +144,7 @@ public class AwayTeamFragment extends Fragment {
         });
     }
 
+    //names have to be changed to be exactly like database as they're used in databse call path
     public String matchDatabaseName(String team) {
         switch (team) {
             case "BRIGHTON":

@@ -42,6 +42,7 @@ public class PredictedLineupActivity extends AppCompatActivity {
         PagerAdapter pa = new PagerAdapter(getSupportFragmentManager());
         viewPager.setAdapter(pa);
 
+        //set up home and away tab
         TabLayout tL = findViewById(R.id.tab_layout);
         tL.setupWithViewPager(viewPager);
 
@@ -49,6 +50,7 @@ public class PredictedLineupActivity extends AppCompatActivity {
 
     }
 
+    //get teams from the fixture clicked
     public String passInTeams(){
         Intent intent = getIntent();
         String teams = intent.getStringExtra("teams");
@@ -63,6 +65,7 @@ public class PredictedLineupActivity extends AppCompatActivity {
         getSupportActionBar().setTitle(title);
     }
 
+    //handle tab clicked
     private class PagerAdapter extends FragmentStatePagerAdapter {
 
         final int pageCount = 2;

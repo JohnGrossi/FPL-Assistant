@@ -33,40 +33,16 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link TotwFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class TotwFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     public TotwFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment TotwFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static TotwFragment newInstance(String param1, String param2) {
         TotwFragment fragment = new TotwFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -75,8 +51,6 @@ public class TotwFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
 
@@ -84,22 +58,24 @@ public class TotwFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_totw, container, false);
-
         getPlayers(view);
 
         return view;
     }
 
+    //gets players
     public void getPlayers(View view) {
 
+        //set up database connection
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         FirebaseStorage storage = FirebaseStorage.getInstance();
         CollectionReference docRef = db.collection("best11");
-
         docRef.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            //if successful finding best 11
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
+                    //set number of players for each position to 0 initially
                     int GKnumber = 0;
                     int DEFnumber = 0;
                     int MIDnumber = 0;
@@ -107,9 +83,12 @@ public class TotwFragment extends Fragment {
                     int price = 0;
                     Long captainScore = Long.valueOf(0);
                     String captain = null;
+
+                    //for each player:
                     for (QueryDocumentSnapshot document : task.getResult()) {
                         TextView textView;
                         int holder = 0;
+                        //add 1 to the position, holder is the number of players in that position
                         switch(document.getString("position")) {
                             case "GK":
                                 GKnumber++;
@@ -130,22 +109,29 @@ public class TotwFragment extends Fragment {
                         }
                         Log.d("ACDC", document.getId());
 
+                        // get the players position and the number, this equals the textView name  e.g DEF1 or FWD3
                         String textViewName = document.getString("position")+holder;
                         Log.d("ACDC", "onComplete: "+textViewName);
+
+                        //set to textView
                         int resID = getResources().getIdentifier(textViewName, "id", "com.example.fpl_assistant_app");
                         textView = (TextView) view.findViewById(resID);
                         textView.setText(document.getId());
 
+                        //add up all player prices
                         price += document.getLong("price");
 
+                        //get highest scoring player to be caprain as they should get the most points
                         if(document.getLong("algorithmScore") > captainScore) {
                             captainScore = document.getLong("algorithmScore");
                             captain = document.getId();
                         }
 
+                        //get player's pic
                         String filename = document.getId() +document.getString("team") + ".png";
                         StorageReference storageReference = storage.getReferenceFromUrl("gs://fpl-assistant-41263.appspot.com/Pics").child(filename);
 
+                        //set pic to correct view
                         try {
                             final File picture = File.createTempFile(filename, "png");
                             final String whichPic = textViewName+"picture";
@@ -159,6 +145,8 @@ public class TotwFragment extends Fragment {
                                     imageView.setImageBitmap(bitmap);
                                 }
                             }).addOnFailureListener(new OnFailureListener() {
+
+                                //if not successful, add default image
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
                                     final File picture2;
@@ -186,6 +174,7 @@ public class TotwFragment extends Fragment {
                         }
                     }
 
+                    //add price to view in correct format. database saves £11 mil as 110. so has to be changed to have £ and .
                     TextView textView;
                     String prices = String.valueOf(price).substring(0, String.valueOf(price).length()-1) +"."+ String.valueOf(price).substring(String.valueOf(price).length()-1);
                     int resID = getResources().getIdentifier("priceNumber", "id", "com.example.fpl_assistant_app");
@@ -204,8 +193,4 @@ public class TotwFragment extends Fragment {
         });
 
     }
-
-    public void getBenchPlayers(View view) {}
-
-
-    }
+}

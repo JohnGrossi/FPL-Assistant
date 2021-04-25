@@ -45,7 +45,6 @@ public class FixturesFragment extends Fragment implements MyFixturesRecyclerView
     public FixturesFragment() {
     }
 
-    // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
     public static FixturesFragment newInstance(int columnCount) {
         FixturesFragment fragment = new FixturesFragment();
@@ -83,8 +82,10 @@ public class FixturesFragment extends Fragment implements MyFixturesRecyclerView
         final MyFixturesRecyclerViewAdapter adapter = new MyFixturesRecyclerViewAdapter(fixtures, this);
         recyclerView.setAdapter(adapter);
 
+        //set up firebase instance
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+        //get fixtures from database
         DocumentReference docRef = db.collection("fixtures").document("currentWeek");
         docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -92,14 +93,12 @@ public class FixturesFragment extends Fragment implements MyFixturesRecyclerView
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
-                        Log.d(TAG,"DocumentSnapshot data: " + document.getData().values());
                         for (int i = 1; i < 11; i++) {
                             Fixture fixture1 = new Fixture();
                             fixture1.setFixtureName(document.getString(Integer.toString(i)));
                             fixtures.add(fixture1);
                             adapter.notifyDataSetChanged();
                         }
-
                     } else {
                         Log.d(TAG, "No such document");
                     }
@@ -112,6 +111,7 @@ public class FixturesFragment extends Fragment implements MyFixturesRecyclerView
         return view;
     }
 
+    //when fixture is clicked, record what was clicked and pass to new activity
     @Override
     public void onFixtureClick(int position) {
         Log.d(TAG, "onFixtureClick: clicked " +fixtures.get(position));
