@@ -59,7 +59,7 @@ public class AwayTeamFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ((PredictedLineupActivity) getActivity()).setActionBarTitle("Away Team Prediction");
+        ((PredictedLineupActivity) getActivity()).setActionBarTitle("Team Predictions");
     }
 
     @Override
