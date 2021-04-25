@@ -37,43 +37,18 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link HomeTeamFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class HomeTeamFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
     final String TAG = "TasksSample";
     String homeTeam = "";
-
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     public HomeTeamFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment team1Fragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static HomeTeamFragment newInstance(String param1, String param2) {
         HomeTeamFragment fragment = new HomeTeamFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -88,14 +63,14 @@ public class HomeTeamFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home_team, container, false);
 
+        //get home team
         String teams = ((PredictedLineupActivity) getActivity()).passInTeams();
-
-        //String sTitle = getArguments().getString("title");
 
         String[] split = teams.split(" v ");
         homeTeam = split[0];
         getPlayers(view);
 
+        //set up back button
         Button button = (Button) view.findViewById(R.id.backButton);
         button.setOnClickListener(new View.OnClickListener()
         {
@@ -111,11 +86,14 @@ public class HomeTeamFragment extends Fragment {
 
     public void getPlayers(View view) {
 
+        //has to be uppercase to match datbase
         homeTeam = matchDatabaseName(homeTeam.toUpperCase());
 
+        //View names
         String[] playerPosition = {"GK1", "DEF1", "DEF2", "DEF3", "DEF4", "MID1", "MID2", "MID3", "MID4", "FWD1", "FWD2"};
         String[] playerPicture = {"GK1picture", "DEF1picture", "DEF2picture", "DEF3picture", "DEF4picture", "MID1picture", "MID2picture", "MID3picture", "MID4picture", "FWD1picture", "FWD2picture"};
 
+        //set up databse connection to get players for that team
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         FirebaseStorage storage = FirebaseStorage.getInstance();
         DocumentReference docRef = db.collection("predictedTeams").document(homeTeam.toUpperCase());
@@ -127,7 +105,7 @@ public class HomeTeamFragment extends Fragment {
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     if (document.exists()) {
-                        for (int i = 1, j = 0; i <= 11; i++, j++) {
+                        for (int i = 1, j = 0; i <= 11; i++, j++) {         //loop through 11 and set to textView and Image views
                             TextView textView;
                             int resID = getResources().getIdentifier(playerPosition[j], "id", "com.example.fpl_assistant_app");
                             textView = (TextView) view.findViewById(resID);
@@ -167,6 +145,7 @@ public class HomeTeamFragment extends Fragment {
         });
     }
 
+    //names have to be changed to be exactly like database as they're used in databse call path
     public String matchDatabaseName(String team) {
         switch (team) {
             case "BRIGHTON":

@@ -40,9 +40,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- */
 public class PlayerComparisonFragment extends Fragment implements AdapterView.OnItemSelectedListener {
 
     //set up class variables - spinners and adapters - textView
@@ -60,6 +57,7 @@ public class PlayerComparisonFragment extends Fragment implements AdapterView.On
     ArrayAdapter<CharSequence> adapter2 = null;
     ArrayAdapter<CharSequence> adapter4 = null;
 
+    //list of textview names
     String[] playerStat = {"name", "team", "price", "position", "fitness", "lastFixture", "secondLastFixture", "thirdLastFixture", "lastPoints", "secondLastPoints", "thirdLastPoints", "nextFixture", "secondNextFixture", "thirdNextFixture", "pointsTotal", "cleanSheetTotal", "penaltySaves", "goalsTotal", "assistTotal"};
     String[] playerStat2 = {"name2", "team2", "price2", "position2", "fitness2", "lastFixture2", "secondLastFixture2", "thirdLastFixture2", "lastPoints2", "secondLastPoints2", "thirdLastPoints2", "nextFixture2", "secondNextFixture2", "thirdNextFixture2", "pointsTotal2", "cleanSheetTotal2", "penaltySaves2", "goalsTotal2", "assistTotal2"};
 
@@ -68,12 +66,6 @@ public class PlayerComparisonFragment extends Fragment implements AdapterView.On
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @return A new instance of fragment PlayerComparisonFragment.
-     */
     public static PlayerComparisonFragment newInstance(String param1, String param2) {
         PlayerComparisonFragment fragment = new PlayerComparisonFragment();
         Bundle args = new Bundle();

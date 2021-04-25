@@ -11,9 +11,6 @@ import com.example.fpl_assistant_app.R;
 
 import java.util.ArrayList;
 
-/**
- * TODO: Replace the implementation with code for your data type.
- */
 public class MyFixturesRecyclerViewAdapter extends RecyclerView.Adapter<MyFixturesRecyclerViewAdapter.ViewHolder> {
 
     private final ArrayList<Fixture> mValues;
@@ -54,7 +51,6 @@ public class MyFixturesRecyclerViewAdapter extends RecyclerView.Adapter<MyFixtur
             button_value = (Button) view.findViewById(R.id.button_value);
             button_value.setOnClickListener(this);
             this.onFixtureListener = onFixtureListener;
-
         }
 
         @Override
